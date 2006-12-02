@@ -1,0 +1,9 @@
+Changelog for plone.memoize
+
+    (name of developer listed in brackets)
+
+plone.memoize - 0.1 Unreleased
+
+    - Initial package structure.
+      [zopeskel]
+

@@ -1,0 +1,12 @@
+README.txt
+setup.cfg
+setup.py
+plone/__init__.py
+plone.memoize.egg-info/PKG-INFO
+plone.memoize.egg-info/SOURCES.txt
+plone.memoize.egg-info/dependency_links.txt
+plone.memoize.egg-info/entry_points.txt
+plone.memoize.egg-info/namespace_packages.txt
+plone.memoize.egg-info/not-zip-safe
+plone.memoize.egg-info/top_level.txt
+plone/memoize/__init__.py
