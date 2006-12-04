@@ -29,10 +29,9 @@ class ViewMemo(object):
             # context, the physical path is a better key, since the id could
             # change if the object is invalidated from the ZODB cache
             
-            getPhysicalPath = getattr(context, 'getPhysicalPath', None)
-            if getPhysicalPath is not None:
-                context_id = getPhysicalPath()
-            else:
+            try:
+                context_id = context.getPhysicalPath()
+            except AttributeError:
                 context_id = id(context)
             
             # Note: we don't use args[0] in the cache key, since args[0] == 
