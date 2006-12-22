@@ -49,12 +49,7 @@ class ViewMemo(object):
     def memoize_contextless(self, func):
         def memogetter(*args, **kwargs):
             instance = args[0]
-            
             request = getattr(instance, 'request', None)
-            # This adds a more general support for acquisition wrapped instances
-            # We might eventually want to move this into a seperate class.
-            if request is None:
-                request = getattr(instance, 'REQUEST', None)
             
             annotations = IAnnotations(request)
             cache = annotations.get(self.key, _marker)
