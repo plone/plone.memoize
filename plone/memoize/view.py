@@ -16,8 +16,12 @@ class ViewMemo(object):
         def memogetter(*args, **kwargs):
             instance = args[0]
             
-            context = getattr(instance, 'context', None)
+            context = getattr(instance, 'context', None)            
             request = getattr(instance, 'request', None)
+            
+            # XXX: A Zope 2 workaround/optimisation (will degrade gracefully)
+            if request is None:
+                request = getattr(context, 'REQUEST', None)
             
             annotations = IAnnotations(request)
             cache = annotations.get(self.key, _marker)
