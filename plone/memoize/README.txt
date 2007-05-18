@@ -3,10 +3,42 @@
 ==============================
 
 Used to memoize the return values of functions and properties of classes
-or views.
+and Zope views.
 
-See view.txt and instance.txt for usage, but the most common usage pattern
-is:
+volatile
+========
+
+The 'volatile' module defines a versatile caching decorator that gives
+you total control of how the cache key is calculated and where it is
+stored.  This decorator is explained in more in depth with example
+usage in 'volatile.py'.
+
+A quick example of a Five view that uses 'volatile':
+
+  >>> from Products.Five import BrowserView
+  >>> from plone.memoize import volatile
+
+  >>> def _render_details_cachekey(self, brain):
+  ...    return hash((brain.getPath(), brain.modified))
+
+  >>> class View(BrowserView):
+  ...    @volatile.cache(_render_details_cachekey, volatile.store_on_context)
+  ...    def render_details(self, brain):
+  ...        obj = brain.getObject()
+  ...        view = obj.restrictedTraverse('@@obj-view')
+  ...        return view.render()
+
+The results of our hypothetical 'render_details' method are cached
+*across requests* and independently of the (not) logged in user.  The
+cache is only refreshed when the brain's path or modification date
+change, as defined in '_render_details_cachekey'.
+
+view and instance
+=================
+
+See view.txt and instance.txt for usage of cache decorators that have
+a fixed cache key and cache storage.  The most common usage pattern of
+these view and instance caching decorators is:
 
  from plone.memoize import instance
 

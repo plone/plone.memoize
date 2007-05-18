@@ -31,6 +31,8 @@ def test_suite():
                              setUp=configurationSetUp,
                              tearDown=configurationTearDown,
                              optionflags=optionflags),
+        doctest.DocFileSuite('README.txt'),
+        doctest.DocTestSuite('plone.memoize.volatile'),
         ))
 
 if __name__=="__main__":
