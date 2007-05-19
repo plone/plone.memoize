@@ -107,13 +107,63 @@ Let's try it out:
 It works!
 """
 
+import time
+
+class CleanupDict(dict):
+    """A dict that automatically cleans up items that haven't been
+    accessed in a given timespan on *set*.
+
+    This implementation is a bit naive, since it's not associated with
+    any policy that the user can configure, and it doesn't provide
+    statistics like RAMCache, but at least it helps make sure our
+    volatile attribute doesn't grow stale entries indefinitely.
+
+      >>> d = CleanupDict()
+      >>> d['spam'] = 'bar'
+      >>> d['spam']
+      'bar'
+
+      >>> d = CleanupDict(0)
+      >>> d['spam'] = 'bar'
+      >>> d['spam'] # doctest: +ELLIPSIS
+      Traceback (most recent call last):
+      ...
+      KeyError: 'spam'
+    """
+    cleanup_period = 60 * 60 * 24 * 3 # 3 days
+
+    def __init__(self, cleanup_period=None):
+        super(CleanupDict, self).__init__()
+        self._last_access = {}
+        if cleanup_period is not None:
+            self.cleanup_period = cleanup_period
+
+    def __getitem__(self, key):
+        value = super(CleanupDict, self).__getitem__(key)
+        self._last_access[key] = time.time()
+        return value
+
+    def __setitem__(self, key, value):
+        super(CleanupDict, self).__setitem__(key, value)
+        self._last_access[key] = time.time()
+        self._cleanup()
+
+    def _cleanup(self):
+        now = time.time()
+        okay = now - self.cleanup_period
+        for key, timestamp in self._last_access.items():
+            if timestamp < okay:
+                del self._last_access[key]
+                super(CleanupDict, self).__delitem__(key)
+    
 ATTR = '_v_memoize_cache'
+CONTAINER_FACTORY = CleanupDict
 
 def store_on_self(obj, *args, **kwargs):
-    return obj.__dict__.setdefault(ATTR, {})
+    return obj.__dict__.setdefault(ATTR, CONTAINER_FACTORY())
 
 def store_on_context(obj, *args, **kwargs):
-    return obj.context.__dict__.setdefault(ATTR, {})
+    return obj.context.__dict__.setdefault(ATTR, CONTAINER_FACTORY())
 
 def cache(get_key, get_cache=store_on_self):
     def decorator(fun):
