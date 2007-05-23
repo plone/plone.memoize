@@ -20,17 +20,28 @@ def configurationTearDown(test):
     tearDown()
 
 def test_suite():
+    try:
+        from zope.publisher.interfaces.browser import IBrowserView, IBrowserRequest
+    except ImportError:
+        from zope.app.publisher.interfaces.browser import IBrowserView
+        from zope.publisher.interfaces.browser import IBrowserRequest
+    from zope.component import adapts
+    from zope.component import provideAdapter
+    from zope.interface import implements, Interface
+
     return unittest.TestSuite((
         doctest.DocFileSuite('instance.txt', 
                              package="plone.memoize",
                              setUp=configurationSetUp,
                              tearDown=configurationTearDown,
-                             optionflags=optionflags),
+                             optionflags=optionflags,
+                             globs=locals()),
         doctest.DocFileSuite('view.txt', 
                              package="plone.memoize",
                              setUp=configurationSetUp,
                              tearDown=configurationTearDown,
-                             optionflags=optionflags),
+                             optionflags=optionflags,
+                             globs=locals()),
         doctest.DocFileSuite('README.txt'),
         doctest.DocTestSuite('plone.memoize.volatile'),
         ))

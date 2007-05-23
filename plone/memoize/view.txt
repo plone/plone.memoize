@@ -1,23 +1,15 @@
-=====================
- view decorators
-=====================
+======================
+ view memo decorators
+======================
 
 Decorators for methods/properties in views. Values are cached by annotating
 the view's request, and keyed based on the context and any arguments to the
 function. This means that the same view can be looked up multiple times and
-the same memos will be returned.
+the same memos will be returned::
 
 >>> from plone.memoize import view
 
-First we set up a dummy view
-
->>> from zope.interface import implements
->>> from zope.component import adapts
->>> from zope.component import provideAdapter
-
->>> from zope.interface import Interface
->>> from zope.publisher.interfaces.browser import IBrowserView
->>> from zope.publisher.interfaces.browser import IBrowserRequest
+First we set up a dummy view::
 
 >>> class MyView(object):
 ...     implements(IBrowserView)
@@ -49,7 +41,7 @@ First we set up a dummy view
 ...     
 >>> provideAdapter(MyView, name=u'msg_view')
 
-We also need a dummy context
+We also need a dummy context::
 
 >>> class Dummy(object):
 ...     implements(Interface)
@@ -60,7 +52,7 @@ Let's look up the view:
 >>> request = TestRequest()
 >>> context = Dummy()
 
-We need request to be annotatable
+We need request to be annotatable::
 
 >>> from zope.interface import directlyProvides
 >>> from zope.annotation.interfaces import IAttributeAnnotatable
@@ -70,7 +62,7 @@ We need request to be annotatable
 >>> msg = getMultiAdapter((context, request), name=u'msg_view')
 
 Now, if we access the memoized property txt2, we will get the value in 
-txt1.
+txt1::
 
 >>> msg.txt2
 'hello world'
