@@ -2,9 +2,10 @@
  instance decorators
 =====================
 
-These are taken from Whit Morriss' memojito package. They are used to 
-memoize return values for functions on an instance. The memoized values
-disappear when the instance is destroyed.
+Originally from Whit Morriss' memojito package, they are used to
+memoize return values for methods on an instance. The memoized values
+are stored on an attribute on the instance and disappear when the
+instance is destroyed or a cleanup is called.
 
 Let's try it out w/ a dummy class::
 
@@ -24,6 +25,10 @@ Let's try it out w/ a dummy class::
 ...         instxt = ' '.join(lst)
 ...         return ("%s: %s%s %s" %(to, self.txt2, self.bang, instxt)).strip()
 ...     
+...     @instance.memoizedproperty
+...     def recurse(self):
+...         return "recursive: %s" % self.txt2
+...
 ...     @instance.clearbefore
 ...     def clearbefore(self):
 ...         return self.txt2
@@ -117,3 +122,16 @@ Our message to faulkner now is semantically correct::
 >>> ins = dict(tale='told by idiot', signify='nothing')
 >>> print msg.getMsg('Bill F.', **ins)
 Bill F.: sound and fury world#! tale--told by idiot signify--nothing
+
+Let's make sure that memoized properties which call OTHER memoized
+properties do the right thing::
+
+>>> msg = MyMsg('hello')
+>>> print msg.recurse
+recursive: hello world
+
+Now we make sure that both the txt2 and the recurse values are in the
+cache::
+
+>>> print len(msg._memojito_.keys())
+2

@@ -1,9 +1,9 @@
 """
-Memoize decorators for instances.
+Memo decorators for instances.
 
-Stores values in a property on the instance. See instance.txt.
+Stores values in an attribute on the instance. See instance.txt.
 
-Stolen from Whit Morriss' memojito package. 
+This package current subsumes memojito
 """
 
 _marker = object()
@@ -31,11 +31,14 @@ class Memojito(object):
     def memoize(self, func):
         def memogetter(*args, **kwargs):
             inst = args[0]
-            cache = getattr(inst, self.propname, dict())
+            cache = getattr(inst, self.propname, _marker)
+            if cache is _marker:
+                setattr(inst, self.propname, dict())
+                cache = getattr(inst, self.propname)
 
             # XXX this could be improved to unfold unhashables
             # and optimized with pyrex
-            
+
             key = (func.__name__, args, frozenset(kwargs.items()))
             key=hash(key)
             val = cache.get(key, _marker)
@@ -46,9 +49,13 @@ class Memojito(object):
             return val
         return memogetter
 
+
 _m = Memojito()
 memoize = _m.memoize
 clearbefore = _m.clearbefore
 clearafter = _m.clearafter
 
-__all__ = (memoize, clearbefore, clearafter)
+def memoizedproperty(func):
+    return property(_m.memoize(func))
+
+__all__ = (memoize, memoizedproperty, clearbefore, clearafter)
