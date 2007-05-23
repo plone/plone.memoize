@@ -7,3 +7,10 @@ plone.memoize - 0.1 Unreleased
     - Initial package structure.
       [zopeskel]
 
+    - rolled in changes from memojito to fix recursively memoized
+      methods(fix by Rob Miller and Whit Morriss)
+      [whit]
+
+    - made plone.memoize backwardly compatible with zope2.9 and remain
+      usable w/out zope.annotation. Minor wording changes to some docs.
+      [whit]
