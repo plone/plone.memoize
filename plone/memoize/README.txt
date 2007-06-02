@@ -16,13 +16,13 @@ usage in 'volatile.py'.
 A quick example of a Five view that uses 'volatile':
 
   >>> from Products.Five import BrowserView
-  >>> from plone.memoize import volatile
+  >>> from plone.memoize import ram
 
-  >>> def _render_details_cachekey(self, brain):
+  >>> def _render_details_cachekey(method, self, brain):
   ...    return hash((brain.getPath(), brain.modified))
 
   >>> class View(BrowserView):
-  ...    @volatile.cache(_render_details_cachekey, volatile.store_on_context)
+  ...    @ram.cache(_render_details_cachekey)
   ...    def render_details(self, brain):
   ...        obj = brain.getObject()
   ...        view = obj.restrictedTraverse('@@obj-view')

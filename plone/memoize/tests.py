@@ -44,6 +44,9 @@ def test_suite():
                              globs=locals()),
         doctest.DocFileSuite('README.txt'),
         doctest.DocTestSuite('plone.memoize.volatile'),
+        doctest.DocTestSuite('plone.memoize.ram',
+                             setUp=configurationSetUp,
+                             tearDown=configurationTearDown),
         ))
 
 if __name__=="__main__":

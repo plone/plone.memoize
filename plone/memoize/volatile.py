@@ -12,10 +12,11 @@ with an expensive method `pow` that we want to cache:
 Okay, we know that if the `first` and `second` arguments are the same,
 the result is going to be the same, always.  We'll use a cache key
 calculator to tell the `cache` decorator about this assertion.  What's
-this cache key calculator?  It's a function that takes exactly the
-same arguments as the original function that we're caching:
+this cache key calculator?  It's a function that takes the original
+function plus the same arguments as the original function that we're
+caching:
 
-  >>> def cache_key(self, first, second):
+  >>> def cache_key(method, self, first, second):
   ...     return hash((first, second))
 
 The cache decorator is really simple to use.  Let's define our first
@@ -57,7 +58,7 @@ instance as a *volatile* attribute.  That is, it's prefixed with
 
 This cache container maps our key to the return value.
 
-  >>> cache_container[cache_key(None, 3, 2)]
+  >>> cache_container[cache_key(None, None, 3, 2)]
   9
   >>> len(cache_container)
   1
@@ -71,14 +72,14 @@ amount of arguments as the original cached function.  We'll use a
 global for caching this time:
 
   >>> my_cache = {}
-  >>> def cache_storage(*args, **kwargs):
+  >>> def cache_storage(fun, *args, **kwargs):
   ...     return my_cache
 
 This time, instead of caching a method, we'll cache a normal function.
 For this, we'll need to change our cache key function to take the
 correct number of arguments:
 
-  >>> def cache_key(first, second):
+  >>> def cache_key(fun, first, second):
   ...     return hash((first, second))    
 
 Note how we provide both the cache key generator and the cache storage
@@ -103,8 +104,34 @@ Let's try it out:
   27
   >>> pow(3, 3)
   27
+  >>> my_cache.clear()
 
 It works!
+
+A cache key generator may also return `DONT_CACHE`, which is a marker
+object defined in this module.
+
+  >>> def cache_key(fun, first, second):
+  ...     if first == second:
+  ...         return DONT_CACHE
+  ...     else:
+  ...         return hash((first, second))    
+  >>> @cache(cache_key, cache_storage)
+  ... def pow(first, second):
+  ...     print 'Someone or something called me'
+  ...     return first ** second
+
+  >>> pow(3, 2)
+  Someone or something called me
+  9
+  >>> pow(3, 2)
+  9
+  >>> pow(3, 3)
+  Someone or something called me
+  27
+  >>> pow(3, 3)
+  Someone or something called me
+  27
 """
 
 import time
@@ -158,18 +185,21 @@ class CleanupDict(dict):
     
 ATTR = '_v_memoize_cache'
 CONTAINER_FACTORY = CleanupDict
+DONT_CACHE = object()
 
-def store_on_self(obj, *args, **kwargs):
+def store_on_self(method, obj, *args, **kwargs):
     return obj.__dict__.setdefault(ATTR, CONTAINER_FACTORY())
 
-def store_on_context(obj, *args, **kwargs):
+def store_on_context(method, obj, *args, **kwargs):
     return obj.context.__dict__.setdefault(ATTR, CONTAINER_FACTORY())
 
 def cache(get_key, get_cache=store_on_self):
     def decorator(fun):
         def replacement(*args, **kwargs):
-            key = get_key(*args, **kwargs)
-            cache = get_cache(*args, **kwargs)
+            key = get_key(fun, *args, **kwargs)
+            if key is DONT_CACHE:
+                return fun(*args, **kwargs)
+            cache = get_cache(fun, *args, **kwargs)
             cached_value = cache.get(key)
             if cached_value is None:
                 cache[key] = fun(*args, **kwargs)
