@@ -103,6 +103,7 @@ from plone.memoize.interfaces import IRAMCacheChooser
 from plone.memoize import volatile
 
 global_cache = ram.RAMCache()
+global_cache.update(maxAge=86400)
 DONT_CACHE = volatile.DONT_CACHE
 
 class RAMCacheAdapter:
