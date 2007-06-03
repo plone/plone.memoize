@@ -94,6 +94,9 @@ Let's fill them:
   1
 """
 
+import md5
+import cPickle
+
 from zope import interface
 from zope import component
 from zope.app.cache.interfaces.ram import IRAMCache
@@ -106,7 +109,33 @@ global_cache = ram.RAMCache()
 global_cache.update(maxAge=86400)
 DONT_CACHE = volatile.DONT_CACHE
 
-class RAMCacheAdapter:
+class AbstractDict:
+    def get(self, key, default=None):
+        try:
+            return self.__getitem__(key)
+        except KeyError:
+            return default
+
+class MemcacheAdapter(AbstractDict):
+    def __init__(self, client, globalkey=''):
+        self.client = client
+        self.globalkey = globalkey and '%s:' % globalkey
+
+    def _make_key(self, source):
+        return md5.new(source).hexdigest()
+
+    def __getitem__(self, key):
+        cached_value = self.client.get(self.globalkey + self._make_key(key))
+        if cached_value is None:
+            raise KeyError(key)
+        else:
+            return cPickle.loads(cached_value)
+
+    def __setitem__(self, key, value):
+        cached_value = cPickle.dumps(value)
+        self.client.set(self.globalkey + self._make_key(key), cached_value)
+
+class RAMCacheAdapter(AbstractDict):
     def __init__(self, ramcache, globalkey=''):
         self.ramcache = ramcache
         self.globalkey = globalkey
@@ -121,12 +150,6 @@ class RAMCacheAdapter:
 
     def __setitem__(self, key, value):
         self.ramcache.set(value, self.globalkey, dict(key=key))
-
-    def get(self, key, default=None):
-        try:
-            return self.__getitem__(key)
-        except KeyError:
-            return default
 
 def choose_cache(fun_name):
     return RAMCacheAdapter(component.queryUtility(IRAMCache),
