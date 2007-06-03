@@ -6,6 +6,6 @@
              provides="zope.app.cache.interfaces.ram.IRAMCache" />
 
     <utility component=".ram.choose_cache"
-             provides=".interfaces.IRAMCacheChooser" />
+             provides=".interfaces.ICacheChooser" />
 
 </configure>

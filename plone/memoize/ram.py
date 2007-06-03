@@ -1,4 +1,4 @@
-"""A cache decorator that uses RAMCache.
+"""A cache decorator that uses RAMCache by default.
 
 See README.txt and the `volatile` module for more details.
 
@@ -44,8 +44,8 @@ Make sure that we only invalidated the cache for the `pow` function:
 
   >>> global_cache.invalidateAll()
 
-You can register an IRAMCacheChooser utility to override the RAMCache
-used based on the function that is cached.  To do this, we'll first
+You can register an ICacheChooser utility to override the cache used
+based on the function that is cached.  To do this, we'll first
 unregister the already registered global `choose_cache` function:
 
   >>> sm = component.getGlobalSiteManager()
@@ -58,10 +58,10 @@ function, and use the `global_cache` for all other functions:
   >>> my_cache = ram.RAMCache()
   >>> def my_choose_cache(fun_name):
   ...     if fun_name.endswith('.pow'):
-  ...         return my_cache
+  ...         return RAMCacheAdapter(my_cache)
   ...     else:
-  ...         return global_cache
-  >>> interface.directlyProvides(my_choose_cache, IRAMCacheChooser)
+  ...         return RAMCacheAdapter(global_cache)
+  >>> interface.directlyProvides(my_choose_cache, ICacheChooser)
   >>> sm.registerUtility(my_choose_cache)
 
 Both caches are empty at this point:
@@ -99,7 +99,7 @@ from zope import component
 from zope.app.cache.interfaces.ram import IRAMCache
 from zope.app.cache import ram
 
-from plone.memoize.interfaces import IRAMCacheChooser
+from plone.memoize.interfaces import ICacheChooser
 from plone.memoize import volatile
 
 global_cache = ram.RAMCache()
@@ -129,16 +129,17 @@ class RAMCacheAdapter:
             return default
 
 def choose_cache(fun_name):
-    return component.queryUtility(IRAMCache)
-interface.directlyProvides(choose_cache, IRAMCacheChooser)
+    return RAMCacheAdapter(component.queryUtility(IRAMCache),
+                           globalkey=fun_name)
+interface.directlyProvides(choose_cache, ICacheChooser)
 
-def store_in_ramcache(fun, obj=None, *args, **kwargs):
+def store_in_cache(fun, obj=None, *args, **kwargs):
     key = '%s.%s' % (fun.__module__, fun.__name__)
-    cache = component.getUtility(IRAMCacheChooser)(key)
+    cache = component.getUtility(ICacheChooser)(key)
     if cache is None:
         return {}
     else:
-        return RAMCacheAdapter(cache, globalkey=key)
+        return cache
 
 def cache(get_key):
-    return volatile.cache(get_key, get_cache=store_in_ramcache)
+    return volatile.cache(get_key, get_cache=store_in_cache)
