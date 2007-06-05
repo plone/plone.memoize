@@ -69,18 +69,17 @@ def cache(get_key, get_request='request'):
     cache values are stored on the request:
 
       >>> from zope.publisher.browser import TestRequest
-      >>> request = TestRequest()
       >>> class A(int):
-      ...     request = request
+      ...     request = TestRequest()
       >>> from zope.interface import directlyProvides
       >>> from zope.annotation.interfaces import IAttributeAnnotatable
-      >>> directlyProvides(request, IAttributeAnnotatable)
+      >>> directlyProvides(A.request, IAttributeAnnotatable)
 
     In addition to this request, we'll also need to set up a cache key
     generator.  We'll use the integer value of the only argument for
     that:
 
-      >>> get_key = lambda fun, a: a
+      >>> get_key = lambda fun, a, *args: a
 
     Let's decorate our `increment` function now with the `cache`
     decorator.  We'll tell the decorator to use `args_hash` for
@@ -98,6 +97,22 @@ def cache(get_key, get_request='request'):
       2
       >>> IAnnotations(A.request)
       {'plone.memoize.request.increment:1': 2}
+
+    If `request` is already part of the function's argument list, we
+    don't need to specify any expression:
+
+      >>> @cache(get_key=get_key)
+      ... def increment_plus(a, request):
+      ...     print 'Someone or something called me'
+      ...     return a + 1
+
+      >>> increment_plus(42, A.request)
+      Someone or something called me
+      43
+      >>> increment_plus(42, A.request)
+      43
+      >>> IAnnotations(A.request)['plone.memoize.request.increment_plus:42']
+      43
     """
 
     return volatile.cache(get_key,
