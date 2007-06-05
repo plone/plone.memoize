@@ -56,10 +56,11 @@ instance as a *volatile* attribute.  That is, it's prefixed with
   '_v_memoize_cache'
   >>> cache_container = getattr(obj, ATTR)
 
-This cache container maps our key to the return value.
+This cache container maps our key, including the function's dotted
+name, to the return value.
 
-  >>> cache_container[cache_key(None, None, 3, 2)]
-  9
+  >>> cache_container
+  {'plone.memoize.volatile.pow:1697177666': 9}
   >>> len(cache_container)
   1
 
@@ -199,6 +200,7 @@ def cache(get_key, get_cache=store_on_self):
             key = get_key(fun, *args, **kwargs)
             if key is DONT_CACHE:
                 return fun(*args, **kwargs)
+            key = '%s.%s:%s' % (fun.__module__, fun.__name__, key)
             cache = get_cache(fun, *args, **kwargs)
             cached_value = cache.get(key)
             if cached_value is None:
