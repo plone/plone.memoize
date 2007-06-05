@@ -156,7 +156,7 @@ def choose_cache(fun_name):
                            globalkey=fun_name)
 interface.directlyProvides(choose_cache, ICacheChooser)
 
-def store_in_cache(fun, obj=None, *args, **kwargs):
+def store_in_cache(fun, *args, **kwargs):
     key = '%s.%s' % (fun.__module__, fun.__name__)
     cache = component.getUtility(ICacheChooser)(key)
     if cache is None:
