@@ -4,7 +4,11 @@ Memoize decorator for methods.
 Stores values in an annotation of the request.
 """
 
+import inspect
+
 from zope.annotation.interfaces import IAnnotations
+
+from plone.memoize import volatile
 
 _marker = object()
 class RequestMemo(object):
@@ -36,6 +40,69 @@ class RequestMemo(object):
             return value
         return memogetter
 
+def store_in_annotation_of(expr):
+    def _store_in_annotation(fun, *args, **kwargs):
+        # Use expr to find out the name of the request variable
+        vars = {}
+        for index, name in enumerate(inspect.getargspec(fun)[0]):
+            if name in kwargs:
+                vars[name] = kwargs[name]
+            else:
+                vars[name] = args[index]
+        request = eval(expr, {}, vars)
+        return IAnnotations(request)
+    return _store_in_annotation
+
+def cache(get_key, get_request='request'):
+    r"""
+    This is a hypothetical function `increment` that'll store the
+    cache value on `a.request`, where a is the only argument to the
+    function:
+    
+      >>> def increment(a):
+      ...     print 'Someone or something called me'
+      ...     return a + 1
+
+    Now we need to define this `a`.  For this, we'll inherit from
+    `int` and add a `request` class variable.  Note that we also make
+    our fake request `IAttributeAnnotatable`, because that's how the
+    cache values are stored on the request:
+
+      >>> from zope.publisher.browser import TestRequest
+      >>> request = TestRequest()
+      >>> class A(int):
+      ...     request = request
+      >>> from zope.interface import directlyProvides
+      >>> from zope.annotation.interfaces import IAttributeAnnotatable
+      >>> directlyProvides(request, IAttributeAnnotatable)
+
+    In addition to this request, we'll also need to set up a cache key
+    generator.  We'll use the integer value of the only argument for
+    that:
+
+      >>> get_key = lambda fun, a: a
+
+    Let's decorate our `increment` function now with the `cache`
+    decorator.  We'll tell the decorator to use `args_hash` for
+    generating the key. `get_request` will tell the decorator how to
+    actually find the `request` in the variable scope of the function
+    itself:
+    
+      >>> cached_increment = \
+      ...     cache(get_key=get_key, get_request='a.request')(increment)
+
+      >>> cached_increment(A(1))
+      Someone or something called me
+      2
+      >>> cached_increment(A(1))
+      2
+      >>> IAnnotations(A.request)
+      {'plone.memoize.request.increment:1': 2}
+    """
+
+    return volatile.cache(get_key,
+                          get_cache=store_in_annotation_of(get_request))
+
 memoize_diy_request = RequestMemo
 
-__all__ = (memoize_diy_request)
+__all__ = (memoize_diy_request, store_in_annotation_of, cache)
