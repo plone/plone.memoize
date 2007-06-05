@@ -6,8 +6,6 @@ Stores values in an annotation of the request.
 
 from zope.annotation.interfaces import IAnnotations
 
-from plone.memoize import volatile
-
 _marker = object()
 class RequestMemo(object):
     
@@ -38,12 +36,6 @@ class RequestMemo(object):
             return value
         return memogetter
 
-def store_in_request(fun, *args, **kwargs):
-    return IAnnotations(request)
-
-def cache(get_key):
-    return volatile.cache(get_key, get_cache=store_in_request)
-
 memoize_diy_request = RequestMemo
 
-__all__ = (memoize_diy_request, store_in_request)
+__all__ = (memoize_diy_request)
