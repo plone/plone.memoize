@@ -109,12 +109,12 @@ Let's try it out:
 
 It works!
 
-A cache key generator may also return `DONT_CACHE`, which is a marker
-object defined in this module.
+A cache key generator may also raise DontCache to indicate that no
+caching should be applied:
 
   >>> def cache_key(fun, first, second):
   ...     if first == second:
-  ...         return DONT_CACHE
+  ...         raise DontCache
   ...     else:
   ...         return hash((first, second))    
   >>> @cache(cache_key, cache_storage)
@@ -186,7 +186,9 @@ class CleanupDict(dict):
     
 ATTR = '_v_memoize_cache'
 CONTAINER_FACTORY = CleanupDict
-DONT_CACHE = object()
+
+class DontCache(Exception):
+    pass
 
 def store_on_self(method, obj, *args, **kwargs):
     return obj.__dict__.setdefault(ATTR, CONTAINER_FACTORY())
@@ -197,8 +199,9 @@ def store_on_context(method, obj, *args, **kwargs):
 def cache(get_key, get_cache=store_on_self):
     def decorator(fun):
         def replacement(*args, **kwargs):
-            key = get_key(fun, *args, **kwargs)
-            if key is DONT_CACHE:
+            try:
+                key = get_key(fun, *args, **kwargs)
+            except DontCache:
                 return fun(*args, **kwargs)
             key = '%s.%s:%s' % (fun.__module__, fun.__name__, key)
             cache = get_cache(fun, *args, **kwargs)

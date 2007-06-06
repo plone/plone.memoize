@@ -107,7 +107,8 @@ from plone.memoize import volatile
 
 global_cache = ram.RAMCache()
 global_cache.update(maxAge=86400)
-DONT_CACHE = volatile.DONT_CACHE
+
+DontCache = volatile.DontCache
 
 class AbstractDict:
     def get(self, key, default=None):
@@ -158,7 +159,10 @@ interface.directlyProvides(choose_cache, ICacheChooser)
 
 def store_in_cache(fun, *args, **kwargs):
     key = '%s.%s' % (fun.__module__, fun.__name__)
-    cache = component.getUtility(ICacheChooser)(key)
+    cache = None
+    cache_chooser = component.queryUtility(ICacheChooser)
+    if cache_chooser is not None:
+        cache = cache_chooser(key)
     if cache is None:
         return {}
     else:
