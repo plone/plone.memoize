@@ -13,7 +13,12 @@ you total control of how the cache key is calculated and where it is
 stored.  This decorator is explained in more in depth with example
 usage in 'volatile.py'.
 
-A quick example of a Five view that uses 'volatile':
+'volatile' caches can be stored in different places. A common use is
+a zope RAMCache. There are convenience methods in the 'ram' module
+to support that.
+
+A quick example of a Five view that uses 'volatile' caching through the 'ram'
+module:
 
   >>> from Products.Five import BrowserView
   >>> from plone.memoize import ram
