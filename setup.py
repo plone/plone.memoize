@@ -12,7 +12,7 @@ classes. For views, a memo will last as long as the request, even
 if the view is looked up several times. This requires the request
 to be marked as annotatable.
 """,
-      classifiers=[], # Get strings from http://www.python.org/pypi?%3Aaction=list_classifiers
+      classifiers=[],
       keywords='plone memoize decorator',
       author='Martin Aspeli and David "Whit" Morriss',
       author_email='optilude@gmx.net',
@@ -25,7 +25,4 @@ to be marked as annotatable.
       install_requires=[
         'setuptools',
       ],
-      entry_points="""
-      # -*- Entry points: -*-
-      """,
       )

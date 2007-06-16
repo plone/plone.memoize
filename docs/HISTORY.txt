@@ -2,10 +2,11 @@ Changelog for plone.memoize
 
     (name of developer listed in brackets)
 
-plone.memoize - 0.1 Unreleased
+plone.memoize - 1.0 Unreleased
 
-    - Initial package structure.
-      [zopeskel]
+    - Use a md5 hash of the provided key in RAMCacheAdapter, reducing the
+      memory footprint and speeding up lookup time.
+      [hannosch]
 
     - rolled in changes from memojito to fix recursively memoized
       methods(fix by Rob Miller and Whit Morriss)
@@ -14,3 +15,6 @@ plone.memoize - 0.1 Unreleased
     - made plone.memoize backwardly compatible with zope2.9 and remain
       usable w/out zope.annotation. Minor wording changes to some docs.
       [whit]
+
+    - Initial package structure.
+      [zopeskel]

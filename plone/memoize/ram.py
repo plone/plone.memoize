@@ -109,6 +109,7 @@ global_cache = ram.RAMCache()
 global_cache.update(maxAge=86400)
 
 DontCache = volatile.DontCache
+MARKER = object()
 
 class AbstractDict:
     def get(self, key, default=None):
@@ -141,16 +142,22 @@ class RAMCacheAdapter(AbstractDict):
         self.ramcache = ramcache
         self.globalkey = globalkey
 
+    def _make_key(self, source):
+        return md5.new(source).digest()
+
     def __getitem__(self, key):
-        marker = object()
-        value = self.ramcache.query(self.globalkey, dict(key=key), marker)
-        if value is marker:
+        value = self.ramcache.query(self.globalkey,
+                                    dict(key=self._make_key(key)),
+                                    MARKER)
+        if value is MARKER:
             raise KeyError(key)
         else:
             return value
 
     def __setitem__(self, key, value):
-        self.ramcache.set(value, self.globalkey, dict(key=key))
+        self.ramcache.set(value,
+                          self.globalkey,
+                          dict(key=self._make_key(key)))
 
 def choose_cache(fun_name):
     return RAMCacheAdapter(component.queryUtility(IRAMCache),
