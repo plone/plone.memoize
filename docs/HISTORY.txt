@@ -4,6 +4,11 @@ Changelog for plone.memoize
 
 plone.memoize - 1.0 Unreleased
 
+    - Added simple xhtml_compress method which can be used to plug in
+      whitespace removal libraries. Peter Bengtsson's slimmer library is
+      configured but not enabled by default.
+      [hannosch]
+
     - Use a md5 hash of the provided key in RAMCacheAdapter, reducing the
       memory footprint and speeding up lookup time.
       [hannosch]
