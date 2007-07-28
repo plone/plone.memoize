@@ -30,6 +30,9 @@ def test_suite():
     from zope.interface import implements, Interface
 
     return unittest.TestSuite((
+        doctest.DocTestSuite('plone.memoize.compress',
+                             setUp=configurationSetUp,
+                             tearDown=configurationTearDown),
         doctest.DocFileSuite('instance.txt', 
                              package="plone.memoize",
                              setUp=configurationSetUp,

@@ -4,6 +4,11 @@ Changelog for plone.memoize
 
 plone.memoize - 1.0 Unreleased
 
+    - Extended the xhtml_compress method to use a utility lookup for
+      IXHTMLCompressor utilities instead. Now you can turn the slimmer based
+      compression on via a simple utility registration. See compress.py.
+      [hannosch, fschulze]
+
     - Added simple xhtml_compress method which can be used to plug in
       whitespace removal libraries. Peter Bengtsson's slimmer library is
       configured but not enabled by default.
