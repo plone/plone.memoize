@@ -133,6 +133,60 @@ caching should be applied:
   >>> pow(3, 3)
   Someone or something called me
   27
+
+Caveats
+-------
+
+Be careful when you have multiple methods with the same name in a
+single module:
+
+  >>> def cache_key(fun, instance, *args):
+  ...     return args
+  >>> cache_container = {}
+  >>> class A:
+  ...     @cache(cache_key, lambda *args: cache_container)
+  ...     def somemet(self, one, two):
+  ...         return one + two
+  >>> class B:
+  ...     @cache(cache_key, lambda *args: cache_container)
+  ...     def somemet(self, one, two):
+  ...         return one - two
+  >>> a = A()
+  >>> a.somemet(1, 2)
+  3
+  >>> cache_container
+  {'plone.memoize.volatile.somemet:(1, 2)': 3}
+
+The following call should really return -1, but since the default
+cache key isn't clever enough to include the function's name, it'll
+return 3:
+
+  >>> B().somemet(1, 2)
+  3
+  >>> len(cache_container)
+  1
+  >>> cache_container.clear()
+
+Ouch!  The fix for this is to e.g. include your class' name in the key
+when you create it:
+
+  >>> def cache_key(fun, instance, *args):
+  ...     return (instance.__class__,) + args
+  >>> class A:
+  ...     @cache(cache_key, lambda *args: cache_container)
+  ...     def somemet(self, one, two):
+  ...         return one + two
+  >>> class B:
+  ...     @cache(cache_key, lambda *args: cache_container)
+  ...     def somemet(self, one, two):
+  ...         return one - two
+  >>> a = A()
+  >>> a.somemet(1, 2)
+  3
+  >>> B().somemet(1, 2)
+  -1
+  >>> len(cache_container)
+  2
 """
 
 import time
