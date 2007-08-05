@@ -240,6 +240,7 @@ class CleanupDict(dict):
     
 ATTR = '_v_memoize_cache'
 CONTAINER_FACTORY = CleanupDict
+_marker = object()
 
 class DontCache(Exception):
     pass
@@ -259,9 +260,9 @@ def cache(get_key, get_cache=store_on_self):
                 return fun(*args, **kwargs)
             key = '%s.%s:%s' % (fun.__module__, fun.__name__, key)
             cache = get_cache(fun, *args, **kwargs)
-            cached_value = cache.get(key)
-            if cached_value is None:
-                cache[key] = fun(*args, **kwargs)
-            return cache[key]
+            cached_value = cache.get(key, _marker)
+            if cached_value is _marker:
+                cached_value = cache[key] = fun(*args, **kwargs)
+            return cached_value
         return replacement
     return decorator
