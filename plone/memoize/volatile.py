@@ -59,10 +59,13 @@ instance as a *volatile* attribute.  That is, it's prefixed with
 This cache container maps our key, including the function's dotted
 name, to the return value.
 
-  >>> cache_container
-  {'plone.memoize.volatile.pow:1697177666': 9}
+  >>> cache_container # doctest: +ELLIPSIS
+  {'plone.memoize.volatile.pow:...': 9}
   >>> len(cache_container)
   1
+  >>> k = 'plone.memoize.volatile.pow:%s' % cache_key(MyClass.pow, None, 3, 2)
+  >>> cache_container[k]
+  9
 
 Okay, on to storing the cache somewhere else.  The function we'll have
 to provide is really similar to the cache key function we defined
