@@ -2,7 +2,10 @@ Changelog for plone.memoize
 
     (name of developer listed in brackets)
 
-plone.memoize - 1.0 Unreleased
+plone.memoize - 1.0 Released August 17th 2007
+
+    - Add a forever memo - lives until Zope restart.
+      [optilude]
 
     - Extended the xhtml_compress method to use a utility lookup for
       IXHTMLCompressor utilities instead. Now you can turn the slimmer based
