@@ -4,7 +4,13 @@ Memoize decorator for views.
 Stores values in an annotation of the request. See view.txt.
 """
 
-from zope.annotation.interfaces import IAnnotations, IAttributeAnnotatable
+try:
+    from zope.annotation.interfaces import IAnnotations
+    from zope.annotation.interfaces import IAttributeAnnotatable
+except ImportError:
+    from zope.app.annotation.interfaces import IAnnotations
+    from zope.app.annotation.interfaces import IAttributeAnnotatable
+
 from zope.interface import alsoProvides
 
 _marker = object()

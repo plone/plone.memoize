@@ -95,7 +95,8 @@ take the context into account - the same view looked up during the same
 request (but possibly on another context) with the same parameters will 
 be memoized.
 
-Note that this requires that the request is annotatable using zope.annotation!
+Note that this requires that the request is annotatable using
+zope(.app).annotation!
 
 generic
 =======

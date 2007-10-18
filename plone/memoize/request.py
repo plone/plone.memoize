@@ -6,7 +6,10 @@ Stores values in an annotation of the request.
 
 import inspect
 
-from zope.annotation.interfaces import IAnnotations
+try:
+    from zope.annotation.interfaces import IAnnotations
+except ImportError:
+    from zope.app.annotation.interfaces import IAnnotations
 
 from plone.memoize import volatile
 
@@ -72,7 +75,10 @@ def cache(get_key, get_request='request'):
       >>> class A(int):
       ...     request = TestRequest()
       >>> from zope.interface import directlyProvides
-      >>> from zope.annotation.interfaces import IAttributeAnnotatable
+      >>> try:
+      ...     from zope.annotation.interfaces import IAttributeAnnotatable
+      ... except ImportError:
+      ...     from zope.app.annotation.interfaces import IAttributeAnnotatable
       >>> directlyProvides(A.request, IAttributeAnnotatable)
 
     In addition to this request, we'll also need to set up a cache key

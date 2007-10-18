@@ -55,7 +55,10 @@ Let's look up the view:
 We need request to be annotatable::
 
 >>> from zope.interface import directlyProvides
->>> from zope.annotation.interfaces import IAttributeAnnotatable
+>>> try:
+...     from zope.annotation.interfaces import IAttributeAnnotatable
+... except ImportError:
+...     from zope.app.annotation.interfaces import IAttributeAnnotatable
 >>> directlyProvides(request, IAttributeAnnotatable)
 
 >>> from zope.component import getMultiAdapter
