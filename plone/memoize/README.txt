@@ -2,8 +2,15 @@
  plone memoization decorators
 ==============================
 
-Used to memoize the return values of functions and properties of classes
-and Zope views.
+plone.memoize provides Python function decorators for caching the
+values of functions and methods.
+
+The type of cache storage is freely configurable by the user, as is
+the cache key, which is what the function's value depends on.
+
+plone.memoize has support for memcached and is easily extended to use
+other caching storages.  It also has specialized decorators for use
+with Zope views.  However, plone.memoize can be used without Zope.
 
 volatile
 ========
@@ -37,6 +44,16 @@ The results of our hypothetical 'render_details' method are cached
 *across requests* and independently of the (not) logged in user.  The
 cache is only refreshed when the brain's path or modification date
 change, as defined in '_render_details_cachekey'.
+
+This is how you could use the same decorator to cache a function's
+value for an hour:
+
+  >>> from time import time
+  >>> @ram.cache(lambda *args: time() // (60 * 60))
+  ... def fun():
+  ...     return "Something that takes awfully long"
+  >>> fun()
+  'Something that takes awfully long'
 
 view and instance
 =================

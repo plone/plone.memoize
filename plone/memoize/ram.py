@@ -166,14 +166,11 @@ interface.directlyProvides(choose_cache, ICacheChooser)
 
 def store_in_cache(fun, *args, **kwargs):
     key = '%s.%s' % (fun.__module__, fun.__name__)
-    cache = None
     cache_chooser = component.queryUtility(ICacheChooser)
     if cache_chooser is not None:
-        cache = cache_chooser(key)
-    if cache is None:
-        return {}
+        return cache_chooser(key)
     else:
-        return cache
+        return RAMCacheAdapter(global_cache, globalkey=key)
 
 def cache(get_key):
     return volatile.cache(get_key, get_cache=store_in_cache)
