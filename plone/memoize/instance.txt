@@ -51,11 +51,12 @@ Even though we've twiddled txt1, txt2 is not recalculated::
 >>> msg.txt2
 'hello world'
 
-The memo is stored by a hast of the method's name, args,
-and a frozenset of any kwargs.
+The memo is stored by a key made of the method's name, args,
+and a frozenset of any kwargs. If those are expected to be big,
+you should compute your own hash of it.
 
 >>> key = ('txt2', (msg,), frozenset([]))
->>> msg._memojito_[hash(key)]
+>>> msg._memojito_[key]
 'hello world'
 
 The clear after decorator with clear the memos after

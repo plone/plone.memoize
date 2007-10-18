@@ -24,7 +24,7 @@ module:
   >>> from plone.memoize import ram
 
   >>> def _render_details_cachekey(method, self, brain):
-  ...    return hash((brain.getPath(), brain.modified))
+  ...    return (brain.getPath(), brain.modified)
 
   >>> class View(BrowserView):
   ...    @ram.cache(_render_details_cachekey)
@@ -79,3 +79,26 @@ request (but possibly on another context) with the same parameters will
 be memoized.
 
 Note that this requires that the request is annotatable using zope.annotation!
+
+generic
+=======
+
+The generic decorator uses the GenericCache module as storage. By default
+it'll store into a global cache of its own, with default parameters of 1000
+maximal objects and 1 hour maximal lifespan.
+
+You can create your own storage area with its specific parameters using
+the new_storage method.
+
+Look at the docstring for a few examples.
+
+keys and paramaters marshalling
+===============================
+
+An important issue about caches is how to generate the cache key. In all
+the decorators above, you can create your own function.
+
+The marshallers module provide with useful default marshallers. 
+args_marshaller will compute a key from function name, module and
+parameters, applying a hash if asked for. Look into the docstring
+for usage example.

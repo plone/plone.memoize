@@ -29,7 +29,7 @@ def test_suite():
     from zope.component import provideAdapter
     from zope.interface import implements, Interface
 
-    return unittest.TestSuite((
+    tests = (
         doctest.DocTestSuite('plone.memoize.compress',
                              setUp=configurationSetUp,
                              tearDown=configurationTearDown),
@@ -59,7 +59,24 @@ def test_suite():
         doctest.DocTestSuite('plone.memoize.ram',
                              setUp=configurationSetUp,
                              tearDown=configurationTearDown),
-        ))
+        doctest.DocTestSuite('plone.memoize.marshallers',
+                             setUp=configurationSetUp,
+                             tearDown=configurationTearDown),
+        )
+
+    try:
+        import plone.memoize.generic
+    except ImportError:
+        print >> sys.stderr, "GenericCache not found; tests skipped"
+    else:
+        tests += (
+            doctest.DocTestSuite('plone.memoize.generic',
+                                 setUp=configurationSetUp,
+                                 tearDown=configurationTearDown),
+            )
+
+    return unittest.TestSuite(tests)
+
 
 if __name__=="__main__":
     import unittest

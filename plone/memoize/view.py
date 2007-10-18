@@ -42,8 +42,8 @@ class ViewMemo(object):
             # instance and the whole point is that we can cache different
             # requests
             
-            key = hash((context_id, instance.__class__.__name__, func.__name__, 
-                        args[1:], frozenset(kwargs.items())),)
+            key = (context_id, instance.__class__.__name__, func.__name__, 
+                   args[1:], frozenset(kwargs.items()))
             value = cache.get(key, _marker)
             if value is _marker:
                 value = cache[key] = func(*args, **kwargs)
@@ -61,8 +61,8 @@ class ViewMemo(object):
             if cache is _marker:
                 cache = annotations[self.key] = dict()
             
-            key = hash((instance.__class__.__name__, func.__name__, 
-                        args[1:], frozenset(kwargs.items())),)
+            key = (instance.__class__.__name__, func.__name__, 
+                   args[1:], frozenset(kwargs.items()))
             value = cache.get(key, _marker)
             if value is _marker:
                 value = cache[key] = func(*args, **kwargs)

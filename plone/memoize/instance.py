@@ -36,11 +36,10 @@ class Memojito(object):
                 setattr(inst, self.propname, dict())
                 cache = getattr(inst, self.propname)
 
-            # XXX this could be improved to unfold unhashables
-            # and optimized with pyrex
+            # XXX this could be potentially big, a custom key should
+            # be used if the arguments are expected to be big
 
             key = (func.__name__, args, frozenset(kwargs.items()))
-            key=hash(key)
             val = cache.get(key, _marker)
             if val is _marker:
                 val=func(*args, **kwargs)

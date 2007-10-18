@@ -32,8 +32,8 @@ class RequestMemo(object):
             if cache is _marker:
                 cache = annotations[self.key] = dict()
         
-            key = hash((func.__module__, func.__name__, 
-                        args, frozenset(kwargs.items())),)
+            key = (func.__module__, func.__name__, 
+                   args, frozenset(kwargs.items()))
             value = cache.get(key, _marker)
             if value is _marker:
                 value = cache[key] = func(*args, **kwargs)

@@ -3,7 +3,7 @@
 See README.txt and the `volatile` module for more details.
 
   >>> def cache_key(fun, first, second):
-  ...     return hash((first, second))
+  ...     return (first, second)
   >>> @cache(cache_key)
   ... def pow(first, second):
   ...     print 'Someone or something called me'

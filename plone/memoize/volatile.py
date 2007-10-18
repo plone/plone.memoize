@@ -17,7 +17,11 @@ function plus the same arguments as the original function that we're
 caching:
 
   >>> def cache_key(method, self, first, second):
-  ...     return hash((first, second))
+  ...     return (first, second)
+
+For performances and security reasons, no hash is done on the key in
+this example. You may consider using a cryptographic hash (MD5 or even
+better SHA1) if your parameters can hold big amount of data.
 
 The cache decorator is really simple to use.  Let's define our first
 class again, this time with a cached `pow` method:
@@ -63,7 +67,7 @@ name, to the return value.
   {'plone.memoize.volatile.pow:...': 9}
   >>> len(cache_container)
   1
-  >>> k = 'plone.memoize.volatile.pow:%s' % cache_key(MyClass.pow, None, 3, 2)
+  >>> k = 'plone.memoize.volatile.pow:%s' % str(cache_key(MyClass.pow, None, 3, 2))
   >>> cache_container[k]
   9
 
@@ -84,7 +88,7 @@ For this, we'll need to change our cache key function to take the
 correct number of arguments:
 
   >>> def cache_key(fun, first, second):
-  ...     return hash((first, second))    
+  ...     return (first, second)
 
 Note how we provide both the cache key generator and the cache storage
 as arguments to the `cache` decorator:
@@ -119,7 +123,7 @@ caching should be applied:
   ...     if first == second:
   ...         raise DontCache
   ...     else:
-  ...         return hash((first, second))    
+  ...         return (first, second)
   >>> @cache(cache_key, cache_storage)
   ... def pow(first, second):
   ...     print 'Someone or something called me'
