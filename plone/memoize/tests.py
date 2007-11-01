@@ -59,6 +59,7 @@ def test_suite():
         doctest.DocTestSuite('plone.memoize.ram',
                              setUp=configurationSetUp,
                              tearDown=configurationTearDown),
+        )
 
     return unittest.TestSuite(tests)
 
