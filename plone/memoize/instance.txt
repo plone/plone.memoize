@@ -44,7 +44,7 @@ Let's try it out w/ a dummy class::
 >>> msg.txt2
 'hello world'
 
->>> msg.txt1 = 'goodbye cruel'
+>>> msg.txt1 = 'nice to visit this'
 
 Even though we've twiddled txt1, txt2 is not recalculated::
 
@@ -59,16 +59,30 @@ you should compute your own hash of it.
 >>> msg._memojito_[key]
 'hello world'
 
-The clear after decorator with clear the memos after
+The clear after decorator will clear the memos after
 returning the methods value::
 
 >>> msg.clearafter()
 'hello world'
 
-The clear before does the opposite, allowing new values to be
-calculated::
+So now the message should have changed::
 
->>> msg.clearafter()
+>>> msg.txt2
+'nice to visit this world'
+
+We change the text again::
+
+>>> msg.txt1 = 'goodbye cruel'
+
+The message is still the same of course::
+
+>>> msg.txt2
+'nice to visit this world'
+
+Now we can test the clear before, which does the opposite from the
+clear after, allowing new values to be calculated::
+
+>>> msg.clearbefore()
 'goodbye cruel world'
 
 memojito supports memoization of multiple signatures as long as all
