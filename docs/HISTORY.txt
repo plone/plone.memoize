@@ -7,7 +7,7 @@ Changelog
     - The clearbefore decorator was mistakenly not tested.
       [maurits]
 
-1.0.2 (2007-11-09)
+1.0.3 (2007-11-09)
 ------------------
 
     - Remove features from Plone 3.0 branch.
