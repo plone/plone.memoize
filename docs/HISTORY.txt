@@ -1,25 +1,28 @@
-Changelog for plone.memoize
+Changelog
+=========
 
-    (name of developer listed in brackets)
-
-plone.memoize - trunk
+Trunk (Unreleased)
+------------------
 
     - Merge patch from Gaël Le Mignot:
 
-      - Do not use hash anymore when making cache keys.  This is to
-        avoid cache collisions, and to avoid a potential security
-        problem where an attacker could manually craft collisions.
-        Also, stop recommending the use of hash() in tests.
+        - Do not use hash anymore when making cache keys. This is to
+          avoid cache collisions, and to avoid a potential security
+          problem where an attacker could manually craft collisions.
+          Also, stop recommending the use of hash() in tests.
 
-      - Add support for using Pilot System's GenericCache as a backend
-        for 'plone.memoize.volatile.cache'.
+        - Add support for using Pilot System's GenericCache as a backend
+          for 'plone.memoize.volatile.cache'.
 
-      - Add an arguments marshaller that gives you a more convenient
-        way to declare that your cache is dependent on arguments.  See
-        'plone.memoize.marshallers'.
-    [nouri, gael]
+        - Add an arguments marshaller that gives you a more convenient
+          way to declare that your cache is dependent on arguments.
+          See 'plone.memoize.marshallers'.
 
-plone.memoize - 1.0 Released August 17th 2007
+      [nouri, gael]
+
+
+1.0 (2007/08/17)
+----------------
 
     - Add a forever memo - lives until Zope restart.
       [optilude]
