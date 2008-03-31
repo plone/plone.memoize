@@ -1,12 +1,11 @@
 from setuptools import setup, find_packages
-import sys, os
 
 version = '1.0.5'
 
 setup(name='plone.memoize',
       version=version,
       description="Decorators for caching the values of functions and methods",
-      long_description=open("README.txt").read() + \
+      long_description=open("README.txt").read() + '\n' + \
                        open("docs/HISTORY.txt").read(),
       classifiers=[],
       keywords='plone memoize decorator cache',
