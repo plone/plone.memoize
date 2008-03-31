@@ -7,6 +7,14 @@ Changelog
     - The clearbefore decorator was mistakenly not tested.
       [maurits]
 
+
+1.0.4 (2008-03-31)
+------------------
+
+    - Documentation and release notes cleanup.
+      [hannosch]
+
+
 1.0.3 (2007-11-09)
 ------------------
 
