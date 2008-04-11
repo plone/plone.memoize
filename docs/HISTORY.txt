@@ -4,6 +4,9 @@ Changelog
 1.1 (unreleased)
 ----------------
 
+    - Removed BBB code for zope.app.annotation.
+      [hannosch]
+
     - The clearbefore decorator was mistakenly not tested.
       [maurits]
 
