@@ -1,6 +1,6 @@
-==============================
- plone memoization decorators
-==============================
+============
+Introduction
+============
 
 plone.memoize provides Python function decorators for caching the
 values of functions and methods.
@@ -120,3 +120,4 @@ The marshallers module provide with useful default marshallers.
 args_marshaller will compute a key from function name, module and
 parameters, applying a hash if asked for. Look into the docstring
 for usage example.
+
