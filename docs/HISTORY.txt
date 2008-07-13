@@ -4,6 +4,10 @@ Changelog
 1.1 (unreleased)
 ----------------
 
+    - Added check for Unicode values in cache keys before calculating md5
+      checksums, as the md5 module doesn't seem to like Unicode.
+      [hannosch]
+
     - Removed BBB code for zope.app.annotation.
       [hannosch]
 

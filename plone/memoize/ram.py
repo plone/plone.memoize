@@ -124,6 +124,8 @@ class MemcacheAdapter(AbstractDict):
         self.globalkey = globalkey and '%s:' % globalkey
 
     def _make_key(self, source):
+        if isinstance(source, unicode):
+            source = source.encode('utf-8')
         return md5.new(source).hexdigest()
 
     def __getitem__(self, key):
@@ -143,6 +145,8 @@ class RAMCacheAdapter(AbstractDict):
         self.globalkey = globalkey
 
     def _make_key(self, source):
+        if isinstance(source, unicode):
+            source = source.encode('utf-8')
         return md5.new(source).digest()
 
     def __getitem__(self, key):
