@@ -5,6 +5,10 @@ Changelog
 1.0.5
 =====
 
+- Added check for Unicode values in cache keys before calculating md5
+  checksums, as the md5 module doesn't seem to like Unicode.
+  [hannosch]
+
 - Packaging cleanup: improve reST formatting, add classifiers to the package
   metadata and use the full documentation in the package description.
   [wichert]
