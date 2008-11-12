@@ -47,11 +47,25 @@ def store_in_annotation_of(expr):
     def _store_in_annotation(fun, *args, **kwargs):
         # Use expr to find out the name of the request variable
         vars = {}
-        for index, name in enumerate(inspect.getargspec(fun)[0]):
-            if name in kwargs:
-                vars[name] = kwargs[name]
-            else:
+        spec = inspect.getargspec(fun)
+        num_args = len(args)
+        expected_num_args = num_args
+
+        # Explicitly check for the correct number of arguments and
+        # raise the appropriate TypeError if needed. This is done 
+        # to avoid the real problem being masked by an IndexError 
+        # later in this method.
+        if spec[3] is not None:
+            expected_num_args = len(spec[0]) - len(spec[3])
+        if num_args != expected_num_args:
+            raise TypeError("%s() takes exactly %s arguments (%s given)" \
+                % (fun.func_name, expected_num_args, num_args))
+
+        for index, name in enumerate(spec[0]):
+            if index < num_args:
                 vars[name] = args[index]
+            else:
+                vars[name] = kwargs.get(name, spec[3][index-num_args])
         request = eval(expr, {}, vars)
         return IAnnotations(request)
     return _store_in_annotation
@@ -119,6 +133,49 @@ def cache(get_key, get_request='request'):
       43
       >>> IAnnotations(A.request)['plone.memoize.request.increment_plus:42']
       43
+
+    Create a function that can also take keyword arguments. For the sake of 
+    convenience pass the request explicitly. get_key must be modified to take 
+    kwargs into account:
+
+      >>> def get_key(fun, a, request, **kwargs):
+      ...     li = kwargs.items()
+      ...     li.sort()
+      ...     return "%s,%s" % (a, li)
+
+      >>> @cache(get_key=get_key)
+      ... def increment_kwargs(a, request, kwarg1=1, kwarg2=2):
+      ...     print 'Someone or something called me'
+      ...     return a + 1
+
+      >>> increment_kwargs(42, A.request, kwarg1='kwarg1', kwarg2='kwarg2')
+      Someone or something called me
+      43
+      >>> increment_kwargs(42, A.request, kwarg1='kwarg1', kwarg2='kwarg2')
+      43
+      >>> IAnnotations(A.request)["plone.memoize.request.increment_kwargs:42,[('kwarg1', 'kwarg1'), ('kwarg2', 'kwarg2')]"]
+      43
+
+    Call increment_kwargs without specifying any keyword arguments:
+
+      >>> increment_kwargs(42, A.request)
+      Someone or something called me
+      43
+      >>> increment_kwargs(42, A.request)
+      43
+      >>> IAnnotations(A.request)["plone.memoize.request.increment_kwargs:42,[]"]
+      43
+
+    Call increment_kwargs and specify only the second keyword argument:
+
+      >>> increment_kwargs(42, A.request, kwarg2='kwarg2')
+      Someone or something called me
+      43
+      >>> increment_kwargs(42, A.request, kwarg2='kwarg2')
+      43
+      >>> IAnnotations(A.request)["plone.memoize.request.increment_kwargs:42,[('kwarg2', 'kwarg2')]"]
+      43
+
     """
 
     return volatile.cache(get_key,
