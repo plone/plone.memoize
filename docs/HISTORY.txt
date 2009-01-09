@@ -4,6 +4,9 @@ Changelog
 1.1 (unreleased)
 ----------------
 
+    - Specify package dependencies.
+      [hannosch]
+
     - Added check for Unicode values in cache keys before calculating md5
       checksums, as the md5 module doesn't seem to like Unicode.
       [hannosch]
