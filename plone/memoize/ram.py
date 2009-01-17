@@ -94,7 +94,6 @@ Let's fill them:
   1
 """
 
-import md5
 import cPickle
 
 from zope import interface
@@ -104,6 +103,12 @@ from zope.app.cache import ram
 
 from plone.memoize.interfaces import ICacheChooser
 from plone.memoize import volatile
+
+try:
+    from hashlib import md5
+except ImportError:
+    from md5 import new as md5
+
 
 global_cache = ram.RAMCache()
 global_cache.update(maxAge=86400)
@@ -126,7 +131,7 @@ class MemcacheAdapter(AbstractDict):
     def _make_key(self, source):
         if isinstance(source, unicode):
             source = source.encode('utf-8')
-        return md5.new(source).hexdigest()
+        return md5(source).hexdigest()
 
     def __getitem__(self, key):
         cached_value = self.client.get(self.globalkey + self._make_key(key))
@@ -147,7 +152,7 @@ class RAMCacheAdapter(AbstractDict):
     def _make_key(self, source):
         if isinstance(source, unicode):
             source = source.encode('utf-8')
-        return md5.new(source).digest()
+        return md5(source).digest()
 
     def __getitem__(self, key):
         value = self.ramcache.query(self.globalkey,

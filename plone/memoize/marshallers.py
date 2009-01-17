@@ -29,7 +29,10 @@ Let's cache another function:
 
 Now let's cache a function that requires hashing:
 
-  >>> import sha
+  >>> try:
+  ...     from hashlib import sha1 as sha
+  ... except ImportError:
+  ...     import sha
   >>> @cache(args_marshaller(hashing = sha))
   ... def count_words(text):
   ...     print 'Someone or something called me'
@@ -79,6 +82,8 @@ def args_marshaller(hashing = None, extra = None):
     """
     Creates a args-based marshaller
     Can specify hashing type if wanted (use a hash module, like md5 or sha).
+    The hashing type needs to be either a factory returning a new hash value
+    or has a new function that does so.
 
     Can also sepcify extra arguments, which can must be a callable object,
     receiving (func, *args, **kwargs) as paramaters and returning a tuple
@@ -91,7 +96,12 @@ def args_marshaller(hashing = None, extra = None):
             key += tuple(extra(func, *args, **kwargs))
 
         if hashing:
-            key = hashing.new(str(key)).hexdigest()
+            if hasattr(hashing, 'new'):
+                new = hashing.new
+            else:
+                new = hashing
+
+            key = new(str(key)).hexdigest()
         return key
     
     return marshaller

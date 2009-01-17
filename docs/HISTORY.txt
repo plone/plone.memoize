@@ -4,6 +4,9 @@ Changelog
 1.1 (unreleased)
 ----------------
 
+- Avoid deprecation warnings for the md5 and sha modules in Python 2.6.
+  [hannosch]
+
 - Specify package dependencies.
   [hannosch]
 
