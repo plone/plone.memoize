@@ -17,17 +17,21 @@ setup(name='plone.memoize',
       namespace_packages=['plone'],
       include_package_data=True,
       zip_safe=False,
+      extras_require=dict(
+          test=[
+            'zope.configuration',
+            'zope.publisher',
+            'zope.testing',
+            'zope.app.component',
+            'zope.app.testing',
+          ]
+      ),
       install_requires=[
         'setuptools',
         'zope.annotation',
         'zope.component',
-        'zope.configuration',
         'zope.interface',
-        'zope.publisher',
-        'zope.testing',
         'zope.app.cache',
-        'zope.app.component',
-        'zope.app.testing',
         # 'Zope2',
       ],
       )
