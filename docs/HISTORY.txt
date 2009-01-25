@@ -4,6 +4,9 @@ Changelog
 1.1 (unreleased)
 ----------------
 
+- Clarified license statements.
+  [hannosch]
+
 - Moved declaration of test dependencies into a test extra.
   [hannosch]
 
