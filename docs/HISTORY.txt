@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.1a2 - unreleased
+------------------
+
+
 1.1a1 - 2009-04-04
 ------------------
 
@@ -52,7 +56,7 @@ Changelog
 - Revise docs and project description.
   [nouri]
 
-- Merge patch from Gaël Le Mignot:
+- Merge patch from Gael Le Mignot:
 
     - Do not use hash anymore when making cache keys. This is to
       avoid cache collisions, and to avoid a potential security
