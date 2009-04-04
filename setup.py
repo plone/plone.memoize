@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-version = '1.1'
+version = '1.1a1'
 
 setup(name='plone.memoize',
       version=version,
@@ -19,7 +19,7 @@ setup(name='plone.memoize',
       keywords='plone memoize decorator cache',
       author='Plone Foundation',
       author_email='plone-developers@lists.sourceforge.net',
-      url='http://svn.plone.org/svn/plone/plone.memoize',
+      url='http://pypi.python.org/pypi/plone.memoize',
       license='GPL',
       packages=find_packages(exclude=['ez_setup']),
       namespace_packages=['plone'],
