@@ -40,6 +40,5 @@ setup(name='plone.memoize',
         'zope.component',
         'zope.interface',
         'zope.app.cache',
-        'Zope2',
       ],
       )
