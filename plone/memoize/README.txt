@@ -24,10 +24,10 @@ usage in 'volatile.py'.
 a zope RAMCache. There are convenience methods in the 'ram' module
 to support that.
 
-A quick example of a Five view that uses 'volatile' caching through the 'ram'
+A quick example of a view that uses 'volatile' caching through the 'ram'
 module:
 
-  >>> from Products.Five import BrowserView
+  >>> from zope.publisher.browser import BrowserView
   >>> from plone.memoize import ram
 
   >>> def _render_details_cachekey(method, self, brain):
