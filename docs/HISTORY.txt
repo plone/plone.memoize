@@ -4,6 +4,9 @@ Changelog
 1.1a2 - unreleased
 ------------------
 
+- Removed all testing dependencies on zope.app packages.
+  [hannosch]
+
 - Changed a test to use zope.publisher instead of a Five BrowserView. This
   removes the entire Zope2 dependency.
   [hannosch]

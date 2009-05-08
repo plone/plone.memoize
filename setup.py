@@ -30,8 +30,6 @@ setup(name='plone.memoize',
             'zope.configuration',
             'zope.publisher',
             'zope.testing',
-            'zope.app.component',
-            'zope.app.testing',
           ]
       ),
       install_requires=[
