@@ -4,6 +4,8 @@ Changelog
 1.1a2 - unreleased
 ------------------
 
+- Correct Zope2 dependency, it's indeed only a test dependency.
+  [hannosch]
 
 1.1a1 - 2009-04-04
 ------------------
