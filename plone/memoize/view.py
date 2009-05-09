@@ -4,14 +4,7 @@ Memoize decorator for views.
 Stores values in an annotation of the request. See view.txt.
 """
 
-try:
-    from zope.annotation.interfaces import IAnnotations
-    from zope.annotation.interfaces import IAttributeAnnotatable
-except ImportError:
-    from zope.app.annotation.interfaces import IAnnotations
-    from zope.app.annotation.interfaces import IAttributeAnnotatable
-
-from zope.interface import alsoProvides
+from zope.annotation.interfaces import IAnnotations
 
 _marker = object()
 class ViewMemo(object):
@@ -22,19 +15,15 @@ class ViewMemo(object):
         def memogetter(*args, **kwargs):
             instance = args[0]
             
-            context = getattr(instance, 'context', None)            
+            context = getattr(instance, 'context', None)
             request = getattr(instance, 'request', None)
-            
-            # XXX: A Zope 2 workaround/optimisation (will degrade gracefully)
-            if request is None:
-                request = getattr(context, 'REQUEST', None)
-            
+
             annotations = IAnnotations(request)
             cache = annotations.get(self.key, _marker)
-            
+
             if cache is _marker:
                 cache = annotations[self.key] = dict()
-                
+
             # XXX: Not the most elegant thing in the world; in a Zope 2
             # context, the physical path is a better key, since the id could
             # change if the object is invalidated from the ZODB cache
@@ -44,11 +33,11 @@ class ViewMemo(object):
             except AttributeError:
                 context_id = id(context)
             
-            # Note: we don't use args[0] in the cache key, since args[0] == 
+            # Note: we don't use args[0] in the cache key, since args[0] ==
             # instance and the whole point is that we can cache different
             # requests
-            
-            key = (context_id, instance.__class__.__name__, func.__name__, 
+
+            key = (context_id, instance.__class__.__name__, func.__name__,
                    args[1:], frozenset(kwargs.items()))
             value = cache.get(key, _marker)
             if value is _marker:
@@ -60,14 +49,14 @@ class ViewMemo(object):
         def memogetter(*args, **kwargs):
             instance = args[0]
             request = getattr(instance, 'request', None)
-            
+
             annotations = IAnnotations(request)
             cache = annotations.get(self.key, _marker)
-            
+
             if cache is _marker:
                 cache = annotations[self.key] = dict()
-            
-            key = (instance.__class__.__name__, func.__name__, 
+
+            key = (instance.__class__.__name__, func.__name__,
                    args[1:], frozenset(kwargs.items()))
             value = cache.get(key, _marker)
             if value is _marker:

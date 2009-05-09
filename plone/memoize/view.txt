@@ -8,6 +8,11 @@ function. This means that the same view can be looked up multiple times and
 the same memos will be returned::
 
 >>> from plone.memoize import view
+>>> from zope.component import adapts
+>>> from zope.interface import implements
+>>> from zope.interface import Interface
+>>> from zope.publisher.interfaces.browser import IBrowserRequest
+>>> from zope.publisher.interfaces.browser import IBrowserView
 
 First we set up a dummy view::
 
@@ -38,7 +43,9 @@ First we set up a dummy view::
 ...         lst = ['%s--%s' %t for t in instruction.items()]
 ...         instxt = ' '.join(lst)
 ...         return ("%s: %s world%s %s" %(to, self.txt1, self.bang, instxt)).strip()
-...     
+...
+
+>>> from zope.component import provideAdapter
 >>> provideAdapter(MyView, name=u'msg_view')
 
 We also need a dummy context::
@@ -55,10 +62,7 @@ Let's look up the view:
 We need request to be annotatable::
 
 >>> from zope.interface import directlyProvides
->>> try:
-...     from zope.annotation.interfaces import IAttributeAnnotatable
-... except ImportError:
-...     from zope.app.annotation.interfaces import IAttributeAnnotatable
+>>> from zope.annotation.interfaces import IAttributeAnnotatable
 >>> directlyProvides(request, IAttributeAnnotatable)
 
 >>> from zope.component import getMultiAdapter

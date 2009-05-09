@@ -4,6 +4,9 @@ Changelog
 1.1a3 - unreleased
 ------------------
 
+- Modernized and cleaned up the code a bit. Also drop BBB support for
+  `zope.app.annotation` and made the tests work again.
+  [hannosch]
 
 1.1a2 - 2009-05-08
 ------------------

@@ -95,8 +95,7 @@ take the context into account - the same view looked up during the same
 request (but possibly on another context) with the same parameters will 
 be memoized.
 
-Note that this requires that the request is annotatable using
-zope(.app).annotation!
+Note that this requires that the request is annotatable using zope.annotation!
 
 generic
 =======
@@ -110,8 +109,8 @@ the new_storage method.
 
 Look at the docstring for a few examples.
 
-keys and paramaters marshalling
-===============================
+keys and parameters marshaling
+==============================
 
 An important issue about caches is how to generate the cache key. In all
 the decorators above, you can create your own function.
