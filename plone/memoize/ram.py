@@ -98,8 +98,8 @@ import cPickle
 
 from zope import interface
 from zope import component
-from zope.app.cache.interfaces.ram import IRAMCache
-from zope.app.cache import ram
+from zope.ramcache.interfaces.ram import IRAMCache
+from zope.ramcache import ram
 
 from plone.memoize.interfaces import ICacheChooser
 from plone.memoize import volatile

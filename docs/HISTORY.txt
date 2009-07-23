@@ -4,6 +4,9 @@ Changelog
 1.1a4 - unreleased
 ------------------
 
+- Use the new `zope.ramcache` package instead of `zope.app.cache`. This
+  reduces our dependencies by quite a bit.
+  [hannosch]
 
 1.1a3 - 2009-05-10
 ------------------

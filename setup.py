@@ -37,6 +37,6 @@ setup(name='plone.memoize',
         'zope.annotation',
         'zope.component',
         'zope.interface',
-        'zope.app.cache',
+        'zope.ramcache',
       ],
       )
