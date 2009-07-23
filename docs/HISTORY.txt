@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.1a4 - unreleased
+1.1a4 - 2009-07-23
 ------------------
 
 - Use the new `zope.ramcache` package instead of `zope.app.cache`. This
