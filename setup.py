@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-version = '1.1a4'
+version = '1.1a5'
 
 setup(name='plone.memoize',
       version=version,
