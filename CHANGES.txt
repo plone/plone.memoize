@@ -1,9 +1,11 @@
 Changelog
 =========
 
-1.1a5 - unreleased
+1.1b1 - 2009-11-13
 ------------------
 
+- Updated package documentation.
+  [hannosch]
 
 1.1a4 - 2009-07-23
 ------------------

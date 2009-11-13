@@ -1,12 +1,12 @@
 from setuptools import setup, find_packages
 
-version = '1.1a5'
+version = '1.1b1'
 
 setup(name='plone.memoize',
       version=version,
       description="Decorators for caching the values of functions and methods",
       long_description=open("README.txt").read() + '\n' + \
-                       open("docs/HISTORY.txt").read(),
+                       open("CHANGES.txt").read(),
       classifiers=[
           "Development Status :: 5 - Production/Stable",
           "Environment :: Web Environment",
