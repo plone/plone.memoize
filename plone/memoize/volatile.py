@@ -212,7 +212,11 @@ class CleanupDict(dict):
       >>> d['spam']
       'bar'
 
-      >>> d = CleanupDict(0)
+   Setting the cleanup period to 0 (or a negative number) means the
+   values are thrown away immediately.  (Note that we do not test with
+   exactly zero, as running the tests can go too fast.)
+
+      >>> d = CleanupDict(-0.00001)
       >>> d['spam'] = 'bar'
       >>> d['spam'] # doctest: +ELLIPSIS
       Traceback (most recent call last):
@@ -244,7 +248,7 @@ class CleanupDict(dict):
             if timestamp < okay:
                 del self._last_access[key]
                 super(CleanupDict, self).__delitem__(key)
-    
+
 ATTR = '_v_memoize_cache'
 CONTAINER_FACTORY = CleanupDict
 _marker = object()

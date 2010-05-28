@@ -4,6 +4,11 @@ Changelog
 1.1b2 - Unreleased
 ------------------
 
+- Solve intermittent error during testing of CleanupDict class, as a
+  cleanup period of zero seconds would not always result in a cleanup,
+  if the tests were run fast.
+  [maurits]
+
 
 1.1b1 - 2009-11-13
 ------------------
