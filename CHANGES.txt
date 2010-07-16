@@ -1,14 +1,16 @@
 Changelog
 =========
 
-1.1b2 - Unreleased
-------------------
+1.1 - Unreleased
+----------------
+
+- Update license to GPL version 2 only.
+  [hannosch]
 
 - Solve intermittent error during testing of CleanupDict class, as a
   cleanup period of zero seconds would not always result in a cleanup,
   if the tests were run fast.
   [maurits]
-
 
 1.1b1 - 2009-11-13
 ------------------
