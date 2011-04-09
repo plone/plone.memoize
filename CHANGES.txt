@@ -1,11 +1,15 @@
 Changelog
 =========
 
-1.1.1 - unreleased
+
+1.1.1 (Unreleased)
 ------------------
 
+- Add MANIFEST.in.
+  [WouterVH]
 
-1.1 - 2010-07-18
+
+1.1 (2010-07-18)
 ----------------
 
 - Update license to GPL version 2 only.
@@ -16,27 +20,31 @@ Changelog
   if the tests were run fast.
   [maurits]
 
-1.1b1 - 2009-11-13
+
+1.1b1 (2009-11-13
 ------------------
 
 - Updated package documentation.
   [hannosch]
 
-1.1a4 - 2009-07-23
+
+1.1a4 (2009-07-23)
 ------------------
 
 - Use the new `zope.ramcache` package instead of `zope.app.cache`. This
   reduces our dependencies by quite a bit.
   [hannosch]
 
-1.1a3 - 2009-05-10
+
+1.1a3 (2009-05-10)
 ------------------
 
 - Modernized and cleaned up the code a bit. Also drop BBB support for
   `zope.app.annotation` and made the tests work again.
   [hannosch]
 
-1.1a2 - 2009-05-08
+
+1.1a2 (2009-05-08)
 ------------------
 
 - Removed all testing dependencies on zope.app packages.
@@ -49,7 +57,8 @@ Changelog
 - Correct Zope2 dependency, it's indeed only a test dependency.
   [hannosch]
 
-1.1a1 - 2009-04-04
+
+1.1a1 (2009-04-04)
 ------------------
 
 - Clarified license statements.
@@ -123,6 +132,7 @@ Changelog
 - Simplify forever by reuse of stuff from plone.memoize.volatile.
   [nouri]
 
+
 1.0 (2007-08-17)
 ----------------
 
@@ -140,6 +150,7 @@ Changelog
   compression on via a simple utility registration. See compress.py.
   [hannosch, fschulze]
 
+
 1.0rc2 (2007-07-27)
 -------------------
 
@@ -147,6 +158,7 @@ Changelog
   whitespace removal libraries. Peter Bengtsson's slimmer library is
   configured but not enabled by default.
   [hannosch]
+
 
 1.0b4 (2007-07-09)
 ------------------
@@ -207,6 +219,7 @@ Changelog
   gives you total control of how the cache key is calculated and where
   it is stored.
   [nouri]
+
 
 1.0b3 (2007-05-05)
 ------------------
