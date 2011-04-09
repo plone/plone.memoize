@@ -1,12 +1,26 @@
+import os
 from setuptools import setup, find_packages
 
+
+def read(*rnames):
+    return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
+
+
 version = '1.1.1'
+
+long_description = (
+    read('README.txt')
+    + '\n' +
+    read('plone', 'memoize', 'README.txt')
+    + '\n' +
+    read('CHANGES.txt')
+    + '\n'
+    )
 
 setup(name='plone.memoize',
       version=version,
       description="Decorators for caching the values of functions and methods",
-      long_description=open("README.txt").read() + '\n' + \
-                       open("CHANGES.txt").read(),
+      long_description=long_description,
       classifiers=[
           "Development Status :: 5 - Production/Stable",
           "Environment :: Web Environment",

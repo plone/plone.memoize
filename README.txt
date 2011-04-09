@@ -1,5 +1,5 @@
-plone memoization decorators
-============================
+plone.memoize
+=============
 
 plone.memoize provides Python function decorators for caching the
 values of functions and methods.
