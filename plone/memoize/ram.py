@@ -116,14 +116,18 @@ global_cache.update(maxAge=86400)
 DontCache = volatile.DontCache
 MARKER = object()
 
+
 class AbstractDict:
+
     def get(self, key, default=None):
         try:
             return self.__getitem__(key)
         except KeyError:
             return default
 
+
 class MemcacheAdapter(AbstractDict):
+
     def __init__(self, client, globalkey=''):
         self.client = client
         self.globalkey = globalkey and '%s:' % globalkey
@@ -144,7 +148,9 @@ class MemcacheAdapter(AbstractDict):
         cached_value = cPickle.dumps(value)
         self.client.set(self.globalkey + self._make_key(key), cached_value)
 
+
 class RAMCacheAdapter(AbstractDict):
+
     def __init__(self, ramcache, globalkey=''):
         self.ramcache = ramcache
         self.globalkey = globalkey
@@ -168,10 +174,12 @@ class RAMCacheAdapter(AbstractDict):
                           self.globalkey,
                           dict(key=self._make_key(key)))
 
+
 def choose_cache(fun_name):
     return RAMCacheAdapter(component.queryUtility(IRAMCache),
                            globalkey=fun_name)
 interface.directlyProvides(choose_cache, ICacheChooser)
+
 
 def store_in_cache(fun, *args, **kwargs):
     key = '%s.%s' % (fun.__module__, fun.__name__)
@@ -180,6 +188,7 @@ def store_in_cache(fun, *args, **kwargs):
         return cache_chooser(key)
     else:
         return RAMCacheAdapter(global_cache, globalkey=key)
+
 
 def cache(get_key):
     return volatile.cache(get_key, get_cache=store_in_cache)

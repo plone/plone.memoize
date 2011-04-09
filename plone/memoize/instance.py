@@ -7,13 +7,17 @@ This package current subsumes memojito
 """
 
 _marker = object()
+
+
 class Memojito(object):
     propname = '_memojito_'
+
     def clear(self, inst):
         if hasattr(inst, self.propname):
             delattr(inst, self.propname)
-        
+
     def clearbefore(self, func):
+
         def clear(*args, **kwargs):
             inst=args[0]
             self.clear(inst)
@@ -21,14 +25,16 @@ class Memojito(object):
         return clear
 
     def clearafter(self, func):
+
         def clear(*args, **kwargs):
             inst=args[0]
             val = func(*args, **kwargs)
             self.clear(inst)
-            return val 
+            return val
         return clear
 
     def memoize(self, func):
+
         def memogetter(*args, **kwargs):
             inst = args[0]
             cache = getattr(inst, self.propname, _marker)
@@ -53,6 +59,7 @@ _m = Memojito()
 memoize = _m.memoize
 clearbefore = _m.clearbefore
 clearafter = _m.clearafter
+
 
 def memoizedproperty(func):
     return property(_m.memoize(func))

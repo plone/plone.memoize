@@ -198,6 +198,7 @@ when you create it:
 
 import time
 
+
 class CleanupDict(dict):
     """A dict that automatically cleans up items that haven't been
     accessed in a given timespan on *set*.
@@ -253,17 +254,23 @@ ATTR = '_v_memoize_cache'
 CONTAINER_FACTORY = CleanupDict
 _marker = object()
 
+
 class DontCache(Exception):
     pass
+
 
 def store_on_self(method, obj, *args, **kwargs):
     return obj.__dict__.setdefault(ATTR, CONTAINER_FACTORY())
 
+
 def store_on_context(method, obj, *args, **kwargs):
     return obj.context.__dict__.setdefault(ATTR, CONTAINER_FACTORY())
 
+
 def cache(get_key, get_cache=store_on_self):
+
     def decorator(fun):
+
         def replacement(*args, **kwargs):
             try:
                 key = get_key(fun, *args, **kwargs)

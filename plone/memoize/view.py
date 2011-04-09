@@ -7,14 +7,17 @@ Stores values in an annotation of the request. See view.txt.
 from zope.annotation.interfaces import IAnnotations
 
 _marker = object()
+
+
 class ViewMemo(object):
-    
+
     key = 'plone.memoize'
-    
+
     def memoize(self, func):
+
         def memogetter(*args, **kwargs):
             instance = args[0]
-            
+
             context = getattr(instance, 'context', None)
             request = getattr(instance, 'request', None)
 
@@ -27,12 +30,12 @@ class ViewMemo(object):
             # XXX: Not the most elegant thing in the world; in a Zope 2
             # context, the physical path is a better key, since the id could
             # change if the object is invalidated from the ZODB cache
-            
+
             try:
                 context_id = context.getPhysicalPath()
             except AttributeError:
                 context_id = id(context)
-            
+
             # Note: we don't use args[0] in the cache key, since args[0] ==
             # instance and the whole point is that we can cache different
             # requests
@@ -46,6 +49,7 @@ class ViewMemo(object):
         return memogetter
 
     def memoize_contextless(self, func):
+
         def memogetter(*args, **kwargs):
             instance = args[0]
             request = getattr(instance, 'request', None)

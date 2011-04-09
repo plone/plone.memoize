@@ -1,6 +1,6 @@
-=====================
+===================
  forever decorators
-=====================
+===================
 
 These remember a value "forever", i.e. until the process is restarted. They
 work on both global functions and class functions.

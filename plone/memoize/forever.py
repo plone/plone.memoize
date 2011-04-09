@@ -11,11 +11,15 @@ from plone.memoize import volatile
 
 _memos = {}
 
+
 def memoize(fun):
+
     def get_key(fun, *args, **kwargs):
-        return (args, frozenset(kwargs.items()),)
+        return (args, frozenset(kwargs.items()), )
+
     def get_cache(fun, *args, **kwargs):
         return _memos
+
     return volatile.cache(get_key, get_cache)(fun)
 
-__all__ = (memoize,)
+__all__ = (memoize, )

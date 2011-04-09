@@ -1,6 +1,6 @@
-=====================
+====================
  instance decorators
-=====================
+====================
 
 Originally from Whit Morriss' memojito package, they are used to
 memoize return values for methods on an instance. The memoized values

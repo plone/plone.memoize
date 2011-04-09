@@ -11,14 +11,17 @@ from zope.annotation.interfaces import IAnnotations
 from plone.memoize import volatile
 
 _marker = object()
+
+
 class RequestMemo(object):
-    
+
     key = 'plone.memoize_request'
 
     def __init__(self, arg=0):
         self.arg = arg
 
     def __call__(self, func):
+
         def memogetter(*args, **kwargs):
             request = None
             if isinstance(self.arg, int):
@@ -28,11 +31,11 @@ class RequestMemo(object):
 
             annotations = IAnnotations(request)
             cache = annotations.get(self.key, _marker)
-        
+
             if cache is _marker:
                 cache = annotations[self.key] = dict()
-        
-            key = (func.__module__, func.__name__, 
+
+            key = (func.__module__, func.__name__,
                    args, frozenset(kwargs.items()))
             value = cache.get(key, _marker)
             if value is _marker:
@@ -40,7 +43,9 @@ class RequestMemo(object):
             return value
         return memogetter
 
+
 def store_in_annotation_of(expr):
+
     def _store_in_annotation(fun, *args, **kwargs):
         # Use expr to find out the name of the request variable
         vars = {}
@@ -49,8 +54,8 @@ def store_in_annotation_of(expr):
         expected_num_args = num_args
 
         # Explicitly check for the correct number of arguments and
-        # raise the appropriate TypeError if needed. This is done 
-        # to avoid the real problem being masked by an IndexError 
+        # raise the appropriate TypeError if needed. This is done
+        # to avoid the real problem being masked by an IndexError
         # later in this method.
         if spec[3] is not None:
             expected_num_args = len(spec[0]) - len(spec[3])
@@ -67,12 +72,13 @@ def store_in_annotation_of(expr):
         return IAnnotations(request)
     return _store_in_annotation
 
+
 def cache(get_key, get_request='request'):
     r"""
     This is a hypothetical function `increment` that'll store the
     cache value on `a.request`, where a is the only argument to the
     function:
-    
+
       >>> def increment(a):
       ...     print 'Someone or something called me'
       ...     return a + 1
@@ -100,7 +106,7 @@ def cache(get_key, get_request='request'):
     generating the key. `get_request` will tell the decorator how to
     actually find the `request` in the variable scope of the function
     itself:
-    
+
       >>> cached_increment = \
       ...     cache(get_key=get_key, get_request='a.request')(increment)
 
@@ -128,8 +134,8 @@ def cache(get_key, get_request='request'):
       >>> IAnnotations(A.request)['plone.memoize.request.increment_plus:42']
       43
 
-    Create a function that can also take keyword arguments. For the sake of 
-    convenience pass the request explicitly. get_key must be modified to take 
+    Create a function that can also take keyword arguments. For the sake of
+    convenience pass the request explicitly. get_key must be modified to take
     kwargs into account:
 
       >>> def get_key(fun, a, request, **kwargs):

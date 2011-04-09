@@ -1,6 +1,6 @@
-======================
+=====================
  view memo decorators
-======================
+=====================
 
 Decorators for methods/properties in views. Values are cached by annotating
 the view's request, and keyed based on the context and any arguments to the
