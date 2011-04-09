@@ -1,4 +1,3 @@
-============
 Introduction
 ============
 
@@ -11,6 +10,7 @@ the cache key, which is what the function's value depends on.
 plone.memoize has support for memcached and is easily extended to use
 other caching storages.  It also has specialized decorators for use
 with Zope views.  However, plone.memoize can be used without Zope.
+
 
 volatile
 ========
@@ -55,6 +55,7 @@ value for an hour:
   >>> fun()
   'Something that takes awfully long'
 
+
 view and instance
 =================
 
@@ -62,13 +63,11 @@ See view.txt and instance.txt for usage of cache decorators that have
 a fixed cache key and cache storage.  The most common usage pattern of
 these view and instance caching decorators is:
 
- from plone.memoize import instance
-
- class MyClass(object):
- 
-    @instance.memoize
-    def some_expensive_function(self, arg1, arg2):
-        ...
+ >>> from plone.memoize import instance
+ >>> class MyClass(object):
+ ...   @instance.memoize
+ ...   def some_expensive_function(self, arg1, arg2):
+ ...      return "Some expensive result "
 
 The first time some_expensive_function() is called, the return value will
 be saved. On subsequent calls with the same arguments, the cached version
@@ -79,12 +78,11 @@ Note that this only works if the arguments are hashable!
 
 If you are writing a Zope 3 view, you can do:
 
- from plone.memoize import view
+ >>> from plone.memoize import view
+ >>> class MyView(BrowserView):
+ ...   @view.memoize
+ ...   def some_expensive_function(self, arg1, arg2):
 
- class MyView(BrowserView):
- 
-    @view.memoize
-    def some_expensive_function(self, arg1, arg2):
         ...
 
 This has the same effect, but subsequent lookup of the same view in the
@@ -97,6 +95,7 @@ be memoized.
 
 Note that this requires that the request is annotatable using zope.annotation!
 
+
 generic
 =======
 
@@ -108,6 +107,7 @@ You can create your own storage area with its specific parameters using
 the new_storage method.
 
 Look at the docstring for a few examples.
+
 
 keys and parameters marshaling
 ==============================
