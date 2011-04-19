@@ -67,7 +67,7 @@ these view and instance caching decorators is:
  >>> class MyClass(object):
  ...   @instance.memoize
  ...   def some_expensive_function(self, arg1, arg2):
- ...      return "Some expensive result "
+ ...       return "Some expensive result"
 
 The first time some_expensive_function() is called, the return value will
 be saved. On subsequent calls with the same arguments, the cached version
@@ -82,8 +82,7 @@ If you are writing a Zope 3 view, you can do:
  >>> class MyView(BrowserView):
  ...   @view.memoize
  ...   def some_expensive_function(self, arg1, arg2):
-
-        ...
+ ...       return "Some expensive result"
 
 This has the same effect, but subsequent lookup of the same view in the
 same context will be memoized as well.
