@@ -1,6 +1,6 @@
 """A cache decorator that uses RAMCache by default.
 
-See README.txt and the `volatile` module for more details.
+See README.rst and the `volatile` module for more details.
 
   >>> def cache_key(fun, first, second):
   ...     return (first, second)
