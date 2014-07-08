@@ -1,7 +1,7 @@
 """
 Memoize decorator for views.
 
-Stores values in an annotation of the request. See view.txt.
+Stores values in an annotation of the request. See view.rst.
 """
 
 from zope.annotation.interfaces import IAnnotations

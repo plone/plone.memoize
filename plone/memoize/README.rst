@@ -59,7 +59,7 @@ value for an hour:
 view and instance
 =================
 
-See view.txt and instance.txt for usage of cache decorators that have
+See view.rst and instance.rst for usage of cache decorators that have
 a fixed cache key and cache storage.  The most common usage pattern of
 these view and instance caching decorators is:
 

@@ -1,7 +1,7 @@
 """
 Memo decorators for instances.
 
-Stores values in an attribute on the instance. See instance.txt.
+Stores values in an attribute on the instance. See instance.rst.
 
 This package current subsumes memojito
 """
