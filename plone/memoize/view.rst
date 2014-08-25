@@ -68,7 +68,7 @@ We need request to be annotatable::
 >>> from zope.component import getMultiAdapter
 >>> msg = getMultiAdapter((context, request), name=u'msg_view')
 
-Now, if we access the memoized property txt2, we will get the value in 
+Now, if we access the memoized property txt2, we will get the value in
 txt1::
 
 >>> msg.txt2
@@ -117,7 +117,7 @@ J.D.: sound and fury world! catcher--rye
 >>> print msg.getMsg('Ernest')
 Ernest: goodbye cruel world!
 
-If we look up the view again on the same object, we will get the same 
+If we look up the view again on the same object, we will get the same
 memoized properties as before:
 
 >>> msg2 = getMultiAdapter((context, request), name=u'msg_view')

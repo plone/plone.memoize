@@ -89,7 +89,7 @@ same context will be memoized as well.
 
 You can also use @view.memoize_contextless to have the memoization not
 take the context into account - the same view looked up during the same
-request (but possibly on another context) with the same parameters will 
+request (but possibly on another context) with the same parameters will
 be memoized.
 
 Note that this requires that the request is annotatable using zope.annotation!
@@ -114,7 +114,7 @@ keys and parameters marshaling
 An important issue about caches is how to generate the cache key. In all
 the decorators above, you can create your own function.
 
-The marshallers module provide with useful default marshallers. 
+The marshallers module provide with useful default marshallers.
 args_marshaller will compute a key from function name, module and
 parameters, applying a hash if asked for. Look into the docstring
 for usage example.

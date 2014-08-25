@@ -18,13 +18,13 @@ Let's try it out w/ a dummy class::
 ...     def txt2(self):
 ...         #extreme intense calculation
 ...         return '%s world' %self.txt1
-...         
+...
 ...     @instance.memoize
 ...     def getMsg(self, to, **instruction):
 ...         lst = ['%s--%s' %t for t in instruction.items()]
 ...         instxt = ' '.join(lst)
 ...         return ("%s: %s%s %s" %(to, self.txt2, self.bang, instxt)).strip()
-...     
+...
 ...     @instance.memoizedproperty
 ...     def recurse(self):
 ...         return "recursive: %s" % self.txt2
@@ -32,11 +32,11 @@ Let's try it out w/ a dummy class::
 ...     @instance.clearbefore
 ...     def clearbefore(self):
 ...         return self.txt2
-...     
+...
 ...     @instance.clearafter
 ...     def clearafter(self):
 ...         return self.txt2
-...     
+...
 ...     def __init__(self, txt1):
 ...         self.txt1 = txt1
 
