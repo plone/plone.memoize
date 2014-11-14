@@ -25,20 +25,20 @@ a zope RAMCache. There are convenience methods in the 'ram' module
 to support that.
 
 A quick example of a view that uses 'volatile' caching through the 'ram'
-module:
+module::
 
-  >>> from zope.publisher.browser import BrowserView
-  >>> from plone.memoize import ram
+    >>> from zope.publisher.browser import BrowserView
+    >>> from plone.memoize import ram
 
-  >>> def _render_details_cachekey(method, self, brain):
-  ...    return (brain.getPath(), brain.modified)
+    >>> def _render_details_cachekey(method, self, brain):
+    ...    return (brain.getPath(), brain.modified)
 
-  >>> class View(BrowserView):
-  ...    @ram.cache(_render_details_cachekey)
-  ...    def render_details(self, brain):
-  ...        obj = brain.getObject()
-  ...        view = obj.restrictedTraverse('@@obj-view')
-  ...        return view.render()
+    >>> class View(BrowserView):
+    ...    @ram.cache(_render_details_cachekey)
+    ...    def render_details(self, brain):
+    ...        obj = brain.getObject()
+    ...        view = obj.restrictedTraverse('@@obj-view')
+    ...        return view.render()
 
 The results of our hypothetical 'render_details' method are cached
 *across requests* and independently of the (not) logged in user.  The
@@ -46,14 +46,14 @@ cache is only refreshed when the brain's path or modification date
 change, as defined in '_render_details_cachekey'.
 
 This is how you could use the same decorator to cache a function's
-value for an hour:
+value for an hour::
 
-  >>> from time import time
-  >>> @ram.cache(lambda *args: time() // (60 * 60))
-  ... def fun():
-  ...     return "Something that takes awfully long"
-  >>> fun()
-  'Something that takes awfully long'
+    >>> from time import time
+    >>> @ram.cache(lambda *args: time() // (60 * 60))
+    ... def fun():
+    ...     return "Something that takes awfully long"
+    >>> fun()
+    'Something that takes awfully long'
 
 
 view and instance
@@ -61,13 +61,13 @@ view and instance
 
 See view.rst and instance.rst for usage of cache decorators that have
 a fixed cache key and cache storage.  The most common usage pattern of
-these view and instance caching decorators is:
+these view and instance caching decorators is::
 
- >>> from plone.memoize import instance
- >>> class MyClass(object):
- ...   @instance.memoize
- ...   def some_expensive_function(self, arg1, arg2):
- ...       return "Some expensive result"
+    >>> from plone.memoize import instance
+    >>> class MyClass(object):
+    ...   @instance.memoize
+    ...   def some_expensive_function(self, arg1, arg2):
+    ...       return "Some expensive result"
 
 The first time some_expensive_function() is called, the return value will
 be saved. On subsequent calls with the same arguments, the cached version
@@ -76,13 +76,13 @@ be called again.
 
 Note that this only works if the arguments are hashable!
 
-If you are writing a Zope 3 view, you can do:
+If you are writing a Zope 3 view, you can do::
 
- >>> from plone.memoize import view
- >>> class MyView(BrowserView):
- ...   @view.memoize
- ...   def some_expensive_function(self, arg1, arg2):
- ...       return "Some expensive result"
+    >>> from plone.memoize import view
+    >>> class MyView(BrowserView):
+    ...   @view.memoize
+    ...   def some_expensive_function(self, arg1, arg2):
+    ...       return "Some expensive result"
 
 This has the same effect, but subsequent lookup of the same view in the
 same context will be memoized as well.
