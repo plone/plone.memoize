@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """A cache decorator that uses RAMCache by default.
 
 See README.rst and the `volatile` module for more details.
@@ -94,15 +95,13 @@ Let's fill them:
   1
 """
 
-import cPickle
-
-from zope import interface
-from zope import component
-from zope.ramcache.interfaces.ram import IRAMCache
-from zope.ramcache import ram
-
-from plone.memoize.interfaces import ICacheChooser
 from plone.memoize import volatile
+from plone.memoize.interfaces import ICacheChooser
+from zope import component
+from zope import interface
+from zope.ramcache import ram
+from zope.ramcache.interfaces.ram import IRAMCache
+import cPickle
 
 try:
     from hashlib import md5

@@ -1,5 +1,5 @@
-"""
-In order to use Peter Bengtsson's slimmer library available from
+# -*- coding: utf-8 -*-
+"""In order to use Peter Bengtsson's slimmer library available from
 http://www.issuetrackerproduct.com/Download#slimmer
 you need to register the XHTMLSlimmer utility like this:
 
@@ -35,10 +35,9 @@ Register our new compressor:
    u'<html><body><span>hello.</span></body><html>'
 """
 
+from plone.memoize.interfaces import IXHTMLCompressor
 from zope.component import queryUtility
 from zope.interface import implements
-
-from plone.memoize.interfaces import IXHTMLCompressor
 
 SLIMMER = True
 try:

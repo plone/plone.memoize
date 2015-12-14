@@ -1,14 +1,12 @@
-"""
-Memoize decorator for methods.
+# -*- coding: utf-8 -*-
+"""Memoize decorator for methods.
 
 Stores values in an annotation of the request.
 """
 
-import inspect
-
-from zope.annotation.interfaces import IAnnotations
-
 from plone.memoize import volatile
+from zope.annotation.interfaces import IAnnotations
+import inspect
 
 _marker = object()
 
@@ -60,14 +58,14 @@ def store_in_annotation_of(expr):
         if spec[3] is not None:
             expected_num_args = len(spec[0]) - len(spec[3])
         if num_args != expected_num_args:
-            raise TypeError("%s() takes exactly %s arguments (%s given)" \
-                % (fun.func_name, expected_num_args, num_args))
+            raise TypeError("%s() takes exactly %s arguments (%s given)"
+                            % (fun.func_name, expected_num_args, num_args))
 
         for index, name in enumerate(spec[0]):
             if index < num_args:
                 vars[name] = args[index]
             else:
-                vars[name] = kwargs.get(name, spec[3][index-num_args])
+                vars[name] = kwargs.get(name, spec[3][index - num_args])
         request = eval(expr, {}, vars)
         return IAnnotations(request)
     return _store_in_annotation

@@ -1,5 +1,5 @@
-"""
-Memoize decorator for views.
+# -*- coding: utf-8 -*-
+"""Memoize decorator for views.
 
 Stores values in an annotation of the request. See view.rst.
 """

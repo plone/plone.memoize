@@ -1,5 +1,5 @@
-"""
-Memo decorators for instances.
+# -*- coding: utf-8 -*-
+"""Memo decorators for instances.
 
 Stores values in an attribute on the instance. See instance.rst.
 
@@ -19,7 +19,7 @@ class Memojito(object):
     def clearbefore(self, func):
 
         def clear(*args, **kwargs):
-            inst=args[0]
+            inst = args[0]
             self.clear(inst)
             return func(*args, **kwargs)
         return clear
@@ -27,7 +27,7 @@ class Memojito(object):
     def clearafter(self, func):
 
         def clear(*args, **kwargs):
-            inst=args[0]
+            inst = args[0]
             val = func(*args, **kwargs)
             self.clear(inst)
             return val
@@ -48,8 +48,8 @@ class Memojito(object):
             key = (func.__name__, args, frozenset(kwargs.items()))
             val = cache.get(key, _marker)
             if val is _marker:
-                val=func(*args, **kwargs)
-                cache[key]=val
+                val = func(*args, **kwargs)
+                cache[key] = val
                 setattr(inst, self.propname, cache)
             return val
         return memogetter

@@ -10,7 +10,8 @@ New:
 
 Fixes:
 
-- *add item here*"
+- Minor PEP 8.
+  [thet]
 
 
 1.1.1 (2011-05-12)

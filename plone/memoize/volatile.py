@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """A flexible caching decorator.
 
 This module provides a cache decorator `cache` that you can use to
@@ -200,6 +201,7 @@ import time
 
 
 class CleanupDict(dict):
+
     """A dict that automatically cleans up items that haven't been
     accessed in a given timespan on *set*.
 
@@ -224,7 +226,7 @@ class CleanupDict(dict):
       ...
       KeyError: 'spam'
     """
-    cleanup_period = 60 * 60 * 24 * 3 # 3 days
+    cleanup_period = 60 * 60 * 24 * 3  # 3 days
 
     def __init__(self, cleanup_period=None):
         super(CleanupDict, self).__init__()
