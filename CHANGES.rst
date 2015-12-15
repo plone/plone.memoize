@@ -10,6 +10,9 @@ New:
 
 Fixes:
 
+- Restructure docs.
+  [thet]
+
 - Minor PEP 8.
   [thet]
 

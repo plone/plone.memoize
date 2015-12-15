@@ -72,8 +72,6 @@ def store_in_annotation_of(expr):
 
 
 def cache(get_key, get_request='request'):
-    r"""
-    """
 
     return volatile.cache(get_key,
                           get_cache=store_in_annotation_of(get_request))
