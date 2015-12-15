@@ -7,6 +7,10 @@ Memo decorators for instances.
 Originally from Whit Morriss' memojito package, they are used to memoize return values for methods on an instance.
 The memoized values are stored on an attribute on the instance and disappear when the instance is destroyed or a cleanup is called.
 
+.. warning::
+    The ``instance`` caching decorator writes to ZODB when filling the cache.
+    This can lead to database conflict errors caused by write on read.
+
 Let's try it out w/ a dummy class:
 
 ::
