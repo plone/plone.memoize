@@ -3,6 +3,10 @@ Request Decorators
 
 This is a hypothetical function `increment` that'll store the cache value on `a.request`, where a is the only argument to the function:
 
+Make necessary imports:::
+    >>> from plone.memoize.request import cache
+    >>> from zope.annotation.interfaces import IAnnotations
+
 ::
     >>> def increment(a):
     ...     print 'Someone or something called me'
@@ -40,7 +44,7 @@ We'll tell the decorator to use `args_hash` for generating the key.
     >>> cached_increment(A(1))
     2
     >>> IAnnotations(A.request)
-    {'plone.memoize.request.increment:1': 2}
+    {'None.increment:1': 2}
 
 If `request` is already part of the function's argument list, we don't need to specify any expression:
 
@@ -55,7 +59,7 @@ If `request` is already part of the function's argument list, we don't need to s
     43
     >>> increment_plus(42, A.request)
     43
-    >>> IAnnotations(A.request)['plone.memoize.request.increment_plus:42']
+    >>> IAnnotations(A.request)['None.increment_plus:42']
     43
 
 Create a function that can also take keyword arguments.
@@ -78,7 +82,7 @@ get_key must be modified to take kwargs into account:
     43
     >>> increment_kwargs(42, A.request, kwarg1='kwarg1', kwarg2='kwarg2')
     43
-    >>> IAnnotations(A.request)["plone.memoize.request.increment_kwargs:42,[('kwarg1', 'kwarg1'), ('kwarg2', 'kwarg2')]"]
+    >>> IAnnotations(A.request)["None.increment_kwargs:42,[('kwarg1', 'kwarg1'), ('kwarg2', 'kwarg2')]"]
     43
 
 Call increment_kwargs without specifying any keyword arguments:
@@ -89,7 +93,7 @@ Call increment_kwargs without specifying any keyword arguments:
     43
     >>> increment_kwargs(42, A.request)
     43
-    >>> IAnnotations(A.request)["plone.memoize.request.increment_kwargs:42,[]"]
+    >>> IAnnotations(A.request)["None.increment_kwargs:42,[]"]
     43
 
 Call increment_kwargs and specify only the second keyword argument:
@@ -100,6 +104,6 @@ Call increment_kwargs and specify only the second keyword argument:
     43
     >>> increment_kwargs(42, A.request, kwarg2='kwarg2')
     43
-    >>> IAnnotations(A.request)["plone.memoize.request.increment_kwargs:42,[('kwarg2', 'kwarg2')]"]
+    >>> IAnnotations(A.request)["None.increment_kwargs:42,[('kwarg2', 'kwarg2')]"]
     43
 

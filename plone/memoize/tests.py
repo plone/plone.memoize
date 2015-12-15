@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-from zope.component.testing import setUp, tearDown
+from zope.component.testing import setUp
+from zope.component.testing import tearDown
 from zope.configuration.xmlconfig import XMLConfig
 from zope.testing import doctest
 import unittest
@@ -17,42 +18,42 @@ def configurationSetUp(test):
 
 def test_suite():
     tests = (
-        doctest.DocTestSuite('README.rst',
+        doctest.DocFileSuite('README.rst',
                              package="plone.memoize",
                              setUp=configurationSetUp,
                              tearDown=tearDown,
                              optionflags=optionflags),
-        doctest.DocTestSuite('compress.rst',
+        doctest.DocFileSuite('compress.rst',
                              package="plone.memoize",
                              setUp=configurationSetUp,
                              tearDown=tearDown,
                              optionflags=optionflags),
-        doctest.DocTestSuite('forever.rst',
+        doctest.DocFileSuite('forever.rst',
                              package="plone.memoize",
                              setUp=configurationSetUp,
                              tearDown=tearDown,
                              optionflags=optionflags),
-        doctest.DocTestSuite('instance.rst',
+        doctest.DocFileSuite('instance.rst',
                              package="plone.memoize",
                              setUp=configurationSetUp,
                              tearDown=tearDown,
                              optionflags=optionflags),
-        doctest.DocTestSuite('ram.rst',
+        doctest.DocFileSuite('ram.rst',
                              package="plone.memoize",
                              setUp=configurationSetUp,
                              tearDown=tearDown,
                              optionflags=optionflags),
-        doctest.DocTestSuite('request.rst',
+        doctest.DocFileSuite('request.rst',
                              package="plone.memoize",
                              setUp=configurationSetUp,
                              tearDown=tearDown,
                              optionflags=optionflags),
-        doctest.DocTestSuite('view.rst',
+        doctest.DocFileSuite('view.rst',
                              package="plone.memoize",
                              setUp=configurationSetUp,
                              tearDown=tearDown,
                              optionflags=optionflags),
-        doctest.DocTestSuite('volatile.rst',
+        doctest.DocFileSuite('volatile.rst',
                              package="plone.memoize",
                              setUp=configurationSetUp,
                              tearDown=tearDown,

@@ -3,6 +3,16 @@ RAM Decorators
 
 A cache decorator that uses RAMCache by default.
 
+Make necessary imports:::
+    >>> from plone.memoize.interfaces import ICacheChooser
+    >>> from plone.memoize.ram import cache
+    >>> from plone.memoize.ram import choose_cache
+    >>> from plone.memoize.ram import global_cache
+    >>> from plone.memoize.ram import RAMCacheAdapter
+    >>> from zope import component
+    >>> from zope import interface
+    >>> from zope.ramcache import ram
+
 ::
     >>> def cache_key(fun, first, second):
     ...     return (first, second)
@@ -36,7 +46,7 @@ Now invalidate the cache for the `pow` function:
 ::
     >>> pow(3, 2)
     9
-    >>> global_cache.invalidate('plone.memoize.ram.pow')
+    >>> global_cache.invalidate('None.pow')
     >>> pow(3, 2)
     Someone or something called me
     9

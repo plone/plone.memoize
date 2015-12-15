@@ -3,6 +3,12 @@ Volatile Decorators
 
 A flexible caching decorator.
 
+Make necessary imports:::
+    >>> from plone.memoize.volatile import ATTR
+    >>> from plone.memoize.volatile import cache
+    >>> from plone.memoize.volatile import DontCache
+    >>> from plone.memoize.volatile import CleanupDict
+
 This module provides a cache decorator `cache` that you can use to cache results of your functions or methods.
 Let's say we have a class with an expensive method `pow` that we want to cache:
 
@@ -66,10 +72,10 @@ This cache container maps our key, including the function's dotted name, to the 
 
 ::
     >>> cache_container # doctest: +ELLIPSIS
-    {'plone.memoize.volatile.pow:...': 9}
+    {'None.pow:...': 9}
     >>> len(cache_container)
     1
-    >>> k = 'plone.memoize.volatile.pow:%s' % str(cache_key(MyClass.pow, None, 3, 2))
+    >>> k = 'None.pow:%s' % str(cache_key(MyClass.pow, None, 3, 2))
     >>> cache_container[k]
     9
 
@@ -164,7 +170,7 @@ Be careful when you have multiple methods with the same name in a single module:
     >>> a.somemet(1, 2)
     3
     >>> cache_container
-    {'plone.memoize.volatile.somemet:(1, 2)': 3}
+    {'None.somemet:(1, 2)': 3}
 
 The following call should really return -1, but since the default cache key isn't clever enough to include the function's name, it'll return 3:
 

@@ -7,6 +7,13 @@ In order to use Peter Bengtsson's slimmer library available from http://www.issu
   <utility component="plone.memoize.compress.xhtmlslimmer"
            provides="plone.memoize.interfaces.IXHTMLCompressor" />
 
+Make necessary imports:::
+    >>> from plone.memoize.compress import xhtml_compress
+    >>> from plone.memoize.interfaces import IXHTMLCompressor
+    >>> from zope.interface import implements
+
+
+
 You can register other XHTML-whitespace removal libraries as well.
 
 Per default there is no compressor available and we get the same string back:
