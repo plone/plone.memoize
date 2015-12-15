@@ -11,7 +11,7 @@ However, plone.memoize can be used without Zope.
 
 
 Volatile
-========
+--------
 
 The 'volatile' module defines a versatile caching decorator that gives you total control of how the cache key is calculated and where it is stored.
 This decorator is explained in more in depth with example usage in 'volatile.py'.
@@ -49,7 +49,7 @@ This is how you could use the same decorator to cache a function's value for an 
 
 
 View and Instance
-=================
+-----------------
 
 See view.rst and instance.rst for usage of cache decorators that have a fixed cache key and cache storage.
 The most common usage pattern of these view and instance caching decorators is::
@@ -82,7 +82,7 @@ Note that this requires that the request is annotatable using zope.annotation!
 
 
 Generic
-=======
+-------
 
 The generic decorator uses the GenericCache module as storage.
 By default it'll store into a global cache of its own, with default parameters of 1000 maximal objects and 1 hour maximal lifespan.
@@ -93,7 +93,7 @@ Look at the docstring for a few examples.
 
 
 Keys and Parameters Marshaling
-==============================
+------------------------------
 
 An important issue about caches is how to generate the cache key.
 In all the decorators above, you can create your own function.

@@ -10,9 +10,8 @@ The memoized values are stored on an attribute on the instance and disappear whe
     The ``instance`` caching decorator writes to ZODB when filling the cache.
     This can lead to database conflict errors caused by write on read.
 
-Let's try it out w/ a dummy class:
+Let's try it out w/ a dummy class::
 
-::
     >>> from plone.memoize import instance
     >>> class MyMsg(object):
     ...     bang='!'
@@ -50,61 +49,52 @@ Let's try it out w/ a dummy class:
 
     >>> msg.txt1 = 'nice to visit this'
 
-Even though we've twiddled txt1, txt2 is not recalculated:
+Even though we've twiddled txt1, txt2 is not recalculated::
 
-::
     >>> msg.txt2
     'hello world'
 
 The memo is stored by a key made of the method's name, args, and a frozenset of any kwargs.
-If those are expected to be big, you should compute your own hash of it:
+If those are expected to be big, you should compute your own hash of it::
 
-::
     >>> key = ('txt2', (msg,), frozenset([]))
     >>> msg._memojito_[key]
     'hello world'
 
-The clear after decorator will clear the memos after returning the methods value:
+The clear after decorator will clear the memos after returning the methods value::
 
-::
     >>> msg.clearafter()
     'hello world'
 
-So now the message should have changed:
+So now the message should have changed::
 
-::
     >>> msg.txt2
     'nice to visit this world'
 
-We change the text again:
+We change the text again::
 
-::
     >>> msg.txt1 = 'goodbye cruel'
 
-The message is still the same of course:
+The message is still the same of course::
 
-::
     >>> msg.txt2
     'nice to visit this world'
 
-Now we can test the clear before, which does the opposite from the clear after, allowing new values to be calculated:
+Now we can test the clear before, which does the opposite from the clear after, allowing new values to be calculated::
 
-::
     >>> msg.clearbefore()
     'goodbye cruel world'
 
-memojito supports memoization of multiple signatures as long as all signature values are hashable:
+memojito supports memoization of multiple signatures as long as all signature values are hashable::
 
-::
     >>> print msg.getMsg('Ernest')
     Ernest: goodbye cruel world!
 
     >>> print msg.getMsg('J.D.', **{'raise':'roofbeams'})
     J.D.: goodbye cruel world! raise--roofbeams
 
-We can alter data underneath, but nothing changes:
+We can alter data underneath, but nothing changes::
 
-::
     >>> msg.txt1 = 'sound and fury'
     >>> print msg.getMsg('J.D.', **{'raise':'roofbeams'})
     J.D.: goodbye cruel world! raise--roofbeams
@@ -112,9 +102,8 @@ We can alter data underneath, but nothing changes:
     >>> print msg.getMsg('Ernest')
     Ernest: goodbye cruel world!
 
-If we alter the signature, our msg is recalculated, but since mst.txt2 is a memo, only the values passed in change:
+If we alter the signature, our msg is recalculated, but since mst.txt2 is a memo, only the values passed in change::
 
-::
     >>> ins = {'tale':'told by idiot', 'signify':'nothing'}
     >>> print msg.getMsg('Bill F.', **ins)
     Bill F.: goodbye cruel world! tale--told by idiot signify--nothing
@@ -122,9 +111,8 @@ If we alter the signature, our msg is recalculated, but since mst.txt2 is a memo
     >>> print msg.getMsg('J.D.', **{'catcher':'rye'})
     J.D.: goodbye cruel world! catcher--rye
 
-If change the bang, the memo remains the same:
+If change the bang, the memo remains the same::
 
-::
     >>> msg.bang='#!'
     >>> print msg.getMsg('J.D.', **{'catcher':'rye'})
     J.D.: goodbye cruel world! catcher--rye
@@ -132,35 +120,30 @@ If change the bang, the memo remains the same:
     >>> print msg.getMsg('Ernest')
     Ernest: goodbye cruel world!
 
-clearing works the same as for properties:
+clearing works the same as for properties::
 
-::
     >>> print msg.clearafter()
     goodbye cruel world
 
-Our shebang appears:
+Our shebang appears::
 
-::
     >>> print msg.getMsg('Ernest')
     Ernest: sound and fury world#!
 
-Our message to faulkner now is semantically correct:
+Our message to faulkner now is semantically correct::
 
-::
     >>> ins = dict(tale='told by idiot', signify='nothing')
     >>> print msg.getMsg('Bill F.', **ins)
     Bill F.: sound and fury world#! tale--told by idiot signify--nothing
 
-Let's make sure that memoized properties which call OTHER memoized properties do the right thing:
+Let's make sure that memoized properties which call OTHER memoized properties do the right thing::
 
-::
     >>> msg = MyMsg('hello')
     >>> print msg.recurse
     recursive: hello world
 
-Now we make sure that both the txt2 and the recurse values are in the cache:
+Now we make sure that both the txt2 and the recurse values are in the cache::
 
-::
     >>> print len(msg._memojito_.keys())
     2
 
