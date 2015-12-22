@@ -3,7 +3,7 @@
 
 Stores values in an attribute on the instance. See instance.rst.
 
-This package current subsumes memojito
+This package current subsumes memojito.
 """
 
 _marker = object()

@@ -1,11 +1,14 @@
-====================
- instance decorators
-====================
+Instance Decorators
+===================
 
-Originally from Whit Morriss' memojito package, they are used to
-memoize return values for methods on an instance. The memoized values
-are stored on an attribute on the instance and disappear when the
-instance is destroyed or a cleanup is called.
+Memo decorators for instances.
+
+Originally from Whit Morriss' memojito package, they are used to memoize return values for methods on an instance.
+The memoized values are stored on an attribute on the instance and disappear when the instance is destroyed or a cleanup is called.
+
+.. warning::
+    The ``instance`` caching decorator writes to ZODB when filling the cache.
+    This can lead to database conflict errors caused by write on read.
 
 Let's try it out w/ a dummy class::
 
@@ -51,16 +54,14 @@ Even though we've twiddled txt1, txt2 is not recalculated::
     >>> msg.txt2
     'hello world'
 
-The memo is stored by a key made of the method's name, args,
-and a frozenset of any kwargs. If those are expected to be big,
-you should compute your own hash of it::
+The memo is stored by a key made of the method's name, args, and a frozenset of any kwargs.
+If those are expected to be big, you should compute your own hash of it::
 
     >>> key = ('txt2', (msg,), frozenset([]))
     >>> msg._memojito_[key]
     'hello world'
 
-The clear after decorator will clear the memos after
-returning the methods value::
+The clear after decorator will clear the memos after returning the methods value::
 
     >>> msg.clearafter()
     'hello world'
@@ -79,14 +80,12 @@ The message is still the same of course::
     >>> msg.txt2
     'nice to visit this world'
 
-Now we can test the clear before, which does the opposite from the
-clear after, allowing new values to be calculated::
+Now we can test the clear before, which does the opposite from the clear after, allowing new values to be calculated::
 
     >>> msg.clearbefore()
     'goodbye cruel world'
 
-memojito supports memoization of multiple signatures as long as all
-signature values are hashable::
+memojito supports memoization of multiple signatures as long as all signature values are hashable::
 
     >>> print msg.getMsg('Ernest')
     Ernest: goodbye cruel world!
@@ -103,8 +102,7 @@ We can alter data underneath, but nothing changes::
     >>> print msg.getMsg('Ernest')
     Ernest: goodbye cruel world!
 
-If we alter the signature, our msg is recalculated, but since mst.txt2
-is a memo, only the values passed in change::
+If we alter the signature, our msg is recalculated, but since mst.txt2 is a memo, only the values passed in change::
 
     >>> ins = {'tale':'told by idiot', 'signify':'nothing'}
     >>> print msg.getMsg('Bill F.', **ins)
@@ -138,15 +136,14 @@ Our message to faulkner now is semantically correct::
     >>> print msg.getMsg('Bill F.', **ins)
     Bill F.: sound and fury world#! tale--told by idiot signify--nothing
 
-Let's make sure that memoized properties which call OTHER memoized
-properties do the right thing::
+Let's make sure that memoized properties which call OTHER memoized properties do the right thing::
 
     >>> msg = MyMsg('hello')
     >>> print msg.recurse
     recursive: hello world
 
-Now we make sure that both the txt2 and the recurse values are in the
-cache::
+Now we make sure that both the txt2 and the recurse values are in the cache::
 
     >>> print len(msg._memojito_.keys())
     2
+

@@ -1,9 +1,14 @@
-===================
- forever decorators
-===================
+Forever Decorators
+==================
 
-These remember a value "forever", i.e. until the process is restarted. They
-work on both global functions and class functions.
+Memo decorators for globals - memoized values survive for as long as the process lives.
+
+Stores values in a module-level variable.
+
+Pay attention that is module is not thread-safe, so use it with care.
+
+These remember a value "forever", i.e. until the process is restarted.
+They work on both global functions and class functions.::
 
     >>> from plone.memoize import forever
 
@@ -12,8 +17,7 @@ work on both global functions and class functions.
     ...     print "Calculating"
     ...     return arg1 + arg2
 
-No matter how many times we call this function with a particular set of
-arguments, it will only perform its calculation once.
+No matter how many times we call this function with a particular set of arguments, it will only perform its calculation once::
 
     >>> remember(1, 1)
     Calculating
@@ -26,7 +30,7 @@ arguments, it will only perform its calculation once.
     >>> remember(1, 2)
     3
 
-This also works for methods in classes.
+This also works for methods in classes::
 
     >>> class Test(object):
     ...
@@ -46,3 +50,4 @@ This also works for methods in classes.
     3
     >>> t.remember(1, 2)
     3
+

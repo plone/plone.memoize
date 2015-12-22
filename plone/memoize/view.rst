@@ -1,11 +1,11 @@
-=====================
- view memo decorators
-=====================
+View Decorators
+===============
 
-Decorators for methods/properties in views. Values are cached by annotating
-the view's request, and keyed based on the context and any arguments to the
-function. This means that the same view can be looked up multiple times and
-the same memos will be returned::
+Memoize decorator for views.
+
+Decorators for methods/properties in views.
+Values are cached by annotating the view's request, and keyed based on the context and any arguments to the function.
+This means that the same view can be looked up multiple times and the same memos will be returned::
 
     >>> from plone.memoize import view
     >>> from zope.component import adapts
@@ -68,8 +68,7 @@ We need request to be annotatable::
     >>> from zope.component import getMultiAdapter
     >>> msg = getMultiAdapter((context, request), name=u'msg_view')
 
-Now, if we access the memoized property txt2, we will get the value in
-txt1::
+Now, if we access the memoized property txt2, we will get the value in txt1::
 
     >>> msg.txt2
     'hello world'
@@ -81,8 +80,7 @@ Even though we've twiddled txt1, txt2 is not recalculated::
     >>> msg.txt2
     'hello world'
 
-We support memoization of multiple signatures as long as all
-signature values are hashable::
+We support memoization of multiple signatures as long as all signature values are hashable::
 
     >>> print msg.getMsg('Ernest')
     Ernest: goodbye cruel world!
@@ -117,8 +115,7 @@ If change the bang, the memo remains the same::
     >>> print msg.getMsg('Ernest')
     Ernest: goodbye cruel world!
 
-If we look up the view again on the same object, we will get the same
-memoized properties as before::
+If we look up the view again on the same object, we will get the same memoized properties as before::
 
     >>> msg2 = getMultiAdapter((context, request), name=u'msg_view')
 
@@ -173,3 +170,4 @@ based on parameters, but not on context::
 
     >>> print msg2.getAnotherMsg('J.D.', **{'raise':'roofbeams'})
     J.D.: so long, cruel world& raise--roofbeams
+
