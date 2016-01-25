@@ -50,7 +50,6 @@ setup(
         test=[
             'zope.configuration',
             'zope.publisher',
-            'zope.testing',
         ]
     ),
     install_requires=[
