@@ -8,7 +8,11 @@ from zope import component
 from zope import interface
 from zope.ramcache import ram
 from zope.ramcache.interfaces.ram import IRAMCache
-import cPickle
+
+try:
+    import pickle  # Python 3
+except ImportError:
+    import cPickle as pickle  # Python 2
 
 try:
     from hashlib import md5
@@ -39,7 +43,7 @@ class MemcacheAdapter(AbstractDict):
         self.globalkey = globalkey and '%s:' % globalkey
 
     def _make_key(self, source):
-        if isinstance(source, unicode):
+        if isinstance(source, str):
             source = source.encode('utf-8')
         return md5(source).hexdigest()
 
@@ -48,10 +52,10 @@ class MemcacheAdapter(AbstractDict):
         if cached_value is None:
             raise KeyError(key)
         else:
-            return cPickle.loads(cached_value)
+            return pickle.loads(cached_value)
 
     def __setitem__(self, key, value):
-        cached_value = cPickle.dumps(value)
+        cached_value = pickle.dumps(value)
         self.client.set(self.globalkey + self._make_key(key), cached_value)
 
 
@@ -62,7 +66,7 @@ class RAMCacheAdapter(AbstractDict):
         self.globalkey = globalkey
 
     def _make_key(self, source):
-        if isinstance(source, unicode):
+        if isinstance(source, str):
             source = source.encode('utf-8')
         return md5(source).digest()
 

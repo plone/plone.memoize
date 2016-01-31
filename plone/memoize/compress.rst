@@ -10,8 +10,7 @@ Make necessary imports::
 
     >>> from plone.memoize.compress import xhtml_compress
     >>> from plone.memoize.interfaces import IXHTMLCompressor
-    >>> from zope.interface import implements
-
+    >>> from zope.interface import implementer
 
 
 You can register other XHTML-whitespace removal libraries as well.
@@ -25,8 +24,8 @@ Per default there is no compressor available and we get the same string back::
 Make a stupid lowercasing compressor.
 This is not safe as it would lowercase all text outside of tags as well::
 
-    >>> class LowerCaser(object):
-    ...     implements(IXHTMLCompressor)
+    >>> @implementer(IXHTMLCompressor)
+    ... class LowerCaser(object):
     ...
     ...     def compress(self, string):
     ...         return string.lower()
@@ -39,6 +38,6 @@ Register our new compressor::
     >>> sm = getSiteManager()
     >>> sm.registerUtility(lower)
 
-    >>> xhtml_compress(html_string)
-    u'<html><body><span>hello.</span></body><html>'
+    >>> str(xhtml_compress(html_string))
+    '<html><body><span>hello.</span></body><html>'
 

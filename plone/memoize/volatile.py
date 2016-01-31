@@ -33,7 +33,7 @@ class CleanupDict(dict):
     def _cleanup(self):
         now = time.time()
         okay = now - self.cleanup_period
-        for key, timestamp in self._last_access.items():
+        for key, timestamp in list(self._last_access.items()):
             if timestamp < okay:
                 del self._last_access[key]
                 super(CleanupDict, self).__delitem__(key)

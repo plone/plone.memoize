@@ -14,7 +14,7 @@ They work on both global functions and class functions.::
 
     >>> @forever.memoize
     ... def remember(arg1, arg2):
-    ...     print "Calculating"
+    ...     print("Calculating")
     ...     return arg1 + arg2
 
 No matter how many times we call this function with a particular set of arguments, it will only perform its calculation once::
@@ -36,7 +36,7 @@ This also works for methods in classes::
     ...
     ...     @forever.memoize
     ...     def remember(self, arg1, arg2):
-    ...         print "Calculating"
+    ...         print("Calculating")
     ...         return arg1 + arg2
 
     >>> t = Test()

@@ -46,6 +46,7 @@ setup(
     namespace_packages=['plone'],
     include_package_data=True,
     zip_safe=False,
+    test_suite='plone.memoize.tests.test_suite',
     extras_require=dict(
         test=[
             'zope.configuration',

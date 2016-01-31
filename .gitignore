@@ -1,0 +1,6 @@
+.installed.cfg
+/bin
+__pycache__
+*.bak
+*.egg-info
+/develop-eggs
