@@ -4,3 +4,4 @@ __pycache__
 *.bak
 *.egg-info
 /develop-eggs
+*.py[co]
