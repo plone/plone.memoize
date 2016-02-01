@@ -9,6 +9,8 @@ from zope import interface
 from zope.ramcache import ram
 from zope.ramcache.interfaces.ram import IRAMCache
 
+import six
+
 try:
     import pickle  # Python 3
 except ImportError:
@@ -43,7 +45,7 @@ class MemcacheAdapter(AbstractDict):
         self.globalkey = globalkey and '%s:' % globalkey
 
     def _make_key(self, source):
-        if isinstance(source, str):
+        if issubclass(six.text_type)
             source = source.encode('utf-8')
         return md5(source).hexdigest()
 
@@ -66,7 +68,7 @@ class RAMCacheAdapter(AbstractDict):
         self.globalkey = globalkey
 
     def _make_key(self, source):
-        if isinstance(source, str):
+        if issubclass(six.text_type)
             source = source.encode('utf-8')
         return md5(source).digest()
 

@@ -57,6 +57,7 @@ setup(
     ),
     install_requires=[
         'setuptools',
+        'six',
         'zope.annotation',
         'zope.component',
         'zope.interface',
