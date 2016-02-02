@@ -45,7 +45,7 @@ class MemcacheAdapter(AbstractDict):
         self.globalkey = globalkey and '%s:' % globalkey
 
     def _make_key(self, source):
-        if issubclass(six.text_type)
+        if issubclass(type(source), six.text_type):
             source = source.encode('utf-8')
         return md5(source).hexdigest()
 
@@ -68,7 +68,7 @@ class RAMCacheAdapter(AbstractDict):
         self.globalkey = globalkey
 
     def _make_key(self, source):
-        if issubclass(six.text_type)
+        if issubclass(type(source), six.text_type):
             source = source.encode('utf-8')
         return md5(source).digest()
 
