@@ -5,3 +5,7 @@ __pycache__
 *.egg-info
 /develop-eggs
 *.py[co]
+.tox
+.eggs
+.coverage
+/htmlcov
