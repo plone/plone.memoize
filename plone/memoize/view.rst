@@ -100,7 +100,11 @@ We can alter data underneath, but nothing changes::
 
 If we alter the signature, our msg is recalculated::
 
-    >>> ins = {'tale':'told by idiot', 'signify':'nothing'}
+    >>> try:
+    ...     from collections import OrderedDict
+    ... expcept ImportError:
+    ...     OrderedDict = dict
+    >>> ins = OrderedDict([('tale', 'told by idiot'), ('signify', 'nothing')])
     >>> print(msg.getMsg('Bill F.', **ins))
     Bill F.: sound and fury world! tale--told by idiot signify--nothing
 
@@ -132,7 +136,7 @@ If we look up the view again on the same object, we will get the same memoized p
     >>> print(msg2.getMsg('Ernest'))
     Ernest: goodbye cruel world!
 
-    >>> ins = {'tale':'told by idiot', 'signify':'nothing'}
+    >>> ins = OrderedDict([('tale', 'told by idiot'), ('signify', 'nothing')])
     >>> print(msg2.getMsg('Bill F.', **ins))
     Bill F.: sound and fury world! tale--told by idiot signify--nothing
 
@@ -156,7 +160,7 @@ However, if we look up the view on another context object, things change::
     >>> print(msg3.getMsg('Ernest'))
     Ernest: so long, cruel world&
 
-    >>> ins = {'tale':'told by idiot', 'signify':'nothing'}
+    >>> ins = OrderedDict([('tale', 'told by idiot'), ('signify', 'nothing')])
     >>> print(msg3.getMsg('Bill F.', **ins))
     Bill F.: so long, cruel world& tale--told by idiot signify--nothing
 

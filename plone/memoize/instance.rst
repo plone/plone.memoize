@@ -104,7 +104,11 @@ We can alter data underneath, but nothing changes::
 
 If we alter the signature, our msg is recalculated, but since mst.txt2 is a memo, only the values passed in change::
 
-    >>> ins = {'tale':'told by idiot', 'signify':'nothing'}
+    >>> try:
+    ...     from collections import OrderedDict
+    ... expcept ImportError:
+    ...     OrderedDict = dict
+    >>> ins = OrderedDict([('tale', 'told by idiot'), ('signify', 'nothing')])
     >>> print(msg.getMsg('Bill F.', **ins))
     Bill F.: goodbye cruel world! tale--told by idiot signify--nothing
 
@@ -132,10 +136,6 @@ Our shebang appears::
 
 Our message to faulkner now is semantically correct::
 
-    >>> try:
-    ...     from collections import OrderedDict
-    ... except ImportError:
-    ...     OrderedDict = dict    # Python 2.6 but this can fail randomly
     >>> ins = OrderedDict(tale='told by idiot', signify='nothing')
     >>> print(msg.getMsg('Bill F.', **ins))
     Bill F.: sound and fury world#! tale--told by idiot signify--nothing
