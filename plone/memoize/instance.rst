@@ -132,7 +132,11 @@ Our shebang appears::
 
 Our message to faulkner now is semantically correct::
 
-    >>> ins = dict(tale='told by idiot', signify='nothing')
+    >>> try:
+    ...     from collections import OrderedDict
+    ... except ImportError:
+    ...     OrderedDict = dict    # Python 2.6 but this can fail randomly
+    >>> ins = OrderedDict(tale='told by idiot', signify='nothing')
     >>> print(msg.getMsg('Bill F.', **ins))
     Bill F.: sound and fury world#! tale--told by idiot signify--nothing
 
