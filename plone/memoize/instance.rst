@@ -106,7 +106,7 @@ If we alter the signature, our msg is recalculated, but since mst.txt2 is a memo
 
     >>> try:
     ...     from collections import OrderedDict
-    ... expcept ImportError:
+    ... except ImportError:
     ...     OrderedDict = dict
     >>> ins = OrderedDict([('tale', 'told by idiot'), ('signify', 'nothing')])
     >>> print(msg.getMsg('Bill F.', **ins))

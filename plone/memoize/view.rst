@@ -102,7 +102,7 @@ If we alter the signature, our msg is recalculated::
 
     >>> try:
     ...     from collections import OrderedDict
-    ... expcept ImportError:
+    ... except ImportError:
     ...     OrderedDict = dict
     >>> ins = OrderedDict([('tale', 'told by idiot'), ('signify', 'nothing')])
     >>> print(msg.getMsg('Bill F.', **ins))
