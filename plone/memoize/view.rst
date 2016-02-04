@@ -86,13 +86,13 @@ We support memoization of multiple signatures as long as all signature values ar
     >>> print(msg.getMsg('Ernest'))
     Ernest: goodbye cruel world!
 
-    >>> print(msg.getMsg('J.D.', **{'raise':'roofbeams'}))
+    >>> print(msg.getMsg('J.D.', [('raise', 'roofbeams')]))
     J.D.: goodbye cruel world! raise--roofbeams
 
 We can alter data underneath, but nothing changes::
 
     >>> msg.txt1 = 'sound and fury'
-    >>> print(msg.getMsg('J.D.', **{'raise':'roofbeams'}))
+    >>> print(msg.getMsg('J.D.', [('raise', 'roofbeams')]))
     J.D.: goodbye cruel world! raise--roofbeams
 
     >>> print(msg.getMsg('Ernest'))
@@ -100,21 +100,17 @@ We can alter data underneath, but nothing changes::
 
 If we alter the signature, our msg is recalculated::
 
-    >>> try:
-    ...     from collections import OrderedDict
-    ... except ImportError:
-    ...     OrderedDict = dict
-    >>> ins = OrderedDict([('tale', 'told by idiot'), ('signify', 'nothing')])
-    >>> print(msg.getMsg('Bill F.', **ins))
+    >>> print(msg.getMsg('Bill F.',
+    ...       [('tale', 'told by idiot'), ('signify', 'nothing')]))
     Bill F.: sound and fury world! tale--told by idiot signify--nothing
 
-    >>> print(msg.getMsg('J.D.', **{'catcher':'rye'}))
+    >>> print(msg.getMsg('J.D.', [('catcher', 'rye')]))
     J.D.: sound and fury world! catcher--rye
 
 If change the bang, the memo remains the same::
 
     >>> msg.bang='#!'
-    >>> print(msg.getMsg('J.D.', **{'catcher':'rye'}))
+    >>> print(msg.getMsg('J.D.', [('catcher', 'rye')]))
     J.D.: sound and fury world! catcher--rye
 
     >>> print(msg.getMsg('Ernest'))
@@ -130,14 +126,14 @@ If we look up the view again on the same object, we will get the same memoized p
     >>> msg2.txt2
     'hello world'
 
-    >>> print(msg2.getMsg('J.D.', **{'raise':'roofbeams'}))
+    >>> print(msg2.getMsg('J.D.', [('raise', 'roofbeams')]))
     J.D.: goodbye cruel world! raise--roofbeams
 
     >>> print(msg2.getMsg('Ernest'))
     Ernest: goodbye cruel world!
 
-    >>> ins = OrderedDict([('tale', 'told by idiot'), ('signify', 'nothing')])
-    >>> print(msg2.getMsg('Bill F.', **ins))
+    >>> print(msg2.getMsg('Bill F.',
+    ...       [('tale', 'told by idiot'), ('signify', 'nothing')]))
     Bill F.: sound and fury world! tale--told by idiot signify--nothing
 
     >>> print(msg2.getMsg('J.D.', **{'catcher':'rye'}))
@@ -154,7 +150,7 @@ However, if we look up the view on another context object, things change::
     >>> msg3.txt2
     'so long, cruel world'
 
-    >>> print(msg3.getMsg('J.D.', **{'raise':'roofbeams'}))
+    >>> print(msg3.getMsg('J.D.', [('raise', 'roofbeams')]))
     J.D.: so long, cruel world& raise--roofbeams
 
     >>> print(msg3.getMsg('Ernest'))
@@ -170,9 +166,9 @@ However, if we look up the view on another context object, things change::
 This behaviour does not apply to contextless decorators, which memoize
 based on parameters, but not on context::
 
-    >>> print(msg3.getAnotherMsg('J.D.', **{'raise':'roofbeams'}))
+    >>> print(msg3.getAnotherMsg('J.D.', [('raise', 'roofbeams')]))
     J.D.: so long, cruel world& raise--roofbeams
 
-    >>> print(msg2.getAnotherMsg('J.D.', **{'raise':'roofbeams'}))
+    >>> print(msg2.getAnotherMsg('J.D.', [('raise', 'roofbeams')]))
     J.D.: so long, cruel world& raise--roofbeams
 

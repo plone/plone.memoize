@@ -23,8 +23,8 @@ Let's try it out w/ a dummy class::
     ...         return '%s world' %self.txt1
     ...
     ...     @instance.memoize
-    ...     def getMsg(self, to, **instruction):
-    ...         lst = ['%s--%s' %t for t in instruction.items()]
+    ...     def getMsg(self, to, instruction):
+    ...         lst = ['%s--%s' %t for t in instruction]
     ...         instxt = ' '.join(lst)
     ...         return ("%s: %s%s %s" %(to, self.txt2, self.bang, instxt)).strip()
     ...
@@ -90,13 +90,13 @@ memojito supports memoization of multiple signatures as long as all signature va
     >>> print(msg.getMsg('Ernest'))
     Ernest: goodbye cruel world!
 
-    >>> print(msg.getMsg('J.D.', **{'raise':'roofbeams'}))
+    >>> print(msg.getMsg('J.D.', [('raise', 'roofbeams')]))
     J.D.: goodbye cruel world! raise--roofbeams
 
 We can alter data underneath, but nothing changes::
 
     >>> msg.txt1 = 'sound and fury'
-    >>> print(msg.getMsg('J.D.', **{'raise':'roofbeams'}))
+    >>> print(msg.getMsg('J.D.', [('raise', 'roofbeams')]))
     J.D.: goodbye cruel world! raise--roofbeams
 
     >>> print(msg.getMsg('Ernest'))
@@ -104,21 +104,17 @@ We can alter data underneath, but nothing changes::
 
 If we alter the signature, our msg is recalculated, but since mst.txt2 is a memo, only the values passed in change::
 
-    >>> try:
-    ...     from collections import OrderedDict
-    ... except ImportError:
-    ...     OrderedDict = dict
-    >>> ins = OrderedDict([('tale', 'told by idiot'), ('signify', 'nothing')])
-    >>> print(msg.getMsg('Bill F.', **ins))
+    >>> print(msg.getMsg('Bill F.',
+    ...       [('tale', 'told by idiot'), ('signify', 'nothing')]))
     Bill F.: goodbye cruel world! tale--told by idiot signify--nothing
 
-    >>> print(msg.getMsg('J.D.', **{'catcher':'rye'}))
+    >>> print(msg.getMsg('J.D.', [('catcher', 'rye')]))
     J.D.: goodbye cruel world! catcher--rye
 
 If change the bang, the memo remains the same::
 
     >>> msg.bang='#!'
-    >>> print(msg.getMsg('J.D.', **{'catcher':'rye'}))
+    >>> print(msg.getMsg('J.D.', [('catcher', 'rye')]))
     J.D.: goodbye cruel world! catcher--rye
 
     >>> print(msg.getMsg('Ernest'))
@@ -136,8 +132,8 @@ Our shebang appears::
 
 Our message to faulkner now is semantically correct::
 
-    >>> ins = OrderedDict([('tale', 'told by idiot'), ('signify', 'nothing')])
-    >>> print(msg.getMsg('Bill F.', **ins))
+    >>> print(msg.getMsg('Bill F.',
+    ...       [('tale', 'told by idiot'), ('signify', 'nothing')]))
     Bill F.: sound and fury world#! tale--told by idiot signify--nothing
 
 Let's make sure that memoized properties which call OTHER memoized properties do the right thing::
