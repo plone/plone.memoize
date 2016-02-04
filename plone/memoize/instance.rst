@@ -136,7 +136,7 @@ Our shebang appears::
 
 Our message to faulkner now is semantically correct::
 
-    >>> ins = OrderedDict(tale='told by idiot', signify='nothing')
+    >>> ins = OrderedDict([('tale', 'told by idiot'), ('signify', 'nothing')])
     >>> print(msg.getMsg('Bill F.', **ins))
     Bill F.: sound and fury world#! tale--told by idiot signify--nothing
 
