@@ -1,6 +1,9 @@
 plone.memoize
 =============
 
+.. image:: https://travis-ci.org/plone/plone.memoize.svg?branch=master
+       :target: https://travis-ci.org/plone/plone.memoize
+
 plone.memoize provides Python function decorators for caching the
 values of functions and methods.
 
