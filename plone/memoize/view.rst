@@ -34,7 +34,7 @@ First we set up a dummy view::
     ...
     ...     @view.memoize
     ...     def getMsg(self, to, **instruction):
-    ...         lst = ['%s--%s' %t for t in instruction.items()]
+    ...         lst = ['%s--%s' %t for t in sorted(instruction.items(), reverse=True)]
     ...         instxt = ' '.join(lst)
     ...         return ("%s: %s world%s %s" %(to, self.txt1, self.bang, instxt)).strip()
     ...

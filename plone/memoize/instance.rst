@@ -24,7 +24,7 @@ Let's try it out w/ a dummy class::
     ...
     ...     @instance.memoize
     ...     def getMsg(self, to, **instruction):
-    ...         lst = ['%s--%s' %t for t in instruction.items()]
+    ...         lst = ['%s--%s' %t for t in sorted(instruction.items(), reverse=True)]
     ...         instxt = ' '.join(lst)
     ...         return ("%s: %s%s %s" %(to, self.txt2, self.bang, instxt)).strip()
     ...
