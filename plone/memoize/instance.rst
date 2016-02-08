@@ -24,7 +24,7 @@ Let's try it out w/ a dummy class::
     ...
     ...     @instance.memoize
     ...     def getMsg(self, to, **instruction):
-    ...         lst = ['%s--%s' %t for t in instruction.items()]
+    ...         lst = ['%s--%s' %t for t in sorted(instruction.items(), reverse=True)]
     ...         instxt = ' '.join(lst)
     ...         return ("%s: %s%s %s" %(to, self.txt2, self.bang, instxt)).strip()
     ...
@@ -87,63 +87,67 @@ Now we can test the clear before, which does the opposite from the clear after, 
 
 memojito supports memoization of multiple signatures as long as all signature values are hashable::
 
-    >>> print msg.getMsg('Ernest')
+    >>> print(msg.getMsg('Ernest'))
     Ernest: goodbye cruel world!
 
-    >>> print msg.getMsg('J.D.', **{'raise':'roofbeams'})
+    >>> print(msg.getMsg('J.D.', **{'raise':'roofbeams'}))
     J.D.: goodbye cruel world! raise--roofbeams
 
 We can alter data underneath, but nothing changes::
 
     >>> msg.txt1 = 'sound and fury'
-    >>> print msg.getMsg('J.D.', **{'raise':'roofbeams'})
+    >>> print(msg.getMsg('J.D.', **{'raise':'roofbeams'}))
     J.D.: goodbye cruel world! raise--roofbeams
 
-    >>> print msg.getMsg('Ernest')
+    >>> print(msg.getMsg('Ernest'))
     Ernest: goodbye cruel world!
 
 If we alter the signature, our msg is recalculated, but since mst.txt2 is a memo, only the values passed in change::
 
-    >>> ins = {'tale':'told by idiot', 'signify':'nothing'}
-    >>> print msg.getMsg('Bill F.', **ins)
+    >>> try:
+    ...     from collections import OrderedDict
+    ... except ImportError:
+    ...     OrderedDict = dict
+    >>> ins = OrderedDict([('tale', 'told by idiot'), ('signify', 'nothing')])
+    >>> print(msg.getMsg('Bill F.', **ins))
     Bill F.: goodbye cruel world! tale--told by idiot signify--nothing
 
-    >>> print msg.getMsg('J.D.', **{'catcher':'rye'})
+    >>> print(msg.getMsg('J.D.', **{'catcher':'rye'}))
     J.D.: goodbye cruel world! catcher--rye
 
 If change the bang, the memo remains the same::
 
     >>> msg.bang='#!'
-    >>> print msg.getMsg('J.D.', **{'catcher':'rye'})
+    >>> print(msg.getMsg('J.D.', **{'catcher':'rye'}))
     J.D.: goodbye cruel world! catcher--rye
 
-    >>> print msg.getMsg('Ernest')
+    >>> print(msg.getMsg('Ernest'))
     Ernest: goodbye cruel world!
 
 clearing works the same as for properties::
 
-    >>> print msg.clearafter()
+    >>> print(msg.clearafter())
     goodbye cruel world
 
 Our shebang appears::
 
-    >>> print msg.getMsg('Ernest')
+    >>> print(msg.getMsg('Ernest'))
     Ernest: sound and fury world#!
 
 Our message to faulkner now is semantically correct::
 
-    >>> ins = dict(tale='told by idiot', signify='nothing')
-    >>> print msg.getMsg('Bill F.', **ins)
+    >>> ins = OrderedDict([('tale', 'told by idiot'), ('signify', 'nothing')])
+    >>> print(msg.getMsg('Bill F.', **ins))
     Bill F.: sound and fury world#! tale--told by idiot signify--nothing
 
 Let's make sure that memoized properties which call OTHER memoized properties do the right thing::
 
     >>> msg = MyMsg('hello')
-    >>> print msg.recurse
+    >>> print(msg.recurse)
     recursive: hello world
 
 Now we make sure that both the txt2 and the recurse values are in the cache::
 
-    >>> print len(msg._memojito_.keys())
+    >>> print(len(msg._memojito_.keys()))
     2
 

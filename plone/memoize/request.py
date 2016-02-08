@@ -34,7 +34,7 @@ class RequestMemo(object):
                 cache = annotations[self.key] = dict()
 
             key = (func.__module__, func.__name__,
-                   args, frozenset(kwargs.items()))
+                   args, frozenset(list(kwargs.items())))
             value = cache.get(key, _marker)
             if value is _marker:
                 value = cache[key] = func(*args, **kwargs)
@@ -59,7 +59,7 @@ def store_in_annotation_of(expr):
             expected_num_args = len(spec[0]) - len(spec[3])
         if num_args != expected_num_args:
             raise TypeError("%s() takes exactly %s arguments (%s given)"
-                            % (fun.func_name, expected_num_args, num_args))
+                            % (fun.__name__, expected_num_args, num_args))
 
         for index, name in enumerate(spec[0]):
             if index < num_args:

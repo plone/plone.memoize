@@ -11,7 +11,7 @@ Make necessary imports::
 ::
 
     >>> def increment(a):
-    ...     print 'Someone or something called me'
+    ...     print('Someone or something called me')
     ...     return a + 1
 
 Now we need to define this `a`.
@@ -42,14 +42,14 @@ We'll tell the decorator to use `args_hash` for generating the key.
     2
     >>> cached_increment(A(1))
     2
-    >>> IAnnotations(A.request)
-    {'None.increment:1': 2}
+    >>> list(IAnnotations(A.request).items())
+    [('None.increment:1', 2)]
 
 If `request` is already part of the function's argument list, we don't need to specify any expression::
 
     >>> @cache(get_key=get_key)
     ... def increment_plus(a, request):
-    ...     print 'Someone or something called me'
+    ...     print('Someone or something called me')
     ...     return a + 1
 
     >>> increment_plus(42, A.request)
@@ -65,13 +65,13 @@ For the sake of convenience pass the request explicitly.
 get_key must be modified to take kwargs into account::
 
     >>> def get_key(fun, a, request, **kwargs):
-    ...     li = kwargs.items()
+    ...     li = list(kwargs.items())
     ...     li.sort()
     ...     return "%s,%s" % (a, li)
 
     >>> @cache(get_key=get_key)
     ... def increment_kwargs(a, request, kwarg1=1, kwarg2=2):
-    ...     print 'Someone or something called me'
+    ...     print('Someone or something called me')
     ...     return a + 1
 
     >>> increment_kwargs(42, A.request, kwarg1='kwarg1', kwarg2='kwarg2')

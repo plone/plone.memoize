@@ -15,7 +15,7 @@ Let's say we have a class with an expensive method `pow` that we want to cache::
 
     >>> class MyClass:
     ...     def pow(self, first, second):
-    ...         print 'Someone or something called me'
+    ...         print('Someone or something called me')
     ...         return first ** second
 
 Okay, we know that if the `first` and `second` arguments are the same, the result is going to be the same, always.
@@ -35,7 +35,7 @@ Let's define our first class again, this time with a cached `pow` method::
     >>> class MyClass:
     ...     @cache(cache_key)
     ...     def pow(self, first, second):
-    ...         print 'Someone or something called me'
+    ...         print('Someone or something called me')
     ...         return first ** second
 
 The results::
@@ -94,7 +94,7 @@ Note how we provide both the cache key generator and the cache storage as argume
 
     >>> @cache(cache_key, cache_storage)
     ... def pow(first, second):
-    ...     print 'Someone or something called me'
+    ...     print('Someone or something called me')
     ...     return first ** second
 
 Let's try it out::
@@ -124,7 +124,7 @@ A cache key generator may also raise DontCache to indicate that no caching shoul
     ...         return (first, second)
     >>> @cache(cache_key, cache_storage)
     ... def pow(first, second):
-    ...     print 'Someone or something called me'
+    ...     print('Someone or something called me')
     ...     return first ** second
 
     >>> pow(3, 2)

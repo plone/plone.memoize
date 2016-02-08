@@ -20,7 +20,7 @@ Make necessary imports::
     ...     return (first, second)
     >>> @cache(cache_key)
     ... def pow(first, second):
-    ...     print 'Someone or something called me'
+    ...     print('Someone or something called me')
     ...     return first ** second
 
     >>> pow(3, 2)
@@ -33,7 +33,7 @@ Let's cache another function::
 
     >>> @cache(cache_key)
     ... def add(first, second):
-    ...     print 'Someone or something called me'
+    ...     print('Someone or something called me')
     ...     return first + second
 
     >>> add(3, 2)

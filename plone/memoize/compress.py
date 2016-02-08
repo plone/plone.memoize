@@ -4,7 +4,7 @@
 
 from plone.memoize.interfaces import IXHTMLCompressor
 from zope.component import queryUtility
-from zope.interface import implements
+from zope.interface import implementer
 
 SLIMMER = True
 try:
@@ -19,10 +19,8 @@ def xhtml_compress(string):
         return util.compress(string)
     return string
 
-
+@implementer(IXHTMLCompressor)
 class XHTMLSlimmer(object):
-
-    implements(IXHTMLCompressor)
 
     def compress(self, string):
         if SLIMMER:

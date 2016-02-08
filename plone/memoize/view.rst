@@ -9,15 +9,15 @@ This means that the same view can be looked up multiple times and the same memos
 
     >>> from plone.memoize import view
     >>> from zope.component import adapts
-    >>> from zope.interface import implements
+    >>> from zope.interface import implementer
     >>> from zope.interface import Interface
     >>> from zope.publisher.interfaces.browser import IBrowserRequest
     >>> from zope.publisher.interfaces.browser import IBrowserView
 
 First we set up a dummy view::
 
-    >>> class MyView(object):
-    ...     implements(IBrowserView)
+    >>> @implementer(IBrowserView)
+    ... class MyView(object):
     ...     adapts(Interface, IBrowserRequest)
     ...
     ...     def __init__(self, context, request):
@@ -34,7 +34,7 @@ First we set up a dummy view::
     ...
     ...     @view.memoize
     ...     def getMsg(self, to, **instruction):
-    ...         lst = ['%s--%s' %t for t in instruction.items()]
+    ...         lst = ['%s--%s' %t for t in sorted(instruction.items(), reverse=True)]
     ...         instxt = ' '.join(lst)
     ...         return ("%s: %s world%s %s" %(to, self.txt1, self.bang, instxt)).strip()
     ...
@@ -50,8 +50,9 @@ First we set up a dummy view::
 
 We also need a dummy context::
 
-    >>> class Dummy(object):
-    ...     implements(Interface)
+    >>> @implementer(Interface)
+    ... class Dummy(object):
+    ...     pass
 
 Let's look up the view::
 
@@ -82,37 +83,41 @@ Even though we've twiddled txt1, txt2 is not recalculated::
 
 We support memoization of multiple signatures as long as all signature values are hashable::
 
-    >>> print msg.getMsg('Ernest')
+    >>> print(msg.getMsg('Ernest'))
     Ernest: goodbye cruel world!
 
-    >>> print msg.getMsg('J.D.', **{'raise':'roofbeams'})
+    >>> print(msg.getMsg('J.D.', **{'raise':'roofbeams'}))
     J.D.: goodbye cruel world! raise--roofbeams
 
 We can alter data underneath, but nothing changes::
 
     >>> msg.txt1 = 'sound and fury'
-    >>> print msg.getMsg('J.D.', **{'raise':'roofbeams'})
+    >>> print(msg.getMsg('J.D.', **{'raise':'roofbeams'}))
     J.D.: goodbye cruel world! raise--roofbeams
 
-    >>> print msg.getMsg('Ernest')
+    >>> print(msg.getMsg('Ernest'))
     Ernest: goodbye cruel world!
 
 If we alter the signature, our msg is recalculated::
 
-    >>> ins = {'tale':'told by idiot', 'signify':'nothing'}
-    >>> print msg.getMsg('Bill F.', **ins)
+    >>> try:
+    ...     from collections import OrderedDict
+    ... except ImportError:
+    ...     OrderedDict = dict
+    >>> ins = OrderedDict([('tale', 'told by idiot'), ('signify', 'nothing')])
+    >>> print(msg.getMsg('Bill F.', **ins))
     Bill F.: sound and fury world! tale--told by idiot signify--nothing
 
-    >>> print msg.getMsg('J.D.', **{'catcher':'rye'})
+    >>> print(msg.getMsg('J.D.', **{'catcher':'rye'}))
     J.D.: sound and fury world! catcher--rye
 
 If change the bang, the memo remains the same::
 
     >>> msg.bang='#!'
-    >>> print msg.getMsg('J.D.', **{'catcher':'rye'})
+    >>> print(msg.getMsg('J.D.', **{'catcher':'rye'}))
     J.D.: sound and fury world! catcher--rye
 
-    >>> print msg.getMsg('Ernest')
+    >>> print(msg.getMsg('Ernest'))
     Ernest: goodbye cruel world!
 
 If we look up the view again on the same object, we will get the same memoized properties as before::
@@ -125,17 +130,17 @@ If we look up the view again on the same object, we will get the same memoized p
     >>> msg2.txt2
     'hello world'
 
-    >>> print msg2.getMsg('J.D.', **{'raise':'roofbeams'})
+    >>> print(msg2.getMsg('J.D.', **{'raise':'roofbeams'}))
     J.D.: goodbye cruel world! raise--roofbeams
 
-    >>> print msg2.getMsg('Ernest')
+    >>> print(msg2.getMsg('Ernest'))
     Ernest: goodbye cruel world!
 
-    >>> ins = {'tale':'told by idiot', 'signify':'nothing'}
-    >>> print msg2.getMsg('Bill F.', **ins)
+    >>> ins = OrderedDict([('tale', 'told by idiot'), ('signify', 'nothing')])
+    >>> print(msg2.getMsg('Bill F.', **ins))
     Bill F.: sound and fury world! tale--told by idiot signify--nothing
 
-    >>> print msg2.getMsg('J.D.', **{'catcher':'rye'})
+    >>> print(msg2.getMsg('J.D.', **{'catcher':'rye'}))
     J.D.: sound and fury world! catcher--rye
 
 However, if we look up the view on another context object, things change::
@@ -149,25 +154,25 @@ However, if we look up the view on another context object, things change::
     >>> msg3.txt2
     'so long, cruel world'
 
-    >>> print msg3.getMsg('J.D.', **{'raise':'roofbeams'})
+    >>> print(msg3.getMsg('J.D.', **{'raise':'roofbeams'}))
     J.D.: so long, cruel world& raise--roofbeams
 
-    >>> print msg3.getMsg('Ernest')
+    >>> print(msg3.getMsg('Ernest'))
     Ernest: so long, cruel world&
 
-    >>> ins = {'tale':'told by idiot', 'signify':'nothing'}
-    >>> print msg3.getMsg('Bill F.', **ins)
+    >>> ins = OrderedDict([('tale', 'told by idiot'), ('signify', 'nothing')])
+    >>> print(msg3.getMsg('Bill F.', **ins))
     Bill F.: so long, cruel world& tale--told by idiot signify--nothing
 
-    >>> print msg3.getMsg('J.D.', **{'catcher':'rye'})
+    >>> print(msg3.getMsg('J.D.', **{'catcher':'rye'}))
     J.D.: so long, cruel world& catcher--rye
 
 This behaviour does not apply to contextless decorators, which memoize
 based on parameters, but not on context::
 
-    >>> print msg3.getAnotherMsg('J.D.', **{'raise':'roofbeams'})
+    >>> print(msg3.getAnotherMsg('J.D.', **{'raise':'roofbeams'}))
     J.D.: so long, cruel world& raise--roofbeams
 
-    >>> print msg2.getAnotherMsg('J.D.', **{'raise':'roofbeams'})
+    >>> print(msg2.getAnotherMsg('J.D.', **{'raise':'roofbeams'}))
     J.D.: so long, cruel world& raise--roofbeams
 

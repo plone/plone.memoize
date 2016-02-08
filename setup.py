@@ -36,6 +36,8 @@ setup(
         "Programming Language :: Python",
         "Programming Language :: Python :: 2.6",
         "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3.4",
+        "Programming Language :: Python :: 3.5",
     ],
     keywords='plone memoize decorator cache',
     author='Plone Foundation',
@@ -46,14 +48,17 @@ setup(
     namespace_packages=['plone'],
     include_package_data=True,
     zip_safe=False,
+    test_suite='plone.memoize.tests.test_suite',
     extras_require=dict(
         test=[
             'zope.configuration',
             'zope.publisher',
+            'zope.testrunner',
         ]
     ),
     install_requires=[
         'setuptools',
+        'six',
         'zope.annotation',
         'zope.component',
         'zope.interface',
