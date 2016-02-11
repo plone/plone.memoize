@@ -19,6 +19,7 @@ def xhtml_compress(string):
         return util.compress(string)
     return string
 
+
 @implementer(IXHTMLCompressor)
 class XHTMLSlimmer(object):
 
