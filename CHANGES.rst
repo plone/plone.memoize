@@ -6,6 +6,8 @@ Changelog
 
 New:
 
+- Dropped official support for Plone 4 and Python 2.6.  [maurits]
+
 - Python 3 compatibility.  [tomgross]
 
 Fixes:
