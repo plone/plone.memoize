@@ -6,7 +6,7 @@ Changelog
 
 New:
 
-- *add item here*
+- Python 3 compatibility.  [tomgross]
 
 Fixes:
 
