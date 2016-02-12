@@ -1,0 +1,11 @@
+.installed.cfg
+/bin
+__pycache__
+*.bak
+*.egg-info
+/develop-eggs
+*.py[co]
+.tox
+.eggs
+.coverage
+/htmlcov
