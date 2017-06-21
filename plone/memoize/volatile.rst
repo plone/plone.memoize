@@ -15,6 +15,7 @@ Let's say we have a class with an expensive method `pow` that we want to cache::
 
     >>> class MyClass:
     ...     def pow(self, first, second):
+    ...         """Returns the number 'first' to the power of 'second'."""
     ...         print('Someone or something called me')
     ...         return first ** second
 
@@ -35,6 +36,7 @@ Let's define our first class again, this time with a cached `pow` method::
     >>> class MyClass:
     ...     @cache(cache_key)
     ...     def pow(self, first, second):
+    ...         """Returns the number 'first' to the power of 'second'."""
     ...         print('Someone or something called me')
     ...         return first ** second
 
@@ -48,6 +50,11 @@ The results::
     9
 
 Did you see that?  The method was called only once.
+
+You can also see, that the method's docstring is still intact::
+
+    >>> obj.pow.__doc__
+    "Returns the number 'first' to the power of 'second'."
 
 Now to where this cache is stored: That's actually variable.
 The cache decorator takes an optional second argument with which you can define the where the cache is stored to.

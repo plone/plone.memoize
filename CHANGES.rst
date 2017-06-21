@@ -6,6 +6,9 @@ Changelog
 
 New:
 
+- Keep docstrings intact in decorators.
+  [pgrunewald]
+
 - *add item here*
 
 Fixes:
