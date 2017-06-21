@@ -5,6 +5,7 @@ Stores values in an attribute on the instance. See instance.rst.
 
 This package current subsumes memojito.
 """
+from functools import wraps
 
 _marker = object()
 
@@ -35,6 +36,7 @@ class Memojito(object):
 
     def memoize(self, func):
 
+        @wraps(func)
         def memogetter(*args, **kwargs):
             inst = args[0]
             cache = getattr(inst, self.propname, _marker)

@@ -5,6 +5,7 @@ This module provides a cache decorator `cache` that you can use to
 cache results of your functions or methods.
 """
 
+from functools import wraps
 import time
 
 
@@ -59,6 +60,7 @@ def cache(get_key, get_cache=store_on_self):
 
     def decorator(fun):
 
+        @wraps(fun)
         def replacement(*args, **kwargs):
             try:
                 key = get_key(fun, *args, **kwargs)

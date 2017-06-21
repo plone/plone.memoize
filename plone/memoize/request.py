@@ -3,7 +3,7 @@
 
 Stores values in an annotation of the request.
 """
-
+from functools import wraps
 from plone.memoize import volatile
 from zope.annotation.interfaces import IAnnotations
 import inspect
@@ -20,6 +20,7 @@ class RequestMemo(object):
 
     def __call__(self, func):
 
+        @wraps(func)
         def memogetter(*args, **kwargs):
             request = None
             if isinstance(self.arg, int):

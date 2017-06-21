@@ -3,7 +3,7 @@
 
 Stores values in an annotation of the request. See view.rst.
 """
-
+from functools import wraps
 from zope.annotation.interfaces import IAnnotations
 
 _marker = object()
@@ -15,6 +15,7 @@ class ViewMemo(object):
 
     def memoize(self, func):
 
+        @wraps(func)
         def memogetter(*args, **kwargs):
             instance = args[0]
 
