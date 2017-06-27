@@ -10,6 +10,9 @@ New:
 
 Fixes:
 
+- Update Travis setup (drop Python2.6, tolerate failing pypy3)
+  [pgrunewald]
+
 - *add item here*
 
 
