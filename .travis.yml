@@ -5,7 +5,8 @@ matrix:
     - python: 3.5
       env: TOXENV=py35
   allow_failures:
-  - python: 'TOXENV=pypy3'
+    - python:
+      env: 'TOXENV=pypy3'
 env:
     - TOXENV=py27
     - TOXENV=py33
