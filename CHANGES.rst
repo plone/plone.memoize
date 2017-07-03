@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.2.1 (unreleased)
+1.2.1 (2017-07-03)
 ------------------
 
 New:
@@ -9,14 +9,10 @@ New:
 - Keep docstrings intact in decorators.
   [pgrunewald]
 
-- *add item here*
-
 Fixes:
 
 - Update Travis setup (drop Python2.6, tolerate failing pypy3)
   [pgrunewald]
-
-- *add item here*
 
 
 1.2.0 (2016-02-12)
