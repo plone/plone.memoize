@@ -18,6 +18,10 @@ Bug fixes:
   plone.memoize is being tested on jenkins.plone.org.
   [gforcada]
 
+- Clean up dependencies.
+  [gforcada]
+
+
 1.2.1 (2017-07-03)
 ------------------
 
