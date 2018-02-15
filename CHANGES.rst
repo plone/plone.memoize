@@ -14,8 +14,9 @@ New features:
 
 Bug fixes:
 
-- *add item here*
-
+- Drop travis and tox. A solution that works at one point does not necessarily work later.
+  plone.memoize is being tested on jenkins.plone.org.
+  [gforcada]
 
 1.2.1 (2017-07-03)
 ------------------
