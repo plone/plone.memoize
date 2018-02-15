@@ -51,7 +51,6 @@ setup(
         test=[
             'zope.configuration',
             'zope.publisher',
-            'zope.testrunner',
         ]
     ),
     install_requires=[
