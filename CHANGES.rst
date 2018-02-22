@@ -4,14 +4,6 @@ Changelog
 1.2.2 (unreleased)
 ------------------
 
-Breaking changes:
-
-- *add item here*
-
-New features:
-
-- *add item here*
-
 Bug fixes:
 
 - Drop travis and tox. A solution that works at one point does not necessarily work later.
