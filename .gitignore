@@ -8,4 +8,5 @@ __pycache__
 .tox
 .eggs
 .coverage
+coverage.xml
 /htmlcov
