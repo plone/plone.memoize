@@ -1,0 +1,6 @@
+[run]
+branch = True
+source = plone
+
+[report]
+precision = 2
