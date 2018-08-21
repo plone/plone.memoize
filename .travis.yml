@@ -10,7 +10,7 @@ install:
     - buildout bootstrap
     - buildout install test
 script:
-    - coverage run bin/tests -v
+    - coverage run bin/test -v
 after_success:
     - coveralls
 notifications:
