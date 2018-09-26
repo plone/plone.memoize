@@ -4,17 +4,11 @@ Changelog
 1.2.3 (unreleased)
 ------------------
 
-Breaking changes:
-
-- *add item here*
-
-New features:
-
-- *add item here*
-
 Bug fixes:
 
-- *add item here*
+- Re-enable Travis-CI.
+  This package can be used outside Plone so it should be tested outside, too.
+  [howitz]
 
 
 1.2.2 (2018-02-23)
