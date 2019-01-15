@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.2.4 (unreleased)
+2.0.1 (unreleased)
 ------------------
 
 Breaking changes:
@@ -15,6 +15,16 @@ New features:
 Bug fixes:
 
 - *add item here*
+
+
+2.0 (15.01.2019)
+------------------
+
+Breaking changes:
+
+- Relicensed under BSD (documented September 2010,
+  https://plone.org/foundation/materials/foundation-resolutions/plone-framework-components-relicensing-policy)
+  [andbag]
 
 
 1.2.3 (2018-09-26)
