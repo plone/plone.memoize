@@ -8,6 +8,23 @@ Changelog
 
 .. towncrier release notes start
 
+2.0.0 (2019-02-08)
+------------------
+
+Breaking changes:
+
+
+- Relicensed under BSD (documented September 2010,
+  https://plone.org/foundation/materials/foundation-resolutions/plone-framework-components-relicensing-policy)
+  [andbag] (#12)
+
+
+Bug fixes:
+
+
+- Clean up package here and there. [gforcada] [mauritsvanrees] (#15)
+
+
 1.2.3 (2018-09-26)
 ------------------
 
