@@ -1,0 +1,3 @@
+Fix broken tests in TravisCI
+(`#12 <https://github.com/plone/plone.memoize/issues/12>`_)
+[andbag]
