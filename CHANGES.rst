@@ -8,6 +8,17 @@ Changelog
 
 .. towncrier release notes start
 
+2.0.1 (2019-04-29)
+------------------
+
+Bug fixes:
+
+
+- Fix broken tests in TravisCI
+  (`#12 <https://github.com/plone/plone.memoize/issues/12>`_)
+  [andbag] (#12)
+
+
 2.0.0 (2019-02-08)
 ------------------
 
