@@ -11,31 +11,30 @@ _marker = object()
 
 
 class Memojito(object):
-    propname = '_memojito_'
+    propname = "_memojito_"
 
     def clear(self, inst):
         if hasattr(inst, self.propname):
             delattr(inst, self.propname)
 
     def clearbefore(self, func):
-
         def clear(*args, **kwargs):
             inst = args[0]
             self.clear(inst)
             return func(*args, **kwargs)
+
         return clear
 
     def clearafter(self, func):
-
         def clear(*args, **kwargs):
             inst = args[0]
             val = func(*args, **kwargs)
             self.clear(inst)
             return val
+
         return clear
 
     def memoize(self, func):
-
         @wraps(func)
         def memogetter(*args, **kwargs):
             inst = args[0]
@@ -54,6 +53,7 @@ class Memojito(object):
                 cache[key] = val
                 setattr(inst, self.propname, cache)
             return val
+
         return memogetter
 
 
@@ -65,5 +65,6 @@ clearafter = _m.clearafter
 
 def memoizedproperty(func):
     return property(_m.memoize(func))
+
 
 __all__ = (memoize, memoizedproperty, clearbefore, clearafter)

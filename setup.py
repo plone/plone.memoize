@@ -7,17 +7,15 @@ def read(*rnames):
     return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
 
 
-version = '2.0.2.dev0'
+version = "2.0.2.dev0"
 
-long_description = u"\n".join([
-    read('README.rst'),
-    read('plone', 'memoize', 'README.rst'),
-    read('CHANGES.rst'),
-])
+long_description = u"\n".join(
+    [read("README.rst"), read("plone", "memoize", "README.rst"), read("CHANGES.rst"),]
+)
 
 
 setup(
-    name='plone.memoize',
+    name="plone.memoize",
     version=version,
     description="Decorators for caching the values of functions and methods",
     long_description=long_description,
@@ -42,28 +40,23 @@ setup(
         "Programming Language :: Python :: Implementation :: CPython",
         "Programming Language :: Python :: Implementation :: PyPy",
     ],
-    keywords='plone memoize decorator cache',
-    author='Plone Foundation',
-    author_email='plone-developers@lists.sourceforge.net',
-    url='https://pypi.org/project/plone.memoize',
-    license='BSD',
+    keywords="plone memoize decorator cache",
+    author="Plone Foundation",
+    author_email="plone-developers@lists.sourceforge.net",
+    url="https://pypi.org/project/plone.memoize",
+    license="BSD",
     packages=find_packages(),
-    namespace_packages=['plone'],
+    namespace_packages=["plone"],
     include_package_data=True,
     zip_safe=False,
-    test_suite='plone.memoize.tests.test_suite',
-    extras_require=dict(
-        test=[
-            'zope.configuration',
-            'zope.publisher',
-        ]
-    ),
+    test_suite="plone.memoize.tests.test_suite",
+    extras_require=dict(test=["zope.configuration", "zope.publisher",]),
     install_requires=[
-        'setuptools',
-        'six',
-        'zope.annotation',
-        'zope.component',
-        'zope.interface',
-        'zope.ramcache',
+        "setuptools",
+        "six",
+        "zope.annotation",
+        "zope.component",
+        "zope.interface",
+        "zope.ramcache",
     ],
 )
