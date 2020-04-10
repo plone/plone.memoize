@@ -6,8 +6,6 @@ Stores values in an annotation of the request. See view.rst.
 from functools import wraps
 from zope.annotation.interfaces import IAnnotations
 
-_marker = object()
-
 
 class ViewMemo(object):
 
@@ -22,10 +20,9 @@ class ViewMemo(object):
             request = getattr(instance, "request", None)
 
             annotations = IAnnotations(request)
-            cache = annotations.get(self.key, _marker)
-
-            if cache is _marker:
-                cache = annotations[self.key] = dict()
+            if self.key not in annotations:
+                annotations[self.key] = dict()
+            cache = annotations[self.key]
 
             # XXX: Not the most elegant thing in the world; in a Zope 2
             # context, the physical path is a better key, since the id could
@@ -47,10 +44,9 @@ class ViewMemo(object):
                 args[1:],
                 frozenset(kwargs.items()),
             )
-            value = cache.get(key, _marker)
-            if value is _marker:
-                value = cache[key] = func(*args, **kwargs)
-            return value
+            if key not in cache:
+                cache[key] = func(*args, **kwargs)
+            return cache[key]
 
         return memogetter
 
@@ -60,10 +56,9 @@ class ViewMemo(object):
             request = getattr(instance, "request", None)
 
             annotations = IAnnotations(request)
-            cache = annotations.get(self.key, _marker)
-
-            if cache is _marker:
-                cache = annotations[self.key] = dict()
+            if self.key not in annotations:
+                annotations[self.key] = dict()
+            cache = annotations[self.key]
 
             key = (
                 instance.__class__.__name__,
@@ -71,10 +66,9 @@ class ViewMemo(object):
                 args[1:],
                 frozenset(kwargs.items()),
             )
-            value = cache.get(key, _marker)
-            if value is _marker:
-                value = cache[key] = func(*args, **kwargs)
-            return value
+            if key not in cache:
+                cache[key] = func(*args, **kwargs)
+            return cache[key]
 
         return memogetter
 
