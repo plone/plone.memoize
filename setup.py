@@ -50,7 +50,9 @@ setup(
     include_package_data=True,
     zip_safe=False,
     test_suite="plone.memoize.tests.test_suite",
-    extras_require=dict(test=["zope.configuration", "zope.publisher",]),
+    extras_require=dict(
+        test=["zope.configuration", "zope.globalrequest", "zope.publisher",]
+    ),
     install_requires=[
         "setuptools",
         "six",

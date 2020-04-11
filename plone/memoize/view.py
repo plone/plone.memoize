@@ -7,6 +7,14 @@ from functools import wraps
 from zope.annotation.interfaces import IAnnotations
 
 
+try:
+    from zope.globalrequest import getRequest
+except ImportError:
+
+    def getRequest():
+        return None
+
+
 class ViewMemo(object):
 
     key = "plone.memoize"
@@ -17,9 +25,12 @@ class ViewMemo(object):
             instance = args[0]
 
             context = getattr(instance, "context", None)
-            request = getattr(instance, "request", None)
+            try:
+                request = instance.request
+            except AttributeError:
+                request = getRequest()
 
-            annotations = IAnnotations(request)
+            annotations = IAnnotations(request, {})
             if self.key not in annotations:
                 annotations[self.key] = dict()
             cache = annotations[self.key]
@@ -52,10 +63,18 @@ class ViewMemo(object):
 
     def memoize_contextless(self, func):
         def memogetter(*args, **kwargs):
-            instance = args[0]
-            request = getattr(instance, "request", None)
 
-            annotations = IAnnotations(request)
+            if args:
+                instance = args[0]
+            else:
+                instance = None
+
+            try:
+                request = instance.request
+            except AttributeError:
+                request = getRequest()
+
+            annotations = IAnnotations(request, {})
             if self.key not in annotations:
                 annotations[self.key] = dict()
             cache = annotations[self.key]

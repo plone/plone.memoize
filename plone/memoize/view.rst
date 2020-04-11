@@ -176,3 +176,72 @@ based on parameters, but not on context::
     >>> print(msg2.getAnotherMsg('J.D.', **{'raise':'roofbeams'}))
     J.D.: so long, cruel world& raise--roofbeams
 
+There is also support for using a global request
+if zope.globalrequest is available.
+With that you can cache also functions.
+
+If the global request is missing nothing changes:
+
+    >>> a = "foo"
+    >>> @view.memoize_contextless
+    ... def memoized_function():
+    ...     return a
+    >>> memoized_function()
+    'foo'
+    >>> a = "bar"
+    >>> memoized_function()
+    'bar'
+
+Now we provide a global request which supports annotations:
+
+    >>> from zope.globalrequest import setRequest
+    >>> from zope.interface import alsoProvides
+    >>> from zope.annotation import IAttributeAnnotatable
+    >>> global_request = TestRequest()
+    >>> alsoProvides(global_request, IAttributeAnnotatable)
+    >>> setRequest(global_request)
+
+With that in place the results are cached:
+    >>> a = "foo"
+    >>> memoized_function()
+    'foo'
+    >>> a = "bar"
+    >>> memoized_function()
+    'foo'
+
+
+The same is true for an adapter:
+
+    >>> class Adapter(object):
+    ...
+    ...     msg = "foo"
+    ...
+    ...     def __init__(self, context):
+    ...         self.context = context
+    ...
+    ...     @view.memoize
+    ...     def context_aware_function(self):
+    ...         return self.msg
+    ...
+    ...     @view.memoize_contextless
+    ...     def context_unaware_function(self):
+    ...         return self.msg
+
+We now instatiate two objects:
+    >>> instance1 = Adapter(Dummy())
+    >>> instance2 = Adapter(Dummy())
+    >>> instance1.context_aware_function()
+    'foo'
+    >>> instance1.context_unaware_function()
+    'foo'
+
+Let's verify that the cache depends on the context:
+    >>> Adapter.msg = "bar"
+    >>> instance2.context_aware_function()
+    'bar'
+    >>> instance1.context_unaware_function()
+    'foo'
+
+Still instance1 is not aware of the change:
+    >>> instance1.context_aware_function()
+    'foo'
