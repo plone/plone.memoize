@@ -11,16 +11,15 @@ _marker = object()
 
 class ViewMemo(object):
 
-    key = 'plone.memoize'
+    key = "plone.memoize"
 
     def memoize(self, func):
-
         @wraps(func)
         def memogetter(*args, **kwargs):
             instance = args[0]
 
-            context = getattr(instance, 'context', None)
-            request = getattr(instance, 'request', None)
+            context = getattr(instance, "context", None)
+            request = getattr(instance, "request", None)
 
             annotations = IAnnotations(request)
             cache = annotations.get(self.key, _marker)
@@ -41,19 +40,24 @@ class ViewMemo(object):
             # instance and the whole point is that we can cache different
             # requests
 
-            key = (context_id, instance.__class__.__name__, func.__name__,
-                   args[1:], frozenset(kwargs.items()))
+            key = (
+                context_id,
+                instance.__class__.__name__,
+                func.__name__,
+                args[1:],
+                frozenset(kwargs.items()),
+            )
             value = cache.get(key, _marker)
             if value is _marker:
                 value = cache[key] = func(*args, **kwargs)
             return value
+
         return memogetter
 
     def memoize_contextless(self, func):
-
         def memogetter(*args, **kwargs):
             instance = args[0]
-            request = getattr(instance, 'request', None)
+            request = getattr(instance, "request", None)
 
             annotations = IAnnotations(request)
             cache = annotations.get(self.key, _marker)
@@ -61,13 +65,19 @@ class ViewMemo(object):
             if cache is _marker:
                 cache = annotations[self.key] = dict()
 
-            key = (instance.__class__.__name__, func.__name__,
-                   args[1:], frozenset(kwargs.items()))
+            key = (
+                instance.__class__.__name__,
+                func.__name__,
+                args[1:],
+                frozenset(kwargs.items()),
+            )
             value = cache.get(key, _marker)
             if value is _marker:
                 value = cache[key] = func(*args, **kwargs)
             return value
+
         return memogetter
+
 
 _m = ViewMemo()
 memoize = _m.memoize

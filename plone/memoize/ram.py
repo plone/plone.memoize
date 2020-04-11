@@ -30,7 +30,6 @@ MARKER = object()
 
 
 class AbstractDict:
-
     def get(self, key, default=None):
         try:
             return self.__getitem__(key)
@@ -39,14 +38,13 @@ class AbstractDict:
 
 
 class MemcacheAdapter(AbstractDict):
-
-    def __init__(self, client, globalkey=''):
+    def __init__(self, client, globalkey=""):
         self.client = client
-        self.globalkey = globalkey and '%s:' % globalkey
+        self.globalkey = globalkey and "%s:" % globalkey
 
     def _make_key(self, source):
         if issubclass(type(source), six.text_type):
-            source = source.encode('utf-8')
+            source = source.encode("utf-8")
         return md5(source).hexdigest()
 
     def __getitem__(self, key):
@@ -62,39 +60,37 @@ class MemcacheAdapter(AbstractDict):
 
 
 class RAMCacheAdapter(AbstractDict):
-
-    def __init__(self, ramcache, globalkey=''):
+    def __init__(self, ramcache, globalkey=""):
         self.ramcache = ramcache
         self.globalkey = globalkey
 
     def _make_key(self, source):
         if issubclass(type(source), six.text_type):
-            source = source.encode('utf-8')
+            source = source.encode("utf-8")
         return md5(source).digest()
 
     def __getitem__(self, key):
-        value = self.ramcache.query(self.globalkey,
-                                    dict(key=self._make_key(key)),
-                                    MARKER)
+        value = self.ramcache.query(
+            self.globalkey, dict(key=self._make_key(key)), MARKER
+        )
         if value is MARKER:
             raise KeyError(key)
         else:
             return value
 
     def __setitem__(self, key, value):
-        self.ramcache.set(value,
-                          self.globalkey,
-                          dict(key=self._make_key(key)))
+        self.ramcache.set(value, self.globalkey, dict(key=self._make_key(key)))
 
 
 def choose_cache(fun_name):
-    return RAMCacheAdapter(component.queryUtility(IRAMCache),
-                           globalkey=fun_name)
+    return RAMCacheAdapter(component.queryUtility(IRAMCache), globalkey=fun_name)
+
+
 interface.directlyProvides(choose_cache, ICacheChooser)
 
 
 def store_in_cache(fun, *args, **kwargs):
-    key = '%s.%s' % (fun.__module__, fun.__name__)
+    key = "%s.%s" % (fun.__module__, fun.__name__)
     cache_chooser = component.queryUtility(ICacheChooser)
     if cache_chooser is not None:
         return cache_chooser(key)

@@ -22,10 +22,10 @@ def xhtml_compress(string):
 
 @implementer(IXHTMLCompressor)
 class XHTMLSlimmer(object):
-
     def compress(self, string):
         if SLIMMER:
             return xhtml_slimmer(string)
         return string
+
 
 xhtmlslimmer = XHTMLSlimmer()

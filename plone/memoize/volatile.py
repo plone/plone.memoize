@@ -13,6 +13,7 @@ class CleanupDict(dict):
     """A dict that automatically cleans up items that haven't been
     accessed in a given timespan on *set*.
     """
+
     cleanup_period = 60 * 60 * 24 * 3  # 3 days
 
     def __init__(self, cleanup_period=None):
@@ -39,7 +40,8 @@ class CleanupDict(dict):
                 del self._last_access[key]
                 super(CleanupDict, self).__delitem__(key)
 
-ATTR = '_v_memoize_cache'
+
+ATTR = "_v_memoize_cache"
 CONTAINER_FACTORY = CleanupDict
 _marker = object()
 
@@ -57,20 +59,20 @@ def store_on_context(method, obj, *args, **kwargs):
 
 
 def cache(get_key, get_cache=store_on_self):
-
     def decorator(fun):
-
         @wraps(fun)
         def replacement(*args, **kwargs):
             try:
                 key = get_key(fun, *args, **kwargs)
             except DontCache:
                 return fun(*args, **kwargs)
-            key = '%s.%s:%s' % (fun.__module__, fun.__name__, key)
+            key = "%s.%s:%s" % (fun.__module__, fun.__name__, key)
             cache = get_cache(fun, *args, **kwargs)
             cached_value = cache.get(key, _marker)
             if cached_value is _marker:
                 cached_value = cache[key] = fun(*args, **kwargs)
             return cached_value
+
         return replacement
+
     return decorator

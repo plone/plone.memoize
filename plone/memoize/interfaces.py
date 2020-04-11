@@ -3,7 +3,6 @@ from zope.interface import Interface
 
 
 class ICacheChooser(Interface):
-
     def __call__(fun_name):
         """Return a cache with a dict interface based on a dotted
         function name `fun_name`.
@@ -13,7 +12,6 @@ class ICacheChooser(Interface):
 
 
 class IXHTMLCompressor(Interface):
-
     def compress(string):
         """Expects a valid XHTML Unicode string as input and returns a valid
         XHTML Unicode string.
