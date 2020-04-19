@@ -6,6 +6,7 @@ from plone.memoize.interfaces import IXHTMLCompressor
 from zope.component import queryUtility
 from zope.interface import implementer
 
+
 SLIMMER = True
 try:
     from slimmer import xhtml_slimmer

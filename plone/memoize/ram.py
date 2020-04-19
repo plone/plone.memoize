@@ -11,6 +11,7 @@ from zope.ramcache.interfaces.ram import IRAMCache
 
 import six
 
+
 try:
     import pickle  # Python 3
 except ImportError:

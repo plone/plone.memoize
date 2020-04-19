@@ -9,6 +9,7 @@ Pay attention that is module is not thread-safe, so use it with care.
 
 from plone.memoize import volatile
 
+
 _memos = {}
 
 
