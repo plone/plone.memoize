@@ -1,0 +1,2 @@
+- Remove ``bootstrap-buildout.py``. If you use buildout, use virtualenv and pip install zc.buildout instead.
+[thet]
