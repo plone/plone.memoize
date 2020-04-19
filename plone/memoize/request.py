@@ -6,7 +6,9 @@ Stores values in an annotation of the request.
 from functools import wraps
 from plone.memoize import volatile
 from zope.annotation.interfaces import IAnnotations
+
 import inspect
+
 
 _marker = object()
 
