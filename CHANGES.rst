@@ -24,9 +24,9 @@ Bug fixes:
 
 - Make code black [ale-rt] (#17)
 - Improve speed when getting resources from the cache [ale-rt] (#19)
-- - Remove ``bootstrap-buildout.py``. If you use buildout, use virtualenv and pip install zc.buildout instead.
-  - Add [isort] and [flake8] config sections into setup.cfg.
-  - Sort all imports in Python files.
+- Remove ``bootstrap-buildout.py``. If you use buildout, use virtualenv and pip install zc.buildout instead.
+  Add [isort] and [flake8] config sections into setup.cfg.
+  Sort all imports in Python files.
   [thet] (#21)
 
 
