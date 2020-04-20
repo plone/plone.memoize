@@ -8,6 +8,28 @@ Changelog
 
 .. towncrier release notes start
 
+2.1.0 (2020-04-20)
+------------------
+
+New features:
+
+
+- Drop 3.4 support, add 3.7, 3.8, PyPy, PyPy3 support.
+  [maurits] (#16)
+- Use the zope global request if available as a fallback if the context does not have it [ale-rt] (#17)
+
+
+Bug fixes:
+
+
+- Make code black [ale-rt] (#17)
+- Improve speed when getting resources from the cache [ale-rt] (#19)
+- - Remove ``bootstrap-buildout.py``. If you use buildout, use virtualenv and pip install zc.buildout instead.
+  - Add [isort] and [flake8] config sections into setup.cfg.
+  - Sort all imports in Python files.
+  [thet] (#21)
+
+
 2.0.1 (2019-04-29)
 ------------------
 

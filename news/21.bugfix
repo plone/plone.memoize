@@ -1,4 +1,0 @@
-- Remove ``bootstrap-buildout.py``. If you use buildout, use virtualenv and pip install zc.buildout instead.
-- Add [isort] and [flake8] config sections into setup.cfg.
-- Sort all imports in Python files.
-[thet]
