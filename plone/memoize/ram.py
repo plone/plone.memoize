@@ -2,7 +2,7 @@
 """A cache decorator that uses RAMCache by default.
 """
 
-from functools import partial
+from hashlib import sha1
 from plone.memoize import volatile
 from plone.memoize.interfaces import ICacheChooser
 from zope import component
@@ -17,17 +17,6 @@ try:
     import pickle  # Python 3
 except ImportError:
     import cPickle as pickle  # Python 2
-
-try:
-    from hashlib import md5 as md5_original
-except ImportError:
-    from md5 import new as md5_original
-
-try:
-    hashed = md5_original(b'test')
-    md5 = md5_original
-except ValueError:
-    md5 = partial(md5_original, usedforsecurity=False)
 
 
 global_cache = ram.RAMCache()
@@ -53,7 +42,7 @@ class MemcacheAdapter(AbstractDict):
     def _make_key(self, source):
         if issubclass(type(source), six.text_type):
             source = source.encode("utf-8")
-        return md5(source).hexdigest()
+        return sha1(source).hexdigest()
 
     def __getitem__(self, key):
         cached_value = self.client.get(self.globalkey + self._make_key(key))
@@ -75,7 +64,7 @@ class RAMCacheAdapter(AbstractDict):
     def _make_key(self, source):
         if issubclass(type(source), six.text_type):
             source = source.encode("utf-8")
-        return md5(source).digest()
+        return sha1(source).digest()
 
     def __getitem__(self, key):
         value = self.ramcache.query(
