@@ -2,6 +2,7 @@
 """A cache decorator that uses RAMCache by default.
 """
 
+from functools import partial
 from plone.memoize import volatile
 from plone.memoize.interfaces import ICacheChooser
 from zope import component
@@ -18,9 +19,15 @@ except ImportError:
     import cPickle as pickle  # Python 2
 
 try:
-    from hashlib import md5
+    from hashlib import md5_original
 except ImportError:
-    from md5 import new as md5
+    from md5 import new as md5_original
+
+try:
+    hashed = md5_original(b'test')
+    md5 = md5_original
+except ValueError:
+    md5 = partial(md5_original, usedforsecurity=False)
 
 
 global_cache = ram.RAMCache()
