@@ -19,7 +19,7 @@ except ImportError:
     import cPickle as pickle  # Python 2
 
 try:
-    from hashlib import md5_original
+    from hashlib import md5 as md5_original
 except ImportError:
     from md5 import new as md5_original
 
