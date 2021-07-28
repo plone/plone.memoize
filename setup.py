@@ -9,7 +9,7 @@ def read(*rnames):
     return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
 
 
-version = "2.1.1"
+version = "2.1.2.dev0"
 
 long_description = u"\n".join(
     [read("README.rst"), read("plone", "memoize", "README.rst"), read("CHANGES.rst"),]
