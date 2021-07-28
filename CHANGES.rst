@@ -8,6 +8,15 @@ Changelog
 
 .. towncrier release notes start
 
+2.1.1 (2021-07-28)
+------------------
+
+Bug fixes:
+
+
+- Work in a FIPS enabled environment by using SHA1 instead of MD5 for computing the cache key. [frapell] (#25)
+
+
 2.1.0 (2020-04-20)
 ------------------
 
