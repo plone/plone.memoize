@@ -52,7 +52,13 @@ setup(
     zip_safe=False,
     test_suite="plone.memoize.tests.test_suite",
     extras_require=dict(
-        test=["zope.configuration", "zope.globalrequest", "zope.publisher",]
+        test=[
+            "zope.configuration",
+            "zope.globalrequest",
+            "zope.publisher",
+            "zope.testrunner",
+            "zope.testing",
+        ],
     ),
     install_requires=[
         "setuptools",
