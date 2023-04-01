@@ -9,8 +9,6 @@ from zope import interface
 from zope.ramcache import ram
 from zope.ramcache.interfaces.ram import IRAMCache
 
-import six
-
 
 try:
     import pickle  # Python 3
