@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Memo decorators for instances.
 
 Stores values in an attribute on the instance. See instance.rst.
@@ -11,7 +10,7 @@ from functools import wraps
 _marker = object()
 
 
-class Memojito(object):
+class Memojito:
     propname = "_memojito_"
 
     def clear(self, inst):

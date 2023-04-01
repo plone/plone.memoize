@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Memo decorators for globals - memoized values survive for as long as the
 process lives.
 

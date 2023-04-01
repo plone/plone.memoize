@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """A cache decorator that uses RAMCache by default.
 """
 
@@ -40,7 +39,7 @@ class MemcacheAdapter(AbstractDict):
         self.globalkey = globalkey and "%s:" % globalkey
 
     def _make_key(self, source):
-        if issubclass(type(source), six.text_type):
+        if issubclass(type(source), str):
             source = source.encode("utf-8")
         return sha1(source).hexdigest()
 
@@ -62,7 +61,7 @@ class RAMCacheAdapter(AbstractDict):
         self.globalkey = globalkey
 
     def _make_key(self, source):
-        if issubclass(type(source), six.text_type):
+        if issubclass(type(source), str):
             source = source.encode("utf-8")
         return sha1(source).digest()
 
@@ -87,7 +86,7 @@ interface.directlyProvides(choose_cache, ICacheChooser)
 
 
 def store_in_cache(fun, *args, **kwargs):
-    key = "%s.%s" % (fun.__module__, fun.__name__)
+    key = f"{fun.__module__}.{fun.__name__}"
     cache_chooser = component.queryUtility(ICacheChooser)
     if cache_chooser is not None:
         return cache_chooser(key)

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """XHTML Compressor
 """
 
@@ -22,7 +21,7 @@ def xhtml_compress(string):
 
 
 @implementer(IXHTMLCompressor)
-class XHTMLSlimmer(object):
+class XHTMLSlimmer:
     def compress(self, string):
         if SLIMMER:
             return xhtml_slimmer(string)

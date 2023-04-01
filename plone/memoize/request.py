@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Memoize decorator for methods.
 
 Stores values in an annotation of the request.
@@ -19,7 +18,7 @@ except AttributeError:
 _marker = object()
 
 
-class RequestMemo(object):
+class RequestMemo:
 
     key = "plone.memoize_request"
 

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """A flexible caching decorator.
 
 This module provides a cache decorator `cache` that you can use to
@@ -18,18 +17,18 @@ class CleanupDict(dict):
     cleanup_period = 60 * 60 * 24 * 3  # 3 days
 
     def __init__(self, cleanup_period=None):
-        super(CleanupDict, self).__init__()
+        super().__init__()
         self._last_access = {}
         if cleanup_period is not None:
             self.cleanup_period = cleanup_period
 
     def __getitem__(self, key):
-        value = super(CleanupDict, self).__getitem__(key)
+        value = super().__getitem__(key)
         self._last_access[key] = time.time()
         return value
 
     def __setitem__(self, key, value):
-        super(CleanupDict, self).__setitem__(key, value)
+        super().__setitem__(key, value)
         self._last_access[key] = time.time()
         self._cleanup()
 
@@ -39,7 +38,7 @@ class CleanupDict(dict):
         for key, timestamp in list(self._last_access.items()):
             if timestamp < okay:
                 del self._last_access[key]
-                super(CleanupDict, self).__delitem__(key)
+                super().__delitem__(key)
 
 
 ATTR = "_v_memoize_cache"
@@ -67,7 +66,7 @@ def cache(get_key, get_cache=store_on_self):
                 key = get_key(fun, *args, **kwargs)
             except DontCache:
                 return fun(*args, **kwargs)
-            key = "%s.%s:%s" % (fun.__module__, fun.__name__, key)
+            key = f"{fun.__module__}.{fun.__name__}:{key}"
             cache = get_cache(fun, *args, **kwargs)
             cached_value = cache.get(key, _marker)
             if cached_value is _marker:

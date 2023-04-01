@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from setuptools import find_packages
 from setuptools import setup
 
@@ -11,7 +10,7 @@ def read(*rnames):
 
 version = "3.0.1.dev0"
 
-long_description = u"\n".join(
+long_description = "\n".join(
     [read("README.rst"), read("plone", "memoize", "README.rst"), read("CHANGES.rst"),]
 )
 

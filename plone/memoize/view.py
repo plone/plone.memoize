@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Memoize decorator for views.
 
 Stores values in an annotation of the request. See view.rst.
@@ -15,7 +14,7 @@ except ImportError:
         return None
 
 
-class ViewMemo(object):
+class ViewMemo:
 
     key = "plone.memoize"
 
