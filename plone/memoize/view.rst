@@ -100,10 +100,7 @@ We can alter data underneath, but nothing changes::
 
 If we alter the signature, our msg is recalculated::
 
-    >>> try:
-    ...     from collections import OrderedDict
-    ... except ImportError:
-    ...     OrderedDict = dict
+    >>> from collections import OrderedDict
     >>> ins = OrderedDict([('tale', 'told by idiot'), ('signify', 'nothing')])
     >>> print(msg.getMsg('Bill F.', **ins))
     Bill F.: sound and fury world! tale--told by idiot signify--nothing

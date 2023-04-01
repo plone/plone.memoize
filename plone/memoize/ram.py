@@ -9,11 +9,7 @@ from zope import interface
 from zope.ramcache import ram
 from zope.ramcache.interfaces.ram import IRAMCache
 
-
-try:
-    import pickle  # Python 3
-except ImportError:
-    import cPickle as pickle  # Python 2
+import pickle
 
 
 global_cache = ram.RAMCache()

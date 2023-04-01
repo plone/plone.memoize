@@ -4,14 +4,7 @@ Stores values in an annotation of the request. See view.rst.
 """
 from functools import wraps
 from zope.annotation.interfaces import IAnnotations
-
-
-try:
-    from zope.globalrequest import getRequest
-except ImportError:
-
-    def getRequest():
-        return None
+from zope.globalrequest import getRequest
 
 
 class ViewMemo:
