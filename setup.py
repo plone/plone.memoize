@@ -57,7 +57,6 @@ setup(
             "zope.configuration",
             "zope.globalrequest",
             "zope.publisher",
-            "zope.testrunner",
             "zope.testing",
         ],
     ),
