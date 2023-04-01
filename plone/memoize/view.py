@@ -15,7 +15,6 @@ except ImportError:
 
 
 class ViewMemo:
-
     key = "plone.memoize"
 
     def memoize(self, func):
@@ -62,7 +61,6 @@ class ViewMemo:
 
     def memoize_contextless(self, func):
         def memogetter(*args, **kwargs):
-
             if args:
                 instance = args[0]
             else:

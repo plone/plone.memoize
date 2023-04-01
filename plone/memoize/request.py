@@ -20,7 +20,6 @@ _marker = object()
 
 
 class RequestMemo:
-
     key = "plone.memoize_request"
 
     def __init__(self, arg=0):
@@ -87,7 +86,6 @@ def store_in_annotation_of(expr):
 
 
 def cache(get_key, get_request="request"):
-
     return volatile.cache(get_key, get_cache=store_in_annotation_of(get_request))
 
 
