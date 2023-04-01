@@ -227,7 +227,7 @@ The same is true for an adapter:
     ...     def context_unaware_function(self):
     ...         return self.msg
 
-We now instatiate two objects:
+We now instantiate two objects:
     >>> instance1 = Adapter(Dummy())
     >>> instance2 = Adapter(Dummy())
     >>> instance1.context_aware_function()
