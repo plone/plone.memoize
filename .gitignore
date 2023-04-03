@@ -9,4 +9,5 @@ __pycache__
 .eggs
 .coverage
 coverage.xml
+dependencies.svg
 /htmlcov
