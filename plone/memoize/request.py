@@ -3,17 +3,9 @@
 Stores values in an annotation of the request.
 """
 from functools import wraps
+from inspect import getfullargspec
 from plone.memoize import volatile
 from zope.annotation.interfaces import IAnnotations
-
-import inspect
-
-
-try:
-    getargspec = inspect.getfullargspec
-except AttributeError:
-    # for Python 2
-    getargspec = inspect.getargspec
 
 
 _marker = object()
@@ -58,7 +50,7 @@ def store_in_annotation_of(expr):
     def _store_in_annotation(fun, *args, **kwargs):
         # Use expr to find out the name of the request variable
         vars = {}
-        spec = getargspec(fun)
+        spec = getfullargspec(fun)
         num_args = len(args)
         expected_num_args = num_args
 
