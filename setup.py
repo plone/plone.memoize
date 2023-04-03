@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from setuptools import find_packages
 from setuptools import setup
 
@@ -11,8 +10,12 @@ def read(*rnames):
 
 version = "3.0.1.dev0"
 
-long_description = u"\n".join(
-    [read("README.rst"), read("plone", "memoize", "README.rst"), read("CHANGES.rst"),]
+long_description = "\n".join(
+    [
+        read("README.rst"),
+        read("plone", "memoize", "README.rst"),
+        read("CHANGES.rst"),
+    ]
 )
 
 
@@ -25,16 +28,12 @@ setup(
         "Development Status :: 5 - Production/Stable",
         "Environment :: Web Environment",
         "Framework :: Plone",
-        "Framework :: Plone :: 5.2",
         "Framework :: Plone :: 6.0",
         "Framework :: Plone :: Core",
-        "Framework :: Zope :: 4",
         "Framework :: Zope :: 5",
         "License :: OSI Approved :: BSD License",
         "Operating System :: OS Independent",
         "Programming Language :: Python",
-        "Programming Language :: Python :: 2.7",
-        "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
@@ -52,18 +51,17 @@ setup(
     include_package_data=True,
     zip_safe=False,
     test_suite="plone.memoize.tests.test_suite",
+    python_requires=">=3.8",
     extras_require=dict(
         test=[
             "zope.configuration",
             "zope.globalrequest",
             "zope.publisher",
-            "zope.testrunner",
             "zope.testing",
         ],
     ),
     install_requires=[
         "setuptools",
-        "six",
         "zope.annotation",
         "zope.component",
         "zope.interface",

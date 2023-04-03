@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Memoize decorator for methods.
 
 Stores values in an annotation of the request.
@@ -8,6 +7,7 @@ from plone.memoize import volatile
 from zope.annotation.interfaces import IAnnotations
 
 import inspect
+
 
 try:
     getargspec = inspect.getfullargspec
@@ -19,8 +19,7 @@ except AttributeError:
 _marker = object()
 
 
-class RequestMemo(object):
-
+class RequestMemo:
     key = "plone.memoize_request"
 
     def __init__(self, arg=0):
@@ -87,7 +86,6 @@ def store_in_annotation_of(expr):
 
 
 def cache(get_key, get_request="request"):
-
     return volatile.cache(get_key, get_cache=store_in_annotation_of(get_request))
 
 

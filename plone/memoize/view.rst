@@ -100,10 +100,7 @@ We can alter data underneath, but nothing changes::
 
 If we alter the signature, our msg is recalculated::
 
-    >>> try:
-    ...     from collections import OrderedDict
-    ... except ImportError:
-    ...     OrderedDict = dict
+    >>> from collections import OrderedDict
     >>> ins = OrderedDict([('tale', 'told by idiot'), ('signify', 'nothing')])
     >>> print(msg.getMsg('Bill F.', **ins))
     Bill F.: sound and fury world! tale--told by idiot signify--nothing
@@ -227,7 +224,7 @@ The same is true for an adapter:
     ...     def context_unaware_function(self):
     ...         return self.msg
 
-We now instatiate two objects:
+We now instantiate two objects:
     >>> instance1 = Adapter(Dummy())
     >>> instance2 = Adapter(Dummy())
     >>> instance1.context_aware_function()

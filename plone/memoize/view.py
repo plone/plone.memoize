@@ -1,22 +1,13 @@
-# -*- coding: utf-8 -*-
 """Memoize decorator for views.
 
 Stores values in an annotation of the request. See view.rst.
 """
 from functools import wraps
 from zope.annotation.interfaces import IAnnotations
+from zope.globalrequest import getRequest
 
 
-try:
-    from zope.globalrequest import getRequest
-except ImportError:
-
-    def getRequest():
-        return None
-
-
-class ViewMemo(object):
-
+class ViewMemo:
     key = "plone.memoize"
 
     def memoize(self, func):
@@ -63,7 +54,6 @@ class ViewMemo(object):
 
     def memoize_contextless(self, func):
         def memogetter(*args, **kwargs):
-
             if args:
                 instance = args[0]
             else:

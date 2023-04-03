@@ -104,10 +104,7 @@ We can alter data underneath, but nothing changes::
 
 If we alter the signature, our msg is recalculated, but since mst.txt2 is a memo, only the values passed in change::
 
-    >>> try:
-    ...     from collections import OrderedDict
-    ... except ImportError:
-    ...     OrderedDict = dict
+    >>> from collections import OrderedDict
     >>> ins = OrderedDict([('tale', 'told by idiot'), ('signify', 'nothing')])
     >>> print(msg.getMsg('Bill F.', **ins))
     Bill F.: goodbye cruel world! tale--told by idiot signify--nothing
