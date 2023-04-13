@@ -8,6 +8,18 @@ Changelog
 
 .. towncrier release notes start
 
+3.0.1 (2023-04-14)
+------------------
+
+Internal:
+
+
+- Update configuration files.
+  [plone devs] (93e1ab65)
+- Removed more Python 2 compatibility code.
+  [maurits] (#55)
+
+
 3.0.0 (2022-10-28)
 ------------------
 
