@@ -50,7 +50,6 @@ setup(
     extras_require=dict(
         test=[
             "zope.configuration",
-            "zope.globalrequest",
             "zope.publisher",
             "zope.testing",
         ],
@@ -59,6 +58,7 @@ setup(
         "setuptools",
         "zope.annotation",
         "zope.component",
+        "zope.globalrequest",
         "zope.interface",
         "zope.ramcache",
     ],
