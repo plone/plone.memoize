@@ -1,0 +1,3 @@
+Fix plone.memoize.view to support unhashable types in function arguments.
+
+Fixes: #36
