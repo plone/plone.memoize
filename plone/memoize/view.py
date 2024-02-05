@@ -2,6 +2,7 @@
 
 Stores values in an annotation of the request. See view.rst.
 """
+
 from functools import wraps
 from zope.annotation.interfaces import IAnnotations
 from zope.globalrequest import getRequest
