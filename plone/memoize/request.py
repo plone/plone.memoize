@@ -2,6 +2,7 @@
 
 Stores values in an annotation of the request.
 """
+
 from functools import wraps
 from inspect import getfullargspec
 from plone.memoize import volatile

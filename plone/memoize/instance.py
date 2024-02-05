@@ -4,6 +4,7 @@ Stores values in an attribute on the instance. See instance.rst.
 
 This package current subsumes memojito.
 """
+
 from functools import wraps
 
 
