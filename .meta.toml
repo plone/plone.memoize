@@ -1,28 +1,13 @@
 # Generated from:
-# https://github.com/plone/meta/tree/master/config/default
+# https://github.com/plone/meta/tree/main/config/default
 # See the inline comments on how to expand/tweak this configuration file
 [meta]
 template = "default"
-commit-id = "237ff4c8"
+commit-id = "4b86f8f1"
 
 [pyproject]
 dependencies_ignores = "['zope.testing']"
+codespell_ignores = "whit"
 
-[tox]
-envlist_lines = """
-    py38,
-    py39,
-    py310,
-    py311,
-    pypy,
-    pypy3,
-"""
-config_lines = """
-[gh-actions]
-python =
-    3.8: py38
-    3.9: py39
-    3.10: py310
-    3.11: py311
-    pypy3.9: pypy3
-"""
+[github]
+py_versions = "[\"3.12\", \"3.11\", \"3.10\", \"3.9\", \"3.8\"]"
