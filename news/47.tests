@@ -1,0 +1,5 @@
+Temporarily stop testing on PyPy3.
+It does not currently fit the updated test setup and is not needed for Plone.
+This package should still run on PyPy3.  If not, then bug fixes are welcome.
+See `comment on PR 47 <https://github.com/plone/plone.memoize/pull/47#issuecomment-2258472252>`_.
+[gforcada, maurits]
