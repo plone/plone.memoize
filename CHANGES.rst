@@ -8,6 +8,15 @@ Changelog
 
 .. towncrier release notes start
 
+3.0.3 (2025-01-23)
+------------------
+
+Bug fixes:
+
+
+- Remove old way to run tests with setuptools [gforcada] (#72)
+
+
 3.0.2 (2023-06-23)
 ------------------
 
