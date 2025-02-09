@@ -1,13 +1,13 @@
 # Generated from:
-# https://github.com/plone/meta/tree/main/config/default
+# https://github.com/plone/meta/tree/main/src/plone/meta/default
 # See the inline comments on how to expand/tweak this configuration file
 [meta]
 template = "default"
-commit-id = "4b86f8f1"
+commit-id = "9d225a77"
 
 [pyproject]
 dependencies_ignores = "['zope.testing']"
 codespell_ignores = "whit"
 
 [github]
-py_versions = "[\"3.12\", \"3.11\", \"3.10\", \"3.9\", \"3.8\", \"pypy3.9\"]"
+py_versions = "[\"3.12\", \"3.11\", \"3.10\", \"3.9\", \"pypy3.9\"]"

@@ -1,5 +1,4 @@
-"""XHTML Compressor
-"""
+"""XHTML Compressor"""
 
 from plone.memoize.interfaces import IXHTMLCompressor
 from zope.component import queryUtility

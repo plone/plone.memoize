@@ -1,5 +1,4 @@
-"""A cache decorator that uses RAMCache by default.
-"""
+"""A cache decorator that uses RAMCache by default."""
 
 from hashlib import sha1
 from plone.memoize import volatile
