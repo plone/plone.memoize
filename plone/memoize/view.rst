@@ -33,14 +33,16 @@ First we set up a dummy view::
     ...         return '%s world' % self.txt1
     ...
     ...     @view.memoize
-    ...     def getMsg(self, to, **instruction):
-    ...         lst = ['%s--%s' %t for t in sorted(instruction.items(), reverse=True)]
+    ...     def getMsg(self, to, *args, **kwargs):
+    ...         lst = ['%s' %t for t in args]
+    ...         lst = lst + ['%s--%s' %t for t in sorted(kwargs.items(), reverse=True)]
     ...         instxt = ' '.join(lst)
     ...         return ("%s: %s world%s %s" %(to, self.txt1, self.bang, instxt)).strip()
     ...
     ...     @view.memoize_contextless
-    ...     def getAnotherMsg(self, to, **instruction):
-    ...         lst = ['%s--%s' %t for t in instruction.items()]
+    ...     def getAnotherMsg(self, to, *args, **kwargs):
+    ...         lst = ['%s' %t for t in args]
+    ...         lst = lst + ['%s--%s' %t for t in kwargs.items()]
     ...         instxt = ' '.join(lst)
     ...         return ("%s: %s world%s %s" %(to, self.txt1, self.bang, instxt)).strip()
     ...
@@ -81,13 +83,30 @@ Even though we've twiddled txt1, txt2 is not recalculated::
     >>> msg.txt2
     'hello world'
 
-We support memoization of multiple signatures as long as all signature values are hashable::
+We support memoization of multiple signatures.
+The signature values just need to be able to be converted into a JSON string::
 
     >>> print(msg.getMsg('Ernest'))
     Ernest: goodbye cruel world!
 
     >>> print(msg.getMsg('J.D.', **{'raise':'roofbeams'}))
     J.D.: goodbye cruel world! raise--roofbeams
+
+We also support unhashable types like lists and dicts::
+
+    >>> print(msg.getMsg('J.D.', lower=['shields', 'engines']))
+    J.D.: goodbye cruel world! lower--['shields', 'engines']
+
+    >>> print(msg.getMsg('J.D.', actions={'open': ['gates']}))
+    J.D.: goodbye cruel world! actions--{'open': ['gates']}
+
+Also in non-keyword arguments::
+
+    >>> print(msg.getMsg('J.D.', ['shields', 'engines']))
+    J.D.: goodbye cruel world! ['shields', 'engines']
+
+    >>> print(msg.getMsg('J.D.', {'open': ['gates']}))
+    J.D.: goodbye cruel world! {'open': ['gates']}
 
 We can alter data underneath, but nothing changes::
 
@@ -172,6 +191,34 @@ based on parameters, but not on context::
 
     >>> print(msg2.getAnotherMsg('J.D.', **{'raise':'roofbeams'}))
     J.D.: so long, cruel world& raise--roofbeams
+
+Contextless memoizing also supports unhashable types like lists and dicts::
+
+    >>> print(msg3.getAnotherMsg('J.D.', lower=['shields', 'engines']))
+    J.D.: so long, cruel world& lower--['shields', 'engines']
+
+    >>> print(msg2.getAnotherMsg('J.D.', lower=['shields', 'engines']))
+    J.D.: so long, cruel world& lower--['shields', 'engines']
+
+    >>> print(msg3.getAnotherMsg('J.D.', actions={'open': ['gates']}))
+    J.D.: so long, cruel world& actions--{'open': ['gates']}
+
+    >>> print(msg2.getAnotherMsg('J.D.', actions={'open': ['gates']}))
+    J.D.: so long, cruel world& actions--{'open': ['gates']}
+
+Also in non-keyword arguments::
+
+    >>> print(msg3.getAnotherMsg('J.D.', ['shields', 'engines']))
+    J.D.: so long, cruel world& ['shields', 'engines']
+
+    >>> print(msg2.getAnotherMsg('J.D.', ['shields', 'engines']))
+    J.D.: so long, cruel world& ['shields', 'engines']
+
+    >>> print(msg3.getAnotherMsg('J.D.', {'open': ['gates']}))
+    J.D.: so long, cruel world& {'open': ['gates']}
+
+    >>> print(msg2.getAnotherMsg('J.D.', {'open': ['gates']}))
+    J.D.: so long, cruel world& {'open': ['gates']}
 
 There is also support for using a global request
 if zope.globalrequest is available.

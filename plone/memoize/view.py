@@ -7,6 +7,8 @@ from functools import wraps
 from zope.annotation.interfaces import IAnnotations
 from zope.globalrequest import getRequest
 
+import json
+
 
 class ViewMemo:
     key = "plone.memoize"
@@ -44,8 +46,8 @@ class ViewMemo:
                 context_id,
                 instance.__class__.__name__,
                 func.__name__,
-                args[1:],
-                frozenset(kwargs.items()),
+                json.dumps(args[1:]),
+                json.dumps(kwargs),
             )
             if key not in cache:
                 cache[key] = func(*args, **kwargs)
@@ -73,8 +75,8 @@ class ViewMemo:
             key = (
                 instance.__class__.__name__,
                 func.__name__,
-                args[1:],
-                frozenset(kwargs.items()),
+                json.dumps(args[1:]),
+                json.dumps(kwargs),
             )
             if key not in cache:
                 cache[key] = func(*args, **kwargs)
