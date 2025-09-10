@@ -7,7 +7,7 @@ version = "3.0.4.dev0"
 
 long_description = (
     f"{Path('README.rst').read_text()}\n"
-    f"{(Path('plone') / 'memoize' / 'README.rst').read_text()}\n"
+    f"{(Path('src') / 'plone' / 'memoize' / 'README.rst').read_text()}\n"
     f"{Path('CHANGES.rst').read_text()}"
 )
 
@@ -41,8 +41,9 @@ setup(
     author_email="plone-developers@lists.sourceforge.net",
     url="https://pypi.org/project/plone.memoize",
     license="BSD",
-    packages=find_packages(),
+    packages=find_packages("src"),
     namespace_packages=["plone"],
+    package_dir={"": "src"},
     include_package_data=True,
     zip_safe=False,
     python_requires=">=3.8",
