@@ -19,7 +19,7 @@ jobs:
         - ["ubuntu", "ubuntu-latest"]
         config:
         # [Python version, visual name, tox env]
-        - ["pypy3", "6.2 on pypy3", "pypy3-plone62"]
+        - ["pypy3.11", "6.2 on pypy3.11", "pypy311-plone62"]
         - ["3.13", "6.2 on py3.13", "py313-plone62"]
         - ["3.10", "6.2 on py3.10", "py310-plone62"]
         - ["3.13", "6.1 on py3.13", "py313-plone61"]
