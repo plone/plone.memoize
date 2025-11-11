@@ -49,7 +49,6 @@ setup(
         ],
     ),
     install_requires=[
-        "setuptools",
         "zope.annotation",
         "zope.component",
         "zope.globalrequest",
