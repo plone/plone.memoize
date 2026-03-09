@@ -8,7 +8,6 @@ from inspect import getfullargspec
 from plone.memoize import volatile
 from zope.annotation.interfaces import IAnnotations
 
-
 _marker = object()
 
 
