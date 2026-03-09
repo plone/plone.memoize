@@ -10,7 +10,6 @@ from zope.ramcache.interfaces.ram import IRAMCache
 
 import pickle
 
-
 global_cache = ram.RAMCache()
 global_cache.update(maxAge=86400)
 

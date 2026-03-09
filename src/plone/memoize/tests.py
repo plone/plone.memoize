@@ -5,7 +5,6 @@ from zope.configuration.xmlconfig import XMLConfig
 import doctest
 import unittest
 
-
 optionflags = doctest.REPORT_ONLY_FIRST_FAILURE | doctest.ELLIPSIS
 
 
