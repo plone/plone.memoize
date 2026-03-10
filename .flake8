@@ -13,6 +13,7 @@ ignore =
     # black takes care of spaces after commas
     E231,
 
+
 ##
 # Add extra configuration options in .meta.toml:
 #  [flake8]
