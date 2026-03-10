@@ -7,7 +7,6 @@ This package current subsumes memojito.
 
 from functools import wraps
 
-
 _marker = object()
 
 
