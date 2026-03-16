@@ -8,6 +8,22 @@ Changelog
 
 .. towncrier release notes start
 
+4.0.0a2 (2026-03-16)
+--------------------
+
+Bug fixes:
+
+
+- Require ``setuptools<83`` in the build system.  [maurits]
+
+
+Internal:
+
+
+- Update configuration files.
+  [plone devs]
+
+
 4.0.0a1 (2025-11-19)
 --------------------
 

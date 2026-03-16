@@ -1,1 +1,0 @@
-Require ``setuptools<83`` in the build system.  [maurits]
