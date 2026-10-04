@@ -10,7 +10,7 @@ repos:
     rev: v3.21.2
     hooks:
     -   id: pyupgrade
-        args: [--py310-plus]
+        args: [--py312-plus]
 -   repo: https://github.com/pycqa/isort
     rev: 9.0.1
     hooks:
@@ -69,7 +69,7 @@ repos:
     rev: "0.24.2"
     hooks:
     -   id: check-python-versions
-        args: ['--only', 'setup.py,tox.ini']
+        args: ['--only', 'pyproject.toml,tox.ini']
 -   repo: https://github.com/collective/i18ndude
     rev: "6.3.0"
     hooks:
